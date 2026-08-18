@@ -1,0 +1,615 @@
+
+\section{Limits Involving Infinity}
+\label{sec:1.3}
+
+Some functions do not settle toward a finite value near a point, nor do they stabilize as \(x\) grows large. Instead, their outputs increase or decrease without bound. This section develops tools for describing such behavior and for analyzing limits where \(x\) itself tends to \(+\infty\) or \(-\infty\). \\
+
+By the end of this section, the student will be able to:
+\begin{itemize}
+    \item interpret infinite limits and limits at infinity through graphs and tables of values; and
+    \item evaluate infinite limits and limits at infinity of rational, radical, and polynomial functions.
+\end{itemize}
+
+
+\subsection*{Infinite Limits}
+\label{subsec:1.3.1}
+
+
+We begin with the case where a function grows without bound as \(x\) approaches a finite number.
+
+\medskip
+\textbf{Illustration 1.3.1.}
+Let \(f(x) = \dfrac{1}{(x - 2)^{2}}\). The function is undefined at \(x = 2\). Examine the values of \(f(x)\) as \(x\) approaches 2 from either side:
+
+\begin{center}
+\small
+\begin{tabular}{c|cccc|c|cccc}
+\(x\)        & \(1\)  & \(1.5\) & \(1.9\) & \(1.99\) & \(2\) & \(2.01\) & \(2.1\) & \(2.5\) & \(3\) \\
+\hline
+\(f(x)\)     & \(1\)  & \(4\)   & \(100\) & \(10\,000\) & undef. & \(10\,000\) & \(100\) & \(4\) & \(1\)
+\end{tabular}
+\normalsize
+\end{center}
+
+As \(x\) approaches 2 from either side, the denominator \((x - 2)^{2}\) becomes arbitrarily small and positive, forcing \(f(x)\) to grow larger and larger without any upper bound.
+
+\vspace{0.5em}
+{\centering
+\begin{tikzpicture}[scale=0.55]
+
+    \clip (-1.5, -0.9) rectangle (5.5, 5);
+
+    \draw[->,thick] (-1.2,0) -- (5.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.3) -- (0,4.5) node[left] {\(y\)};
+    \foreach \x in {1,2,3,4}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \foreach \y in {1,2,3,4}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\(\y\)};
+    \node at (0,0) [below left] {\(0\)};
+    
+    \draw[very thick, primaryColor, domain=-0.8:1.85, samples=50, smooth]
+        plot (\x, {1/((\x-2)^2)});
+    \draw[very thick, primaryColor, domain=2.15:5, samples=50, smooth]
+        plot (\x, {1/((\x-2)^2)});
+        
+    \draw[dashed, gray, thick] (2,0) -- (2,4.8);
+    \node[gray] at (3.8,3.8) {\(x = 2\)};
+\end{tikzpicture}
+
+\nopagebreak\medskip
+\small\textbf{Figure 4:} \(y = \dfrac{1}{(x-2)^{2}}\)\par}
+\vspace{0.5em}
+
+\medskip
+
+This behavior leads to the following formal description. Let \(f\) be defined on an open interval containing \(a\) (except possibly at \(a\)). We say that the \textbf{limit of \(f(x)\) as \(x\) approaches \(a\) is positive infinity}, denoted
+\[
+\lim_{x \to a} f(x) = +\infty,
+\]
+if \(f(x)\) increases without bound as \(x\) gets closer and closer to \(a\) (but \(x \neq a\)).
+
+Similarly, we say that the \textbf{limit of \(f(x)\) as \(x\) approaches \(a\) is negative infinity}, denoted
+\[
+\lim_{x \to a} f(x) = -\infty,
+\]
+if \(f(x)\) decreases without bound as \(x\) gets closer and closer to \(a\) (but \(x \neq a\)).
+
+
+\begin{remarkbox}{Remark 1}
+
+The definitions above also apply when \(x \to a\) is replaced by the one-sided limits \(x \to a^{-}\) or \(x \to a^{+}\).
+\end{remarkbox}
+
+
+\begin{examplebox}{Example 2}
+
+From Illustration~1.3.1, both sides of \(x = 2\) drive the function upward without bound:
+\[
+\lim_{x \to 2^{-}} \frac{1}{(x - 2)^{2}} = +\infty,
+\qquad
+\lim_{x \to 2^{+}} \frac{1}{(x - 2)^{2}} = +\infty,
+\qquad\text{so}\qquad
+\lim_{x \to 2} \frac{1}{(x - 2)^{2}} = +\infty.
+\]
+\end{examplebox}
+
+
+\begin{remarkbox}{Remark 3}
+
+The symbol \(\infty\) is not a real number. Writing \(\lim_{x \to a} f(x) = +\infty\) does \emph{not} mean that the limit exists in the usual sense. Rather, it describes the \emph{manner} in which the limit fails to exist: the function grows without bound near \(a\).
+\end{remarkbox}
+
+\bigskip
+
+When a quotient has a nonzero constant numerator and a denominator that tends to zero, the sign of the denominator determines whether the quotient tends to \(+\infty\) or \(-\infty\).
+
+\medskip
+For instance, consider \(f(x) = \dfrac{2x}{x - 3}\). As \(x \to 3\), the numerator approaches \(6\) while the denominator approaches \(0\). The sign of \(x - 3\) dictates the direction:
+\[
+\lim_{x \to 3^{-}} \frac{2x}{x - 3} = -\infty
+\quad (\text{denominator } \to 0^{-}),
+\qquad
+\lim_{x \to 3^{+}} \frac{2x}{x - 3} = +\infty
+\quad (\text{denominator } \to 0^{+}).
+\]
+Since the one-sided infinite limits differ, we cannot assign a single infinite limit at \(x = 3\).
+
+
+\begin{theorembox}{Theorem 4}
+
+Let \(c\) be a nonzero real number. Suppose \(\displaystyle\lim_{x \to a} f(x) = c\) and \(\displaystyle\lim_{x \to a} g(x) = 0\).
+
+\begin{enumerate}
+    \item If \(c > 0\):
+    \begin{itemize}
+        \item and \(g(x) \to 0^{+}\) as \(x \to a\), then \(\displaystyle\lim_{x \to a} \frac{f(x)}{g(x)} = +\infty\).
+        \item and \(g(x) \to 0^{-}\) as \(x \to a\), then \(\displaystyle\lim_{x \to a} \frac{f(x)}{g(x)} = -\infty\).
+    \end{itemize}
+    \item If \(c < 0\):
+    \begin{itemize}
+        \item and \(g(x) \to 0^{+}\) as \(x \to a\), then \(\displaystyle\lim_{x \to a} \frac{f(x)}{g(x)} = -\infty\).
+        \item and \(g(x) \to 0^{-}\) as \(x \to a\), then \(\displaystyle\lim_{x \to a} \frac{f(x)}{g(x)} = +\infty\).
+    \end{itemize}
+\end{enumerate}
+The theorem applies equally to one-sided limits (\(x \to a^{-}\), \(x \to a^{+}\)).
+\end{theorembox}
+
+
+\begin{examplebox}{Example 5}
+
+Let \(g(x) = \dfrac{3x}{x^{2} - 4} = \dfrac{3x}{(x - 2)(x + 2)}\). Analyze the infinite limits at \(x = -2\) and \(x = 2\).
+
+\medskip
+\textbf{Solution.}
+The numerator tends to a nonzero constant at each point, and the denominator vanishes. Apply Theorem~4 with sign analysis.
+
+\begin{align*}
+\lim_{x \to -2^{-}} \frac{3x}{(x - 2)(x + 2)}
+    &= \frac{-6}{(-4)(0^{-})} = +\infty, \\[6pt]
+\lim_{x \to -2^{+}} \frac{3x}{(x - 2)(x + 2)}
+    &= \frac{-6}{(-4)(0^{+})} = -\infty, \\[6pt]
+\lim_{x \to 2^{-}} \frac{3x}{(x - 2)(x + 2)}
+    &= \frac{6}{(0^{-})(4)} = -\infty, \\[6pt]
+\lim_{x \to 2^{+}} \frac{3x}{(x - 2)(x + 2)}
+    &= \frac{6}{(0^{+})(4)} = +\infty.
+\end{align*}
+\end{examplebox}
+
+\bigskip
+
+The next theorem describes how infinite limits combine with finite limits under elementary operations.
+
+
+\begin{theorembox}{Theorem 6}
+
+\begin{enumerate}
+    \item If \(\displaystyle\lim_{x \to a} f(x)\) exists (finite) and \(\displaystyle\lim_{x \to a} g(x) = \pm\infty\), then
+    \[
+    \lim_{x \to a} \bigl(f(x) + g(x)\bigr) = \pm\infty,
+    \qquad
+    \lim_{x \to a} \bigl(f(x) - g(x)\bigr) = \mp\infty.
+    \]
+
+    \item If \(\displaystyle\lim_{x \to a} f(x) = +\infty\) and \(\displaystyle\lim_{x \to a} g(x) = +\infty\), then
+    \[
+    \lim_{x \to a} \bigl(f(x) + g(x)\bigr) = +\infty.
+    \]
+
+    \item Let \(c \in \R \setminus \{0\}\). If \(\displaystyle\lim_{x \to a} f(x) = c\) and \(\displaystyle\lim_{x \to a} g(x) = \pm\infty\), then
+    \[
+    \lim_{x \to a} f(x)\,g(x) = \begin{cases}
+    \pm\infty, & c > 0,\\
+    \mp\infty, & c < 0.
+    \end{cases}
+    \]
+\end{enumerate}
+\end{theorembox}
+
+
+\begin{examplebox}{Example 7}
+
+Evaluate \(\displaystyle\lim_{x \to 1} \left( x^{2} + \frac{1}{x - 1} \right)\).
+
+\medskip
+\textbf{Solution.}
+\(\lim_{x \to 1} x^{2} = 1\) (finite). The denominator \(x - 1 \to 0\) with differing signs:
+\[
+\lim_{x \to 1^{-}} \frac{1}{x - 1} = -\infty,
+\qquad
+\lim_{x \to 1^{+}} \frac{1}{x - 1} = +\infty.
+\]
+By Theorem~6,
+\[
+\lim_{x \to 1^{-}} \left( x^{2} + \frac{1}{x - 1} \right) = -\infty,
+\qquad
+\lim_{x \to 1^{+}} \left( x^{2} + \frac{1}{x - 1} \right) = +\infty.
+\]
+\end{examplebox}
+
+\pagebreak
+
+A \textbf{vertical asymptote} of the graph \(y = f(x)\) is a line \(x = a\) such that at least one of the following holds:
+\[
+\lim_{x \to a^{-}} f(x) = \pm\infty,
+\qquad
+\lim_{x \to a^{+}} f(x) = \pm\infty.
+\]
+
+
+\begin{examplebox}{Example 8}
+
+From Example~7, \(\lim_{x \to 1^{-}} \bigl(x^{2} + \frac{1}{x-1}\bigr) = -\infty\) and \(\lim_{x \to 1^{+}} \bigl(x^{2} + \frac{1}{x-1}\bigr) = +\infty\). Therefore \(x = 1\) is a vertical asymptote of the graph of \(y = x^{2} + \frac{1}{x-1}\).
+\end{examplebox}
+
+\bigskip
+
+
+\subsection*{Indeterminate Forms: Infinity Minus Infinity and Zero Times Infinity}
+\label{subsec:1.3.2}
+
+
+Theorem~6 does not address every combination of infinite limits. Two important cases are left indeterminate:
+
+\begin{definitionbox}{Definition 9}
+\begin{enumerate}
+    \item If \(\displaystyle\lim_{x \to a} f(x) = +\infty\) and \(\displaystyle\lim_{x \to a} g(x) = +\infty\), then \(\displaystyle\lim_{x \to a} \bigl(f(x) - g(x)\bigr)\) is called an \textbf{indeterminate form of type \(\infty - \infty\)}.
+
+    \item If \(\displaystyle\lim_{x \to a} f(x) = 0\) and \(\displaystyle\lim_{x \to a} g(x) = \pm\infty\), then \(\displaystyle\lim_{x \to a} f(x)\,g(x)\) is called an \textbf{indeterminate form of type \(0 \cdot \infty\)}.
+\end{enumerate}
+\end{definitionbox}
+
+
+\begin{remarkbox}{Note}
+
+From this point onward, whenever an evaluation involves an indeterminate form, its type such as \(\left[ \frac{0}{0}\right]\), \(\left[ \frac{\infty}{\infty}\right]\), \(\left[ \infty - \infty\right]\), or \(\left[ 0 \cdot \infty\right]\) will be explicitly indicated beside the limit at the step where it is identified. It will not be repeated on every line, but shown only where necessary to justify the algebraic transformation.
+\end{remarkbox}
+
+These forms must be rewritten (by combining fractions, factoring, or rationalizing) before the limit can be evaluated.
+
+
+\begin{examplebox}{Example 10}
+
+Evaluate \(\displaystyle\lim_{x \to 2} \left( \frac{1}{x - 2} - \frac{4}{x^{2} - 4} \right)\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+\lim_{x \to 2} \left( \frac{1}{x - 2} - \frac{4}{x^{2} - 4} \right) \quad [\infty - \infty]
+    &= \lim_{x \to 2} \left( \frac{1}{x - 2} - \frac{4}{(x - 2)(x + 2)} \right) \\[6pt]
+    &= \lim_{x \to 2} \frac{(x + 2) - 4}{(x - 2)(x + 2)} \\[6pt]
+    &= \lim_{x \to 2} \frac{x - 2}{(x - 2)(x + 2)} \\[6pt]
+    &= \lim_{x \to 2} \frac{1}{x + 2}
+     = \frac{1}{4}.
+\end{align*}
+\end{examplebox}
+
+
+\begin{examplebox}{Example 11}
+
+Evaluate \(\displaystyle\lim_{x \to 1^{+}} (x - 1) \cdot \frac{2x}{x^{2} - 1}\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+\lim_{x \to 1^{+}} (x - 1) \cdot \frac{2x}{x^{2} - 1} \quad [0 \cdot \infty]
+    &= \lim_{x \to 1^{+}} (x - 1) \cdot \frac{2x}{(x - 1)(x + 1)} \\[6pt]
+    &= \lim_{x \to 1^{+}} \frac{2x}{x + 1}
+     = \frac{2}{2}
+     = 1.
+\end{align*}
+\end{examplebox}
+
+\bigskip
+
+
+\subsection*{Limits at Infinity}
+\label{subsec:1.3.3}
+
+
+We now turn to the behavior of a function when the independent variable itself grows without bound.
+
+\medskip
+\textbf{Illustration 1.3.12.}
+Let \(f(x) = \dfrac{1}{x}\). The tables below show the values of \(f(x)\) as \(x\) becomes large in the positive and negative directions.
+
+\begin{center}
+\small
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tabular}{c|c}
+\(x\)       & \(f(x)\) \\
+\hline
+\(1\)       & \(1\) \\
+\(10\)      & \(0.1\) \\
+\(100\)     & \(0.01\) \\
+\(1\,000\)  & \(0.001\) \\
+\(10\,000\) & \(0.0001\)
+\end{tabular}
+
+\smallskip
+\(x \to +\infty\): \; \(f(x) \to 0\)
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\begin{tabular}{c|c}
+\(x\)        & \(f(x)\) \\
+\hline
+\(-1\)       & \(-1\) \\
+\(-10\)      & \(-0.1\) \\
+\(-100\)     & \(-0.01\) \\
+\(-1\,000\)  & \(-0.001\) \\
+\(-10\,000\) & \(-0.0001\)
+\end{tabular}
+
+\smallskip
+\(x \to -\infty\): \; \(f(x) \to 0\)
+\end{minipage}
+\normalsize
+\end{center}
+
+\vspace{0.5em}
+{\centering
+\begin{tikzpicture}[scale=0.55]
+
+    \clip (-4.5, -3.8) rectangle (4.5, 3.8);
+
+    \draw[->,thick] (-4.2,0) -- (4.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-3.5) -- (0,3.5) node[left] {\(y\)};
+    \foreach \x in {-3,-2,-1,1,2,3}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \foreach \y in {-2,-1,1,2}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\(\y\)};
+    \node at (0,0) [below left] {\(0\)};
+    
+    \draw[very thick, primaryColor, domain=-4.2:-0.28, samples=50, smooth]
+        plot (\x, {1/\x});
+    \draw[very thick, primaryColor, domain=0.28:4.2, samples=50, smooth]
+        plot (\x, {1/\x});
+        
+    \draw[dashed, gray, thick] (0,-3.2) -- (0,3.2);
+\end{tikzpicture}
+
+\nopagebreak\smallskip
+\small\textbf{Figure 5:} \(y = \dfrac{1}{x}\)\par}
+\vspace{0.5em}
+
+\medskip
+
+Let \(f\) be defined on some interval \((a, +\infty)\). We say that the \textbf{limit of \(f(x)\) as \(x\) approaches positive infinity} is \(L\), denoted
+\[
+\lim_{x \to +\infty} f(x) = L,
+\]
+if \(f(x)\) can be made arbitrarily close to \(L\) by taking \(x\) sufficiently large. The definition for \(\lim_{x \to -\infty} f(x) = L\) is analogous, requiring \(f\) to be defined on an interval \((-\infty, a)\) and \(x\) to be taken sufficiently negative.
+
+
+\begin{remarkbox}{Remark 12}
+
+We also encounter infinite limits at infinity. For example, \(\lim_{x \to +\infty} f(x) = +\infty\) means \(f(x)\) grows without bound as \(x \to +\infty\). Similar interpretations hold for \(-\infty\) and for \(x \to -\infty\).
+\end{remarkbox}
+
+
+\begin{theorembox}{Theorem 13}
+
+\begin{enumerate}
+    \item \(\displaystyle\lim_{x \to \pm\infty} x^{n} = +\infty\) if \(n\) is even; \(\displaystyle\lim_{x \to +\infty} x^{n} = +\infty\) and \(\displaystyle\lim_{x \to -\infty} x^{n} = -\infty\) if \(n\) is odd.
+
+    \item \(\displaystyle\lim_{x \to \pm\infty} \frac{1}{x^{n}} = 0\) for any positive integer \(n\).
+
+    \item If \(\displaystyle\lim_{x \to +\infty} f(x) = c\) (finite) and \(\displaystyle\lim_{x \to +\infty} g(x) = \pm\infty\), then \(\displaystyle\lim_{x \to +\infty} \frac{f(x)}{g(x)} = 0\).
+\end{enumerate}
+Statements 1--3 remain valid with \(x \to -\infty\) or one-sided finite limits, provided the denominator grows without bound in magnitude.
+\end{theorembox}
+
+
+\begin{examplebox}{Example 14}
+
+Evaluate \(\displaystyle\lim_{x \to -\infty} \bigl(2x^{4} - 3x^{3} + x - 7\bigr)\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+\lim_{x \to -\infty} \bigl(2x^{4} - 3x^{3} + x - 7\bigr)
+    &= \lim_{x \to -\infty} x^{4} \left(2 - \frac{3}{x} + \frac{1}{x^{3}} - \frac{7}{x^{4}}\right)
+     = (+\infty)(2)
+     = +\infty.
+\end{align*}
+\end{examplebox}
+
+
+\begin{remarkbox}{Remark 15}
+
+For any polynomial \(p(x)\), the limit \(\lim_{x \to \pm\infty} p(x)\) is determined entirely by its \textbf{leading term}. All lower-degree terms become negligible compared to the leading term when \(|x|\) is large.
+\end{remarkbox}
+
+\bigskip
+
+When both numerator and denominator grow without bound, their quotient may approach a finite value. This yields another indeterminate form.
+
+\begin{definitionbox}{Indeterminate Form \(\frac{\infty}{\infty}\)}
+If \(\displaystyle\lim_{x \to a} f(x) = \pm\infty\) and \(\displaystyle\lim_{x \to a} g(x) = \pm\infty\) (where \(a\) may be replaced by \(\pm\infty\) or one-sided notation), then \(\displaystyle\lim_{x \to a} \frac{f(x)}{g(x)}\) is an \textbf{indeterminate form of type \(\dfrac{\infty}{\infty}\)}.
+\end{definitionbox}
+
+
+\begin{examplebox}{Example 16}
+
+Evaluate \(\displaystyle\lim_{x \to +\infty} \frac{4x^{2} - 3x + 1}{2x^{2} + 5x - 2}\).
+
+\medskip
+\textbf{Solution.}
+The highest power of \(x\) in the denominator is \(x^{2}\). Multiply the numerator and denominator by \(\frac{1}{x^{2}}\):
+\begin{align*}
+\lim_{x \to +\infty} \frac{4x^{2} - 3x + 1}{2x^{2} + 5x - 2} \quad \left[\frac{\infty}{\infty}\right]
+    &= \lim_{x \to +\infty} \left( \frac{4x^{2} - 3x + 1}{2x^{2} + 5x - 2} \cdot \frac{\frac{1}{x^{2}}}{\frac{1}{x^{2}}} \right) \\[10pt]
+    &= \lim_{x \to +\infty} \frac{4 - \frac{3}{x} + \frac{1}{x^{2}}}{2 + \frac{5}{x} - \frac{2}{x^{2}}}
+     = \frac{4 - 0 + 0}{2 + 0 - 0}
+     = \frac{4}{2}
+     = 2.
+\end{align*}
+\end{examplebox}
+
+
+\begin{examplebox}{Example 17}
+
+Evaluate \(\displaystyle\lim_{x \to -\infty} \frac{3x^{2} + 2x}{x^{3} - x + 4}\).
+
+\medskip
+\textbf{Solution.}
+The highest power of \(x\) in the denominator is \(x^{3}\). Multiply the numerator and denominator by \(\frac{1}{x^{3}}\):
+\begin{align*}
+\lim_{x \to -\infty} \frac{3x^{2} + 2x}{x^{3} - x + 4} \quad \left[\frac{\infty}{\infty}\right]
+    &= \lim_{x \to -\infty} \left( \frac{3x^{2} + 2x}{x^{3} - x + 4} \cdot \frac{\frac{1}{x^{3}}}{\frac{1}{x^{3}}} \right) \\[10pt]
+    &= \lim_{x \to -\infty} \frac{\frac{3}{x} + \frac{2}{x^{2}}}{1 - \frac{1}{x^{2}} + \frac{4}{x^{3}}}
+     = \frac{0 + 0}{1 - 0 + 0}
+     = \frac{0}{1}
+     = 0.
+\end{align*}
+\end{examplebox}
+
+\bigskip
+
+When radicals appear, recall that \(\sqrt{x^{2}} = |x|\), which equals \(x\) when \(x \ge 0\) and \(-x\) when \(x < 0\). This distinction is crucial at \(-\infty\).
+
+
+\begin{examplebox}{Example 18}
+
+Evaluate \(\displaystyle\lim_{x \to -\infty} \frac{\sqrt{4x^{2} + 1}}{2x - 3}\).
+
+\medskip
+\textbf{Solution.}
+Since \(x \to -\infty\), we have \(x < 0\) and \(\sqrt{x^{2}} = |x| = -x\). Therefore, \(\frac{1}{\sqrt{x^{2}}} = -\frac{1}{x}\).
+Multiplying numerator and denominator by this factor:
+\begin{align*}
+\lim_{x \to -\infty} \frac{\sqrt{4x^{2} + 1}}{2x - 3} \quad \left[\frac{\infty}{\infty}\right]
+    &= \lim_{x \to -\infty} \left( \frac{\sqrt{4x^{2} + 1}}{2x - 3} \cdot \frac{\frac{1}{\sqrt{x^{2}}}}{-\frac{1}{x}} \right) \\[10pt]
+    &= \lim_{x \to -\infty} \frac{\sqrt{4 + \frac{1}{x^{2}}}}{-2 + \frac{3}{x}} \\[10pt]
+    &= \frac{\sqrt{4 + 0}}{-2 + 0}
+     = \frac{2}{-2}
+     = -1.
+\end{align*}
+\end{examplebox}
+
+
+\begin{examplebox}{Example 19}
+
+Evaluate \(\displaystyle\lim_{x \to -\infty} \frac{7x^{3} + 2}{4x^{3} - \sqrt{9x^{6} + 1}}\).
+
+\medskip
+\textbf{Solution.}
+Since \(x \to -\infty\), we have \(x < 0\) and \(\sqrt{x^{6}} = |x^{3}| = -x^{3}\). Therefore, \(\frac{1}{\sqrt{x^{6}}} = -\frac{1}{x^{3}}\).
+Multiplying numerator and denominator by this factor:
+\begin{align*}
+\lim_{x \to -\infty} \frac{7x^{3} + 2}{4x^{3} - \sqrt{9x^{6} + 1}} \quad \left[\frac{\infty}{\infty}\right]
+    &= \lim_{x \to -\infty} \left( \frac{7x^{3} + 2}{4x^{3} - \sqrt{9x^{6} + 1}} \cdot \frac{-\frac{1}{x^{3}}}{\frac{1}{\sqrt{x^{6}}}} \right) \\[10pt]
+    &= \lim_{x \to -\infty} \frac{-7 - \frac{2}{x^{3}}}{-4 - \sqrt{9 + \frac{1}{x^{6}}}} \\[10pt]
+    &= \frac{-7 - 0}{-4 - \sqrt{9 + 0}}
+     = \frac{-7}{-4 - 3}
+     = \frac{-7}{-7}
+     = 1.
+\end{align*}
+\end{examplebox}
+
+
+\begin{examplebox}{Example 20}
+
+Evaluate \(\displaystyle\lim_{x \to +\infty} \bigl( \sqrt{x^{2} + x} - x \bigr)\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+\lim_{x \to +\infty} \bigl( \sqrt{x^{2} + x} - x \bigr) \quad [\infty - \infty]
+    &= \lim_{x \to +\infty} \frac{(\sqrt{x^{2} + x} - x)(\sqrt{x^{2} + x} + x)}{\sqrt{x^{2} + x} + x} \\[6pt]
+    &= \lim_{x \to +\infty} \frac{(x^{2} + x) - x^{2}}{\sqrt{x^{2} + x} + x} \\[6pt]
+    &= \lim_{x \to +\infty} \frac{x}{x\sqrt{1 + \frac{1}{x}} + x} \\[6pt]
+    &= \lim_{x \to +\infty} \frac{1}{\sqrt{1 + \frac{1}{x}} + 1}
+     = \frac{1}{2}.
+\end{align*}
+\end{examplebox}
+
+\bigskip
+
+
+\subsection*{Horizontal Asymptotes}
+\label{subsec:1.3.4}
+
+
+A line \(y = L\) is a \textbf{horizontal asymptote} of the graph \(y = f(x)\) if
+\[
+\lim_{x \to +\infty} f(x) = L
+\qquad\text{or}\qquad
+\lim_{x \to -\infty} f(x) = L.
+\]
+
+
+\begin{examplebox}{Example 21}
+
+Each of the following limits identifies a horizontal asymptote:
+\begin{enumerate}
+    \item \(\displaystyle\lim_{x \to \pm\infty} \frac{1}{x} = 0\); the line \(y = 0\) is a horizontal asymptote of \(y = \frac{1}{x}\).
+    \item \(\displaystyle\lim_{x \to +\infty} \frac{4x^{2} - 3x + 1}{2x^{2} + 5x - 2} = 2\); the line \(y = 2\) is a horizontal asymptote as \(x \to +\infty\) (Example~16).
+    \item \(\displaystyle\lim_{x \to +\infty} (\sqrt{x^{2} + x} - x) = \tfrac{1}{2}\); the line \(y = \frac{1}{2}\) is a horizontal asymptote as \(x \to +\infty\) (Example~20).
+\end{enumerate}
+\end{examplebox}
+
+\bigskip
+
+
+\subsection*{Exercises}
+\label{subsec:1.3.5}
+
+
+\raggedcolumns
+\setlength{\columnsep}{1.5em}
+
+\medskip
+\noindent\textbf{A.} Evaluate the following infinite limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{x \to -2} \frac{3}{(x + 2)^{2}}\)
+    \item \(\displaystyle\lim_{t \to 0} \left( \frac{1}{t} - \frac{1}{t\sqrt{t + 1}} \right)\)
+    \item \(\displaystyle\lim_{x \to 2} \frac{x - 2}{\sqrt{4x - x^{2}}}\)
+    \item \(\displaystyle\lim_{x \to -3} \left( \frac{4}{(x + 3)^{2}} - \frac{1}{x + 3} \right)\)
+    \item \(\displaystyle\lim_{x \to -1} \left( \frac{x}{x + 1} - \frac{2}{x^{2} - 1} \right)\)
+    \item \(\displaystyle\lim_{x \to 3^{+}} \frac{[\![x]\!] - 1}{[\![x]\!] - x}\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{B.} Evaluate the following limits at infinity.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{x \to +\infty} \frac{2x^{3} - 6x + 5}{4 + 7x - 6x^{3}}\)
+    \item \(\displaystyle\lim_{x \to -\infty} \frac{4x^{3} + 5}{1 - 2x + 3x^{2}}\)
+    \item \(\displaystyle\lim_{x \to +\infty} \frac{\sqrt{2x + x^{2}}}{x + 3}\)
+    \item \(\displaystyle\lim_{x \to -\infty} \frac{3}{x^{2} - 3}\)
+    \item \(\displaystyle\lim_{x \to -\infty} \bigl(3x^{4} - 3x^{2} + x + 4\bigr)\)
+    \item \(\displaystyle\lim_{x \to -\infty} \frac{3x^{2} - 5x + 2}{6x^{3} - 2x^{2} - 1}\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{C.} Evaluate the following limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{x \to 1} \frac{2x^{3} - 5x^{2}}{x^{2} - 1}\)
+    \item \(\displaystyle\lim_{x \to 2^{+}} \frac{4}{4 - 4x + x^{2}}\)
+    \item \(\displaystyle\lim_{y \to 4} \frac{y - 2}{y^{2} - 8y + 16}\)
+    \item \(\displaystyle\lim_{t \to 0} \left( \frac{1}{t} - \frac{1}{\sqrt{t + 3} - 1} \right)\)
+    \item \(\displaystyle\lim_{s \to -1} \left( \frac{2}{s^{2} - 1} + \frac{1}{s^{2} + 3s + 2} \right)\)
+    \item \(\displaystyle\lim_{t \to 0^{+}} \left( \frac{1}{t} - \frac{1}{\sqrt{2t + 1}} \right)\)
+    \item \(\displaystyle\lim_{s \to -1} \frac{[\![s]\!] - 1}{[\![s]\!] + 1}\)
+    \item \(\displaystyle\lim_{x \to 1^{+}} \frac{[\![x]\!]^{2} - x}{x^{2} - 1}\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{D.} Find the equations of all vertical and horizontal asymptotes of the following functions.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., nosep, topsep=0pt, itemsep=2pt]
+    \item \(f(x) = \dfrac{3}{x^{2} - 9}\)
+    \item \(g(x) = \dfrac{2x - 1}{4x + 3}\)
+    \item \(h(x) = \dfrac{x^{2} - 1}{x^{2} - 4}\)
+    \item \(p(x) = \dfrac{\sqrt{4x^{2} + 1}}{x - 1}\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{E.} Let
+\[
+f(x) = \begin{cases}
+\dfrac{1}{x + 2},           & x < -2, \\[10pt]
+\dfrac{x^{2} - 4}{x^{2} + x - 2}, & -2 < x < 1, \\[10pt]
+\dfrac{2x}{x - 1},           & x > 1.
+\end{cases}
+\]
+Evaluate:
+\(\displaystyle\lim_{x \to -2^{-}} f(x)\), \quad
+\(\displaystyle\lim_{x \to -2^{+}} f(x)\), \quad
+\(\displaystyle\lim_{x \to 1^{-}} f(x)\), \quad
+\(\displaystyle\lim_{x \to 1^{+}} f(x)\), \quad
+\(\displaystyle\lim_{x \to +\infty} f(x)\), \quad
+\(\displaystyle\lim_{x \to -\infty} f(x)\).

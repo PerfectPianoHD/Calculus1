@@ -1,0 +1,543 @@
+\section{The Precise Definition of a Limit}
+\label{sec:1.4}
+
+Thus far we have described limits through graphs, tables, and algebraic rules. Those tools are suggestive, but they cannot, by themselves, settle a dispute over whether a function truly approaches a candidate value. To resolve such questions, we need a definition that pins down, in fully quantitative terms, what it means for \(f(x)\) to be "arbitrarily close" to \(L\) once \(x\) is "sufficiently close" to \(a\). That definition, due to Weierstrass, is the subject of this section. \\
+
+By the end of this section, the student will be able to:
+\begin{itemize}
+    \item state the precise \(\varepsilon\)--\(\delta\) definitions of a (two-sided) limit, a one-sided limit, an infinite limit, and a limit at infinity;
+    \item use \(\varepsilon\)--\(\delta\) arguments to prove the limit of a linear, polynomial, radical, or rational function;
+    \item use \(\varepsilon\)--\(\delta\) (or \(M\)--\(\delta\)) reasoning to show that a proposed limit does or does not exist; and
+    \item apply the \(M\)--\(\delta\) definition to prove infinite limits and the \(\varepsilon\)--\(N\) definition to prove limits at infinity.
+\end{itemize}
+
+\subsection*{The Need for a Precise Definition}
+\label{subsec:1.4.1}
+
+The intuitive definition of a limit in Section~1.1 states that \(f(x)\) gets "closer and closer" to \(L\) as \(x\) gets "closer and closer" to \(a\). But this language cannot distinguish cases where the function oscillates, touches the limit value, creeps in from one side only, or approaches several competing values simultaneously. The formal \(\varepsilon\)--\(\delta\) definition eliminates this ambiguity by replacing "arbitrarily close" with an explicit numerical tolerance.
+
+Consider \(f(x)=\dfrac{x^{2}-9}{x-3}\). For \(x\neq 3\), the function simplifies to \(x+3\). Yet the informal description "\(f(x)\) gets close to \(6\) as \(x\) gets close to \(3\)" gives us no quantitative measure of \emph{how} close. The picture below suggests the idea: a band of height \(2\varepsilon\) about \(L=6\) should capture the graph inside a suitably chosen band of width \(2\delta\) about \(a=3\).
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+    \fill[softBg] (0, 4.8) rectangle (5.0, 7.2);
+    \fill[rmkBg!35] (1.8, 0) rectangle (4.2, 7.8);
+    \fill[softBg!80!rmkBg] (1.8, 4.8) rectangle (4.2, 7.2);
+
+    \draw[->,thick] (-0.2,0) -- (5.4,0) node[below, font=\small] {\(x\)};
+    \draw[->,thick] (0,-0.2) -- (0,8.2) node[left, font=\small] {\(y\)};
+    \node at (0,0) [below left, font=\small] {\(0\)};
+
+    \draw[secondaryColor, dashed, thin] (0,4.8) -- (4.2,4.8);
+    \draw[secondaryColor, dashed, thin] (0,7.2) -- (4.2,7.2);
+    \draw[dashed, gray] (1.8,0) -- (1.8,4.8);
+    \draw[dashed, gray] (4.2,0) -- (4.2,7.2);
+    \draw[dashed, gray] (3,0) -- (3,6) -- (0,6);
+
+    \draw[very thick, primaryColor, domain=0.8:2.92, smooth] plot (\x, {\x+3});
+    \draw[very thick, primaryColor, domain=3.08:4.8, smooth] plot (\x, {\x+3});
+    \draw[primaryColor, fill=white, thick] (3,6) circle (2.5pt);
+
+    \node[below, font=\small] at (3,0) {\(a\)};
+    \node[below, font=\small] at (1.8,0) {\(a-\delta\)};
+    \node[below, font=\small] at (4.2,0) {\(a+\delta\)};
+
+    \node[left, font=\small] at (0,6) {\(L\)};
+    \node[left, font=\small, secondaryColor] at (0,4.8) {\(L-\varepsilon\)};
+    \node[left, font=\small, secondaryColor] at (0,7.2) {\(L+\varepsilon\)};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 6:} If we trap \(x\) inside the vertical band \((a-\delta,\,a+\delta)\), the corresponding \(f(x)\) must lie inside the horizontal band \((L-\varepsilon,\,L+\varepsilon)\).
+\end{center}
+
+\medskip
+The question is: given any positive tolerance \(\varepsilon\) on the output, can we always find a positive \(\delta\) that makes the implication hold? The definition that follows formalizes this requirement.
+
+\subsection*{The \texorpdfstring{\(\varepsilon\)-\(\delta\)}{epsilon-delta} Definition}
+\label{subsec:1.4.2}
+
+\begin{definitionbox}{Definition 1}
+Let \(f\) be a function defined on some open interval containing \(a\), except possibly at \(a\) itself. We write
+\[
+\lim_{x \to a} f(x) = L
+\]
+if for \textbf{every} number \(\varepsilon > 0\) there exists a number \(\delta > 0\) such that
+\[
+\text{if } 0 < \abs{x - a} < \delta,\text{ then } \abs{f(x) - L} < \varepsilon.
+\]
+\end{definitionbox}
+
+\smallskip
+The geometric meaning is shown in Figure~7: the condition \(0<\abs{x-a}<\delta\) picks a punctured interval of radius \(\delta\) about \(a\) on the \(x\)-axis. The conclusion \(\abs{f(x)-L}<\varepsilon\) requires every corresponding point of the graph to lie inside a horizontal strip of half-height \(\varepsilon\) centered at \(L\).
+
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+    \fill[softBg] (0, 4.8) rectangle (5.0, 7.2);
+    \fill[rmkBg!35] (1.8, 0) rectangle (4.2, 7.8);
+    \fill[softBg!80!rmkBg] (1.8, 4.8) rectangle (4.2, 7.2);
+
+    \draw[->,thick] (-0.2,0) -- (5.4,0) node[below, font=\small] {\(x\)};
+    \draw[->,thick] (0,-0.2) -- (0,8.2) node[left, font=\small] {\(y\)};
+    \node at (0,0) [below left, font=\small] {\(0\)};
+
+    \draw[secondaryColor, dashed, thin] (0,4.8) -- (5.0,4.8);
+    \draw[secondaryColor, dashed, thin] (0,7.2) -- (5.0,7.2);
+    \draw[dashed, gray] (1.8,0) -- (1.8,7.5);
+    \draw[dashed, gray] (4.2,0) -- (4.2,7.5);
+    \draw[dashed, gray] (3,0) -- (3,6) -- (0,6);
+
+    \draw[very thick, primaryColor, domain=0.8:2.92, smooth] plot (\x, {\x+3});
+    \draw[very thick, primaryColor, domain=3.08:4.8, smooth] plot (\x, {\x+3});
+    \draw[primaryColor, fill=white, thick] (3,6) circle (2.5pt);
+
+    \node[below, font=\small, primaryColor] at (3,0) {\(a\)};
+    \node[left, font=\small] at (0,6) {\(L\)};
+    \node[left, font=\small, secondaryColor] at (0,4.8) {\(L-\varepsilon\)};
+    \node[left, font=\small, secondaryColor] at (0,7.2) {\(L+\varepsilon\)};
+    \node[below, font=\small] at (1.8,0) {\(a-\delta\)};
+    \node[below, font=\small] at (4.2,0) {\(a+\delta\)};
+
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (5.1,6.0) -- (5.1,7.2)
+        node[midway, right=3pt, font=\small, secondaryColor] {\(\varepsilon\)};
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (5.1,4.8) -- (5.1,6.0)
+        node[midway, right=3pt, font=\small, secondaryColor] {\(\varepsilon\)};
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (1.8,-0.75) -- (3.0,-0.75)
+        node[midway, below=2pt, font=\small] {\(\delta\)};
+    \draw[decorate, decoration={brace, amplitude=4pt, mirror}] (3.0,-0.75) -- (4.2,-0.75)
+        node[midway, below=2pt, font=\small] {\(\delta\)};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 7:} Geometric meaning of the \(\varepsilon\)--\(\delta\) definition. If \(0<\abs{x-a}<\delta\), then \(\abs{f(x)-L}<\varepsilon\).
+\end{center}
+
+\begin{remarkbox}{Remark 2}
+A proof using the \(\varepsilon\)--\(\delta\) definition always follows the same pattern.
+\begin{enumerate}
+    \item Start with an arbitrary \(\varepsilon > 0\).
+    \item Write \(\abs{f(x)-L}\) and express it in terms of \(\abs{x-a}\).
+    \item Choose a \(\delta > 0\) (usually a function of \(\varepsilon\), possibly involving \(\min\) for a restricted bound) so that the inequality \(\abs{f(x)-L}<\varepsilon\) holds whenever \(0<\abs{x-a}<\delta\).
+    \item Conclude that the definition is satisfied.
+\end{enumerate}
+\end{remarkbox}
+
+\begin{examplebox}{Example 3}
+Prove \(\displaystyle\lim_{x \to 3} (4x - 7) = 5\).
+
+\medskip
+\textbf{Solution.}
+\[
+\abs{(4x - 7) - 5} = \abs{4x - 12} = 4\abs{x - 3}.
+\]
+Given \(\varepsilon > 0\), choose \(\delta = \dfrac{\varepsilon}{4}\). Then for \(0 < \abs{x - 3} < \delta\),
+\[
+\abs{(4x - 7) - 5} = 4\abs{x - 3} < 4 \cdot \frac{\varepsilon}{4} = \varepsilon.
+\]
+By Definition~1, \(\displaystyle\lim_{x \to 3} (4x - 7) = 5\). \(\square\)
+\end{examplebox}
+
+\begin{examplebox}{Example 4}
+Prove \(\displaystyle\lim_{x \to a} c = c\) for every real constant \(c\) and every \(a \in \mathbb{R}\).
+
+\medskip
+\textbf{Solution.}
+Given \(\varepsilon > 0\), choose any \(\delta > 0\) (for instance \(\delta = 1\)). If \(0 < \abs{x - a} < \delta\), then \(f(x) = c\), so
+\[
+\abs{f(x) - c} = \abs{c - c} = 0 < \varepsilon.
+\]
+The definition is satisfied. \(\square\)
+\end{examplebox}
+
+\begin{examplebox}{Example 5}
+Prove \(\displaystyle\lim_{x \to a} x = a\) for every \(a \in \mathbb{R}\).
+
+\medskip
+\textbf{Solution.}
+Given \(\varepsilon > 0\), choose \(\delta = \varepsilon\). If \(0 < \abs{x - a} < \delta\), then
+\[
+\abs{x - a} < \delta = \varepsilon.
+\]
+Hence \(\abs{f(x) - a} = \abs{x - a} < \varepsilon\). \(\square\)
+\end{examplebox}
+
+\subsection*{Proofs for Polynomial and Radical Functions}
+\label{subsec:1.4.3}
+
+For a linear function, \(\abs{f(x)-L}\) is simply a constant multiple of \(\abs{x-a}\), so choosing \(\delta\) is straightforward. For a nonlinear function, \(\abs{f(x)-L}\) depends on \(x\) through more than one factor of \(\abs{x-a}\). The standard workaround is to impose a preliminary numerical restriction on \(\delta\), which pins \(x\) inside a known interval and yields a constant bound for the extraneous factors.
+
+\begin{remarkbox}{Remark 6}
+To bound a nonlinear difference:
+\begin{enumerate}
+    \item Impose a preliminary restriction, for instance \(\delta \le 1\), so that \(x\) lies in a fixed open interval around \(a\).
+    \item Compute a numerical upper bound \(C\) for any factor other than \(\abs{x-a}\) that appears in \(\abs{f(x)-L}\).
+    \item Require \(\abs{x-a} < \varepsilon / C\) from the remaining portion of the inequality.
+    \item Combine via \(\delta = \min(1,\; \varepsilon/C)\).
+\end{enumerate}
+\end{remarkbox}
+
+\begin{examplebox}{Example 7}
+Prove \(\displaystyle\lim_{x \to 5} x^{2} = 25\).
+
+\medskip
+\textbf{Solution.}
+\[
+\abs{x^{2} - 25} = \abs{x - 5}\,\abs{x + 5}.
+\]
+Impose \(\delta \le 1\). Then \(\abs{x - 5} < 1\) gives \(4 < x < 6\), so \(9 < x + 5 < 11\) and therefore \(\abs{x + 5} < 11\). Hence
+\[
+\abs{x^{2} - 25} < 11\,\abs{x - 5}.
+\]
+To guarantee \(11\,\abs{x - 5} < \varepsilon\), we require \(\abs{x - 5} < \varepsilon/11\). Choose
+\[
+\delta = \min\!\left(1,\; \frac{\varepsilon}{11}\right).
+\]
+If \(0 < \abs{x - 5} < \delta\), then \(\abs{x^{2} - 25} = \abs{x - 5}\,\abs{x + 5} < \dfrac{\varepsilon}{11}\cdot 11 = \varepsilon\). \(\square\)
+\end{examplebox}
+
+\begin{examplebox}{Example 8}
+Prove \(\displaystyle\lim_{x \to 2} (x^{2} - x) = 2\).
+
+\medskip
+\textbf{Solution.}
+\[
+\abs{(x^{2} - x) - 2} = \abs{x^{2} - x - 2} = \abs{(x - 2)(x + 1)} = \abs{x - 2}\,\abs{x + 1}.
+\]
+Impose \(\delta \le 1\). Then \(\abs{x - 2} < 1\) gives \(1 < x < 3\), so \(2 < x + 1 < 4\) and \(\abs{x + 1} < 4\). Hence
+\[
+\abs{(x^{2} - x) - 2} < 4\,\abs{x - 2}.
+\]
+Choose \(\delta = \min(1,\; \varepsilon/4)\). Then \(0 < \abs{x - 2} < \delta\) implies
+\[
+\abs{(x^{2} - x) - 2} < 4\cdot\frac{\varepsilon}{4} = \varepsilon.\qquad\square
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 9}
+Prove \(\displaystyle\lim_{x \to 4} \sqrt{x + 5} = 3\).
+
+\medskip
+\textbf{Solution.}
+\[
+\abs{\sqrt{x + 5} - 3}
+= \frac{\abs{x - 4}}{\sqrt{x + 5} + 3}
+\quad\text{(rationalize the numerator)}.
+\]
+For \(x \ge -5\), \(\sqrt{x + 5} + 3 \ge 3\), so
+\[
+\abs{\sqrt{x + 5} - 3} \le \frac{\abs{x - 4}}{3}.
+\]
+Impose \(\delta \le 4\) to keep \(x > 0\) (well inside the domain). Choose
+\[
+\delta = \min(4,\; 3\varepsilon).
+\]
+If \(0 < \abs{x - 4} < \delta\), then
+\[
+\abs{\sqrt{x + 5} - 3} \le \frac{\abs{x - 4}}{3} < \frac{3\varepsilon}{3} = \varepsilon.\qquad\square
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 10}
+Prove \(\displaystyle\lim_{x \to 2} \frac{x^{2} - 3x + 2}{x - 2} = 1\).
+
+\medskip
+\textbf{Solution.}
+For \(x \ne 2\), factor the numerator:
+\[
+\frac{x^{2} - 3x + 2}{x - 2}
+= \frac{(x - 1)(x - 2)}{x - 2}
+= x - 1.
+\]
+The limit as \(x \to 2\) of \(x - 1\) is \(1\). Hence
+\[
+\abs{f(x) - 1} = \abs{(x - 1) - 1} = \abs{x - 2}.
+\]
+Given \(\varepsilon > 0\), choose \(\delta = \varepsilon\). Then \(0 < \abs{x - 2} < \delta\) gives \(\abs{f(x) - 1} < \varepsilon\). \(\square\)
+\end{examplebox}
+
+\begin{remarkbox}{Remark 11}
+When a rational function simplifies by factoring and canceling a common factor, the simplified expression defines the limit. The \(\varepsilon\)--\(\delta\) proof is then carried out against the simpler (linear) form, because the two agree at every \(x \neq a\).
+\end{remarkbox}
+
+\subsection*{One-Sided Limits and Non-Existence}
+\label{subsec:1.4.4}
+
+The \(\varepsilon\)--\(\delta\) definition also formalizes one-sided limits by restricting which side of \(a\) the variable \(x\) may occupy.
+
+\begin{definitionbox}{Definition 12}
+Let \(f\) be defined on an open interval \((c, a)\).
+
+We write \(\lim_{x \to a^{-}} f(x) = L\) if for every \(\varepsilon > 0\) there exists \(\delta > 0\) such that
+\[
+\text{if } a - \delta < x < a,\text{ then } \abs{f(x) - L} < \varepsilon.
+\]
+
+Similarly, let \(f\) be defined on \((a, c)\). We write \(\lim_{x \to a^{+}} f(x) = L\) if for every \(\varepsilon > 0\) there exists \(\delta > 0\) such that
+\[
+\text{if } a < x < a + \delta,\text{ then } \abs{f(x) - L} < \varepsilon.
+\]
+\end{definitionbox}
+
+\begin{theorembox}{Theorem 13}
+\[
+\lim_{x \to a} f(x) = L
+\;\iff\;
+\lim_{x \to a^{-}} f(x) = L = \lim_{x \to a^{+}} f(x).
+\]
+The two-sided limit exists precisely when the two one-sided limits exist and are equal; the common value is then the two-sided limit.
+\end{theorembox}
+
+\noindent
+Theorem~13 is the rigorous counterpart of the graphical tests in Section~1.2. It also provides a direct method for proving non-existence: show that the two one-sided limits differ (or that at least one fails to exist).
+
+\begin{examplebox}{Example 14}
+Prove that \(\displaystyle\lim_{x \to 0} \frac{x}{\abs{x}}\) does not exist.
+
+\medskip
+\textbf{Solution.}
+\[
+f(x) = \frac{x}{\abs{x}} =
+\begin{cases}
+\phantom{-}1, & x > 0, \\[4pt]
+-1, & x < 0.
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=0.6]
+    \draw[->,thick] (-2.8,0) -- (2.8,0) node[below, font=\small] {\(x\)};
+    \draw[->,thick] (0,-1.6) -- (0,1.6) node[left, font=\small] {\(y\)};
+    \foreach \x in {-2,-1,1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\small] {\(\x\)};
+    \draw (0.1,1) -- (-0.1,1) node[left, font=\small] {\(1\)};
+    \draw (0.1,-1) -- (-0.1,-1) node[left, font=\small] {\(-1\)};
+    \draw[very thick, primaryColor] (0.08,1) -- (2.5,1);
+    \draw[primaryColor, fill=white, thick] (0,1) circle (2.5pt);
+    \draw[very thick, primaryColor] (-2.5,-1) -- (-0.08,-1);
+    \draw[primaryColor, fill=white, thick] (0,-1) circle (2.5pt);
+    \node[primaryColor, anchor=south, font=\small] at (1.8,1.05) {\(y = f(x)\)};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 8:} \(f(x) = x/\abs{x}\) has unequal one-sided limits at \(0\).
+\end{center}
+
+For \(x > 0\), \(f(x) = 1\) identically, so
+\[
+\lim_{x \to 0^{+}} \frac{x}{\abs{x}} = \lim_{x \to 0^{+}} 1 = 1.
+\]
+For \(x < 0\), \(f(x) = -1\) identically, so
+\[
+\lim_{x \to 0^{-}} \frac{x}{\abs{x}} = \lim_{x \to 0^{-}} (-1) = -1.
+\]
+The two one-sided limits differ (\(1 \neq -1\)). By Theorem~13, the two-sided limit does not exist. \(\square\)
+\end{examplebox}
+
+\subsection*{Infinite Limits: the \texorpdfstring{\(M\)-\(\delta\)}{M-delta} Definition}
+\label{subsec:1.4.5}
+
+When a function grows without bound near a point, no real number \(L\) can serve as a two-sided limit. The \(\varepsilon\)--\(\delta\) template must be adapted: the output tolerance is replaced by an arbitrarily large positive threshold \(M\).
+
+\begin{definitionbox}{Definition 15}
+Let \(f\) be defined on an open interval containing \(a\), except possibly at \(a\). We write
+\[
+\lim_{x \to a} f(x) = +\infty
+\]
+if for every number \(M > 0\) there exists \(\delta > 0\) such that
+\[
+\text{if } 0 < \abs{x - a} < \delta,\text{ then } f(x) > M.
+\]
+\end{definitionbox}
+
+\begin{definitionbox}{Definition 16}
+We write \(\lim_{x \to a} f(x) = -\infty\) if for every \(M > 0\) there exists \(\delta > 0\) such that \(0 < \abs{x - a} < \delta\) implies \(f(x) < -M\). The definitions also apply when \(x \to a\) is replaced by \(x \to a^{-}\) or \(x \to a^{+}\).
+\end{definitionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.55]
+    \draw[->,thick] (-0.5,0) -- (4.8,0) node[below, font=\small] {\(x\)};
+    \draw[->,thick] (0,-0.3) -- (0,7.2) node[left, font=\small] {\(y\)};
+    \node at (0,0) [below left, font=\small] {\(0\)};
+
+    \draw[dashed, gray, thick] (2,0) -- (2,6.8);
+    \node[gray, anchor=south west, font=\small] at (2,6.4) {\(x = 2\)};
+
+    \draw[secondaryColor, dashed, thin] (0,4) -- (4.4,4);
+    \node[left, font=\small, secondaryColor] at (0,4) {\(y = M\)};
+
+    \draw[dashed, gray] (0.88,0) -- (0.88,4);
+    \draw[dashed, gray] (3.12,0) -- (3.12,4);
+    \node[below, font=\small] at (0.88,0) {\(a-\delta\)};
+    \node[below, font=\small, primaryColor] at (2,0) {\(a\)};
+    \node[below, font=\small] at (3.12,0) {\(a+\delta\)};
+
+    \begin{scope}
+        \clip (-0.5,0) rectangle (4.8,6.8);
+        \draw[very thick, primaryColor, domain=-0.4:1.14, samples=50, smooth] plot (\x, {5/((\x-2)^2)});
+        \draw[very thick, primaryColor, domain=2.86:4.4, samples=50, smooth] plot (\x, {5/((\x-2)^2)});
+    \end{scope}
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 9:} \(f(x) = \dfrac{5}{(x-2)^{2}}\). For any \(M > 0\), a \(\delta\)-neighborhood about \(x = 2\) forces the graph above the line \(y = M\).
+\end{center}
+
+\begin{examplebox}{Example 17}
+Prove \(\displaystyle\lim_{x \to 2} \frac{5}{(x-2)^{2}} = +\infty\).
+
+\medskip
+\textbf{Solution.}
+Let \(M > 0\) be given. We must find \(\delta > 0\) such that
+\[
+\text{if } 0 < \abs{x - 2} < \delta,\text{ then } \frac{5}{(x-2)^{2}} > M.
+\]
+Now
+\[
+\frac{5}{(x-2)^{2}} > M
+\;\iff\; (x-2)^{2} < \frac{5}{M}
+\;\iff\; \abs{x-2} < \sqrt{\frac{5}{M}}.
+\]
+Choose \(\delta = \sqrt{\frac{5}{M}}\). Then \(0 < \abs{x - 2} < \delta\) implies
+\[
+\frac{5}{(x-2)^{2}}
+> \frac{5}{\delta^{2}}
+= \frac{5}{\,5/M\,}
+= M.
+\]
+By Definition~15, \(\displaystyle\lim_{x \to 2} \frac{5}{(x-2)^{2}} = +\infty\). \(\square\)
+\end{examplebox}
+
+\begin{examplebox}{Example 18}
+Prove \(\displaystyle\lim_{x \to 3^{+}} \frac{1}{x-3} = +\infty\) and \(\displaystyle\lim_{x \to 3^{-}} \frac{1}{x-3} = -\infty\).
+
+\medskip
+\textbf{Solution.}
+For the right-hand limit: given \(M > 0\), choose \(\delta = 1/M\). If \(3 < x < 3 + \delta\), then \(0 < x - 3 < \delta = 1/M\), so
+\[
+\frac{1}{x-3} > \frac{1}{1/M} = M.
+\]
+
+For the left-hand limit: given \(M > 0\), choose \(\delta = 1/M\). If \(3 - \delta < x < 3\), then \(-\delta < x-3 < 0\). Hence \(\abs{x-3} < \delta = 1/M\) and \(x-3\) is negative, giving
+\[
+\frac{1}{x-3} < -\frac{1}{\delta} = -M.
+\]
+Thus \(\lim_{x \to 3^{+}} \frac{1}{x-3} = +\infty\) and \(\lim_{x \to 3^{-}} \frac{1}{x-3} = -\infty\) by the one-sided versions of Definitions~15--16. \(\square\)
+\end{examplebox}
+
+\subsection*{Limits at Infinity: the \texorpdfstring{\(\varepsilon\)-\(N\)}{epsilon-N} Definition}
+\label{subsec:1.4.6}
+
+Section~1.3 treated limits at infinity intuitively. The precise counterpart replaces "\(x\) close to \(a\)" with "\(x\) sufficiently large."
+
+\begin{definitionbox}{Definition 19}
+Let \(f\) be defined on an interval \((b, +\infty)\). We write
+\[
+\lim_{x \to +\infty} f(x) = L
+\]
+if for every \(\varepsilon > 0\) there exists a number \(N > 0\) such that
+\[
+\text{if } x > N,\text{ then } \abs{f(x) - L} < \varepsilon.
+\]
+The definition for \(\lim_{x \to -\infty} f(x) = L\) is analogous, with \(x < -N\) in place of \(x > N\).
+\end{definitionbox}
+
+\begin{examplebox}{Example 20}
+Prove \(\displaystyle\lim_{x \to +\infty} \frac{1}{x} = 0\).
+
+\medskip
+\textbf{Solution.}
+Given \(\varepsilon > 0\), choose \(N = \frac{1}{\varepsilon}\). If \(x > N\), then
+\[
+\abs{\frac{1}{x} - 0} = \frac{1}{x} < \frac{1}{N} = \varepsilon.
+\]
+The inequality holds for every \(x > N\), so Definition~19 is satisfied. \(\square\)
+\end{examplebox}
+
+\begin{examplebox}{Example 21}
+Prove \(\displaystyle\lim_{x \to +\infty} \frac{3}{x+2} = 0\).
+
+\medskip
+\textbf{Solution.}
+For \(x > 0\) we have \(x + 2 > x\), so
+\(\dfrac{3}{x+2} < \dfrac{3}{x}.\) \\
+Given \(\varepsilon > 0\), choose \(N = \max\!\left(1,\; \frac{3}{\varepsilon}\right)\). If \(x > N\), then \(x > 0\) and
+\[
+\abs{\frac{3}{x+2} - 0} = \frac{3}{x+2} < \frac{3}{x} < \frac{3}{N} \le \varepsilon.
+\]
+Hence \(\displaystyle\lim_{x \to +\infty} \frac{3}{x+2} = 0\). \(\square\)
+\end{examplebox}
+
+\subsection*{Exercises}
+\label{subsec:1.4.7}
+
+\raggedcolumns
+\setlength{\columnsep}{1.5em}
+
+\medskip
+\noindent\textbf{A.} Use the \(\varepsilon\)--\(\delta\) definition to prove each of the following limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., nosep, topsep=0pt, itemsep=2pt]
+    \item \(\lim_{x \to 2} (3x + 1) = 7\)
+    \item \(\lim_{x \to 8} \frac{x}{6} = \frac{4}{3}\)
+    \item \(\lim_{x \to -1} x = -1\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{B.} Prove the following limits using the \(\varepsilon\)--\(\delta\) definition.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=4, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\lim_{x \to 7} x^{2} = 49\)
+    \item \(\lim_{x \to 1} (x^{2} + 2x) = 3\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{C.} Prove the following limits by first simplifying the rational expression.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=6, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\lim_{x \to 4} \frac{x^{2} - 16}{x - 4} = 8\)
+    \item \(\lim_{x \to 3} \frac{x^{2} - 7x + 12}{x - 3} = -1\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{D.} Prove the following limits using the \(\varepsilon\)--\(\delta\) definition.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=8, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\lim_{x \to 4} \sqrt{x + 2} = \sqrt{6}\)
+    \item \(\lim_{x \to 3} \sqrt{x^{2} + 16} = 5\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{E.} Use the \(M\)--\(\delta\) definition to prove the following infinite limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=10, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\lim_{x \to 4} \frac{3}{(x - 4)^{2}} = +\infty\)
+    \item \(\lim_{x \to 0} \frac{2}{x^{2}} = +\infty\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{F.} Use the \(\varepsilon\)--\(N\) definition to prove the following limits at infinity.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=12, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\lim_{x \to +\infty} \frac{5}{x + 3} = 0\)
+    \item \(\lim_{x \to +\infty} \frac{7}{2x - 1} = 0\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{G.} (Supplementary.)
+
+\begin{enumerate}[label=\arabic*., start=14, nosep, topsep=0pt, itemsep=2pt]
+    \item Prove \(\lim_{x \to 0} x\sin\frac{1}{x} = 0\).  \textit{Hint:} \(\abs{\sin\theta} \le 1\) for all real \(\theta\).
+    \item Show, using Theorem~13, that \(\lim_{x \to 0} \frac{x}{\abs{x}}\) does not exist.
+\end{enumerate}

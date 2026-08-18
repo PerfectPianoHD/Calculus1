@@ -1,0 +1,724 @@
+\section{Continuity of Functions and the Intermediate Value Theorem}
+\label{sec:1.5}
+
+The geometric picture of a function whose graph can be drawn without lifting the pen captures the intuitive idea of continuity. Rigorously, continuity connects the value of a function at a point to its limiting behavior there. In this section, we establish the definition of continuity, classify types of discontinuities, and present the Intermediate Value Theorem. \\
+
+By the end of this section, you will be able to:
+\begin{itemize}
+    \item state the three conditions for continuity at a point and apply them to test whether a function is continuous at a given value;
+    \item classify discontinuities as removable, jump essential, or infinite essential, and redefine removable discontinuities to restore continuity;
+    \item determine the intervals on which a function is continuous;
+    \item use algebraic and compositional properties of continuous functions to evaluate limits; and
+    \item state the Intermediate Value Theorem, verify its hypotheses, and apply it to prove the existence of roots or intermediate values.
+\end{itemize}
+
+
+\subsection*{Continuity at a Point}
+\label{subsec:1.5.1}
+
+
+\begin{definitionbox}{Definition 1}
+A function \(f\) is \textbf{continuous at} \(x = a\) if and only if all three of the following conditions are satisfied:
+\begin{enumerate}
+    \item \(f(a)\) exists (i.e., \(a \in \operatorname{dom} f\));
+    \item \(\displaystyle\lim_{x \to a} f(x)\) exists as a finite real number; and
+    \item \(\displaystyle\lim_{x \to a} f(x) = f(a)\).
+\end{enumerate}
+If one or more of these conditions fails, \(f\) is \textbf{discontinuous} at \(x = a\).
+\end{definitionbox}
+
+\begin{examplebox}{Example 2}
+Let \(g(x) = 2x^{4} - x^{3} + 3x\). Examine the continuity of \(g\) at \(x = -1\).
+
+\medskip
+\textbf{Solution.}
+\[
+g(-1) = 2(1) - (-1) + 3(-1) = 2 + 1 - 3 = 0.
+\]
+Since \(g\) is a polynomial, \(\displaystyle\lim_{x \to -1} g(x) = g(-1) = 0\) by direct substitution. All three conditions hold; therefore \(g\) is continuous at \(x = -1\).
+\end{examplebox}
+
+\begin{examplebox}{Example 3}
+Let \(f(x) = \dfrac{x^{2} - 4x + 3}{x - 3}\). Determine whether \(f\) is continuous at \(x = 3\).
+
+\medskip
+\textbf{Solution.}
+The denominator vanishes at \(x = 3\), so \(f(3)\) is undefined. Condition 1 fails, so \(f\) is discontinuous at \(x = 3\).
+
+For \(x \neq 3\),
+\[
+f(x) = \frac{(x - 1)(x - 3)}{x - 3} = x - 1,
+\qquad\text{so}\qquad
+\lim_{x \to 3} f(x) = 2.
+\]
+Although the limit exists, the lack of a defined value at \(x = 3\) makes \(f\) discontinuous there.
+\end{examplebox}
+
+\begin{remarkbox}{Remark 4}
+Polynomials are continuous everywhere. Rational functions are continuous at every number in their natural domain. These facts follow directly from limit properties.
+\end{remarkbox}
+
+\begin{examplebox}{Example 5}
+Define
+\[
+g(x) = \begin{cases}
+\dfrac{x^{2} - 9}{x + 3}, & x \neq -3, \\[8pt]
+0, & x = -3.
+\end{cases}
+\]
+Examine the continuity of \(g\) at \(x = -3\).
+
+\medskip
+\textbf{Solution.}
+\begin{itemize}
+    \item \(g(-3) = 0\) is defined.
+    \item For \(x \neq -3\), \(\displaystyle\frac{x^{2} - 9}{x + 3} = \frac{(x - 3)(x + 3)}{x + 3} = x - 3\). Hence
+    \[
+    \lim_{x \to -3} g(x) = \lim_{x \to -3} (x - 3) = -6.
+    \]
+    \item Since \(g(-3) = 0 \neq -6 = \displaystyle\lim_{x \to -3} g(x)\), Condition 3 fails.
+\end{itemize}
+Thus \(g\) is discontinuous at \(x = -3\).
+\end{examplebox}
+
+\begin{examplebox}{Example 6}
+Define
+\[
+h(x) = \begin{cases}
+\dfrac{x^{2} - 9}{x + 3}, & x \neq -3, \\[8pt]
+-6, & x = -3.
+\end{cases}
+\]
+Here \(h(-3) = -6 = \displaystyle\lim_{x \to -3} h(x)\). All three conditions hold, so \(h\) is continuous at \(x = -3\).
+\end{examplebox}
+
+\pagebreak
+
+The four graphs below illustrate basic continuity behaviors at a point.
+
+\begin{center}
+\begin{minipage}{0.48\linewidth}
+\centering
+\begin{tikzpicture}[scale=0.48]
+    \draw[->,thick] (-1.2,0) -- (3.6,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.8) -- (0,5.6) node[left] {\(y\)};
+
+    \foreach \x in {1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\scriptsize] {\(\x\)};
+    \foreach \y in {1,3}
+        \draw (0.1,\y) -- (-0.1,\y) node[left, font=\scriptsize] {\(\y\)};
+
+    \begin{scope}
+        \clip (-1.0,-0.6) rectangle (3.2,5.2);
+        \draw[very thick, primaryColor, domain=-0.8:2.2, smooth] plot (\x, {2*\x + 1});
+    \end{scope}
+
+    \fill[primaryColor] (1,3) circle (2.5pt);
+    \draw[dashed, gray!70] (1,0) -- (1,3) -- (0,3);
+
+    \node[font=\footnotesize, primaryColor, anchor=west] at (1.3,4.2) {\(f(x) = 2x + 1\)};
+
+    \node[font=\footnotesize, anchor=north] at (1.0,-0.9) {(a) continuous};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\linewidth}
+\centering
+\begin{tikzpicture}[scale=0.48]
+    \draw[->,thick] (-0.5,0) -- (4.8,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.8) -- (0,4.8) node[left] {\(y\)};
+
+    \foreach \x in {1,2,3}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\scriptsize] {\(\x\)};
+    \foreach \y in {1,2,3}
+        \draw (0.1,\y) -- (-0.1,\y) node[left, font=\scriptsize] {\(\y\)};
+
+    \draw[very thick, defFrame, domain=0.2:2.91, smooth] plot (\x, {\x - 1});
+    \draw[very thick, defFrame, domain=3.09:4.4, smooth] plot (\x, {\x - 1});
+    \draw[defFrame, fill=white, thick] (3,2) circle (2.5pt);
+
+    \draw[dashed, gray!70] (3,0) -- (3,2) -- (0,2);
+
+    \node[font=\footnotesize, defFrame, anchor=west] at (0.2,3.8) {\(g(x) = \frac{x^{2}-4x+3}{x-3}\)};
+
+    \node[font=\footnotesize, anchor=north] at (2.0,-0.9) {(b) removable};
+\end{tikzpicture}
+\end{minipage}
+
+\medskip
+
+\begin{minipage}{0.48\linewidth}
+\centering
+\begin{tikzpicture}[scale=0.48]
+    \draw[->,thick] (-2.2,0) -- (3.8,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-3.2) -- (0,3.6) node[left] {\(y\)};
+
+    \foreach \x in {-2,-1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\scriptsize] {\(\x\)};
+    \foreach \y in {-3,-2,-1,1,2,3}
+        \draw (0.1,\y) -- (-0.1,\y) node[left, font=\scriptsize] {\(\y\)};
+
+    \draw[dashed, gray!70, thick] (1,-3.0) -- (1,3.0);
+
+    \begin{scope}
+        \clip (-2.2,-3.1) rectangle (3.6,3.1);
+        \draw[very thick, thmFrame, domain=-2.2:0.7, smooth, samples=50] plot (\x, {1/(\x-1)});
+        \draw[very thick, thmFrame, domain=1.3:3.6, smooth, samples=50] plot (\x, {1/(\x-1)});
+    \end{scope}
+
+    \node[font=\footnotesize, thmFrame, anchor=west] at (1.2,2.6) {\(h(x) = \frac{1}{x-1}\)};
+
+    \node[font=\footnotesize, anchor=north] at (0.7,-3.4) {(c) infinite essential};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\linewidth}
+\centering
+\begin{tikzpicture}[scale=0.48]
+    \draw[->,thick] (-2.2,0) -- (3.4,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-1.0) -- (0,2.2) node[left] {\(y\)};
+
+    \foreach \x in {-2,-1,1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\scriptsize] {\(\x\)};
+    \draw (0.1,1) -- (-0.1,1) node[left, font=\scriptsize] {\(1\)};
+
+    \draw[ultra thick, exFrame] (-2.2,0) -- (-0.08,0);
+    \draw[exFrame, fill=white, thick] (0,0) circle (2.5pt);
+    \draw[ultra thick, exFrame] (0,1) -- (2.8,1);
+    \fill[exFrame] (0,1) circle (2.5pt);
+
+    \node[font=\footnotesize, exFrame, anchor=south west] at (1.2,1.1) {\(H(x)\)};
+
+    \node[font=\footnotesize, anchor=north] at (0.5,-1.2) {(d) jump essential};
+\end{tikzpicture}
+\end{minipage}
+
+\smallskip
+\textbf{Figure 10:} Four types of behavior at a point: (a) continuous; (b) removable discontinuity; (c) infinite essential discontinuity; (d) jump essential discontinuity.
+\end{center}
+\bigskip
+
+Continuity at a domain boundary point can be defined using one-sided limits.
+
+\medskip
+\noindent\textbf{Continuity from the Left and Right.}
+\begin{enumerate}
+    \item A function \(f\) is \textbf{continuous from the left} at \(x = a\) if \(f(a) = \displaystyle\lim_{x \to a^{-}} f(x)\).
+    \item A function \(f\) is \textbf{continuous from the right} at \(x = a\) if \(f(a) = \displaystyle\lim_{x \to a^{+}} f(x)\).
+\end{enumerate}
+
+\begin{examplebox}{Example 7}
+Let \(f(x) = \sqrt{3 - x}\). The domain is \((-\infty, 3]\).
+\[
+\lim_{x \to 3^{-}} \sqrt{3 - x} = 0 = f(3),
+\]
+so \(f\) is continuous from the left at \(x = 3\). For \(x > 3\), \(f\) is undefined in \(\R\), so \(f\) is not continuous from the right at \(x = 3\).
+\end{examplebox}
+
+\begin{examplebox}{Example 8}
+Let \(g(x) = [\![x]\!]\) be the greatest integer function. At \(x = 2\):
+\[
+\lim_{x \to 2^{-}} [\![x]\!] = 1, \qquad
+\lim_{x \to 2^{+}} [\![x]\!] = 2, \qquad
+g(2) = 2.
+\]
+Because \(g(2) = \displaystyle\lim_{x \to 2^{+}} g(x)\), \(g\) is continuous from the right at \(x = 2\) but not from the left. Generally, \([\![x]\!]\) is continuous from the right at every integer \(n\), but discontinuous from the left.
+\end{examplebox}
+
+
+\subsection*{Types of Discontinuities}
+\label{subsec:1.5.2}
+
+
+\begin{definitionbox}{Definition 9}
+Let \(f\) be discontinuous at \(x = a\).
+\begin{enumerate}
+    \item If \(\displaystyle\lim_{x \to a} f(x)\) exists as a finite real number, but either \(f(a)\) is undefined or \(f(a) \neq \displaystyle\lim_{x \to a} f(x)\), then \(f\) has a \textbf{removable discontinuity} at \(x = a\).
+
+    \item If \(\displaystyle\lim_{x \to a} f(x)\) does not exist, then \(f\) has an \textbf{essential discontinuity} at \(x = a\):
+    \begin{itemize}
+        \item[\textbf{(a)}] If \(\displaystyle\lim_{x \to a^{-}} f(x)\) and \(\displaystyle\lim_{x \to a^{+}} f(x)\) both exist as finite numbers but are unequal, then \(f\) has a \textbf{jump essential discontinuity} at \(x = a\).
+        \item[\textbf{(b)}] If at least one of \(\displaystyle\lim_{x \to a^{-}} f(x)\) or \(\displaystyle\lim_{x \to a^{+}} f(x)\) is \(+\infty\) or \(-\infty\), then \(f\) has an \textbf{infinite essential discontinuity} at \(x = a\).
+    \end{itemize}
+\end{enumerate}
+\end{definitionbox}
+
+\begin{remarkbox}{Remark 10}
+A removable discontinuity can be eliminated by defining or changing the single value \(f(a)\) to equal \(\displaystyle\lim_{x \to a} f(x)\). For essential discontinuities, no single point assignment can restore continuity because the limit fails to exist as a finite number.
+\end{remarkbox}
+
+\begin{examplebox}{Example 11}
+Referring to Figure 10:
+\begin{itemize}
+    \item Panel (a): \(f(x) = 2x + 1\) is continuous everywhere.
+    \item Panel (b): \(g(x) = \dfrac{x^{2} - 4x + 3}{x - 3}\) has \(\displaystyle\lim_{x \to 3} g(x) = 2\) with \(g(3)\) undefined: removable discontinuity at \(x = 3\).
+    \item Panel (c): \(\displaystyle\lim_{x \to 1^{-}} \frac{1}{x-1} = -\infty\) and \(\displaystyle\lim_{x \to 1^{+}} \frac{1}{x-1} = +\infty\): infinite essential discontinuity at \(x = 1\).
+    \item Panel (d): \(\displaystyle\lim_{x \to 0^{-}} H(x) = 0\) and \(\displaystyle\lim_{x \to 0^{+}} H(x) = 1\): jump essential discontinuity at \(x = 0\).
+\end{itemize}
+\end{examplebox}
+
+\begin{examplebox}{Example 12}
+Determine whether
+\[
+f(x) = \begin{cases}
+3x - 2, & x < 1, \\[8pt]
+\dfrac{x - 3}{2x^{2} - 7x + 6}, & x \ge 1
+\end{cases}
+\]
+is continuous at \(x = 1\) and at \(x = \frac{3}{2}\). Classify each discontinuity.
+
+\medskip
+\textbf{Solution.}
+Factor the denominator of the second piece:
+\[
+2x^{2} - 7x + 6 = (2x - 3)(x - 2).
+\]
+This piece is undefined at \(x = \frac{3}{2}\) and \(x = 2\).
+
+\medskip
+\noindent\textbf{At \(x = 1\):}
+\[
+f(1) = \frac{1 - 3}{2 - 7 + 6} = -2.
+\]
+\[
+\lim_{x \to 1^{-}} f(x) = \lim_{x \to 1^{-}} (3x - 2) = 1.
+\]
+\[
+\lim_{x \to 1^{+}} f(x) = \lim_{x \to 1^{+}} \frac{x - 3}{2x^{2} - 7x + 6} = -2.
+\]
+The one-sided limits are finite but unequal (\(1 \neq -2\)). \\ Thus \(f\) has a \textbf{jump essential discontinuity} at \(x = 1\).
+
+\medskip
+\noindent\textbf{At \(x = \frac{3}{2}\):}
+\(f\!\left(\frac{3}{2}\right)\) is undefined. For \(x\) near \(\frac{3}{2}\) with \(x \ge 1\):
+\[
+\lim_{x \to \frac{3}{2}^{-}} \frac{x - 3}{(2x - 3)(x - 2)} = -\infty,
+\qquad
+\lim_{x \to \frac{3}{2}^{+}} \frac{x - 3}{(2x - 3)(x - 2)} = +\infty.
+\]
+Because both one-sided limits are infinite, \\
+therefore \(f\) has an \textbf{infinite essential discontinuity} at \(x = \frac{3}{2}\).
+\end{examplebox}
+
+\begin{remarkbox}{Remark 13}
+Discontinuities can only occur where:
+\begin{itemize}
+    \item \(f\) is undefined (such as zeros in denominators or values outside a radical's domain), or
+    \item the function definition changes (the breakpoints of a piecewise function).
+\end{itemize}
+These values are the \textbf{possible points of discontinuity} of \(f\).
+\end{remarkbox}
+
+\begin{examplebox}{Example 14}
+Determine all values of \(x\) where
+\[
+g(x) = \begin{cases}
+\dfrac{x + 3}{x^{2} + x - 6}, & x < -1, \\[10pt]
+|2x - 1|, & -1 \le x \le 2, \\[10pt]
+\dfrac{2x^{2} - 5x - 3}{x - 3}, & x > 2
+\end{cases}
+\]
+is discontinuous. Classify each discontinuity.
+
+\medskip
+\textbf{Solution.}
+Simplifying each rational piece:
+\begin{itemize}
+    \item First piece: \(\dfrac{x + 3}{(x + 3)(x - 2)} = \dfrac{1}{x - 2}\) for \(x \neq -3\).
+    \item Third piece: \(\dfrac{(2x + 1)(x - 3)}{x - 3} = 2x + 1\) for \(x \neq 3\).
+\end{itemize}
+The candidate points of discontinuity are \(x = -3\), \(x = -1\), \(x = 2\), and \(x = 3\).
+
+\medskip
+\noindent\textbf{At \(x = -3\):} \(g(-3)\) is undefined, but
+\[
+\lim_{x \to -3} g(x) = \lim_{x \to -3} \frac{1}{x - 2} = -\frac{1}{5}.
+\]
+This is a \textbf{removable discontinuity}. Setting \(g(-3) = -\frac{1}{5}\) restores continuity.
+
+\medskip
+\noindent\textbf{At \(x = -1\):} \(g(-1) = |2(-1) - 1| = 3\).
+\[
+\lim_{x \to -1^{-}} g(x) = -\frac{1}{3}, \qquad \lim_{x \to -1^{+}} g(x) = 3.
+\]
+The finite limits differ (\(-\frac{1}{3} \neq 3\)), yielding a \textbf{jump essential discontinuity}.
+
+\medskip
+\noindent\textbf{At \(x = 2\):} \(g(2) = |2(2) - 1| = 3\).
+\[
+\lim_{x \to 2^{-}} g(x) = 3, \qquad \lim_{x \to 2^{+}} g(x) = 5.
+\]
+The finite limits differ (\(3 \neq 5\)), yielding a \textbf{jump essential discontinuity}.
+
+\medskip
+\noindent\textbf{At \(x = 3\):} \(g(3)\) is undefined, but
+\[
+\lim_{x \to 3} g(x) = \lim_{x \to 3} (2x + 1) = 7.
+\]
+This is a \textbf{removable discontinuity}. Setting \(g(3) = 7\) restores continuity.
+\end{examplebox}
+
+
+\subsection*{Continuity on an Interval}
+\label{subsec:1.5.3}
+
+
+A function \(f\) is continuous:
+\begin{enumerate}
+    \item \textbf{everywhere} if it is continuous at every real number;
+    \item \textbf{on \((a, b)\)} if it is continuous at every \(x \in (a, b)\);
+    \item \textbf{on \([a, b)\)} if it is continuous on \((a, b)\) and continuous from the right at \(a\);
+    \item \textbf{on \((a, b]\)} if it is continuous on \((a, b)\) and continuous from the left at \(b\);
+    \item \textbf{on \([a, b]\)} if it is continuous on \((a, b]\) and on \([a, b)\);
+    \item \textbf{on \([a, \infty)\)} if it is continuous on \((a, \infty)\) and continuous from the right at \(a\);
+    \item \textbf{on \((-\infty, b]\)} if it is continuous on \((-\infty, b)\) and continuous from the left at \(b\).
+\end{enumerate}
+
+\begin{remarkbox}{Remark 15}
+Standard continuous functions:
+\begin{enumerate}
+    \item Polynomials, \(|x|\), \(\sin x\), and \(\cos x\) are continuous everywhere.
+    \item Rational functions are continuous on their domains.
+    \item Even root functions \(\sqrt[n]{x}\) are continuous on \([0, \infty)\); odd root functions are continuous everywhere.
+    \item The greatest integer function \([\![x]\!]\) is continuous on \([n, n+1)\) for every integer \(n\).
+\end{enumerate}
+\end{remarkbox}
+
+\begin{examplebox}{Example 16}
+Find the intervals on which \(h(x) = \sqrt{2x + 6} - \dfrac{1}{x - 1}\) is continuous.
+
+\medskip
+\textbf{Solution.}
+\begin{itemize}
+    \item \(\sqrt{2x + 6}\) is continuous where \(2x + 6 \ge 0\), which gives \([-3, \infty)\).
+    \item \(\dfrac{1}{x - 1}\) is a rational function, continuous on \((-\infty, 1) \cup (1, \infty)\).
+\end{itemize}
+Taking the intersection of these domain intervals shows that \(h\) is cont. on \([-3, 1) \cup (1, \infty)\).
+\end{examplebox}
+
+
+\subsection*{Properties of Continuous Functions}
+\label{subsec:1.5.4}
+
+
+Algebraic combinations of continuous functions inherit continuity wherever they are defined.
+
+\begin{theorembox}{Theorem 17}
+If \(f\) and \(g\) are continuous at \(x = a\) and \(c \in \R\), then the following functions are continuous at \(x = a\):
+\begin{multicols}{2}
+\begin{enumerate}[nosep, topsep=0pt, itemsep=2pt]
+    \item \(f + g\)
+    \item \(f - g\)
+    \item \(f \cdot g\)
+
+    \columnbreak
+
+    \item \(\dfrac{f}{g}\), provided \(g(a) \neq 0\)
+    \item \(c\,f\)
+\end{enumerate}
+\end{multicols}
+\end{theorembox}
+
+Limits can be evaluated inside a continuous function.
+
+\begin{theorembox}{Theorem 18}
+If \(\displaystyle\lim_{x \to a} g(x) = b\) and \(f\) is continuous at \(b\), then
+\[
+\lim_{x \to a} f(g(x)) = f(b) = f \!\left[\lim_{x \to a} g(x)\right].
+\]
+\end{theorembox}
+
+\begin{examplebox}{Example 19}
+Evaluate \(\displaystyle\lim_{x \to 3} \left|\frac{x - 3}{x^{2} - 9}\right|\).
+
+\medskip
+\textbf{Solution.}
+Because the absolute value function is continuous everywhere, apply Theorem 18:
+\[
+\lim_{x \to 3} \left|\frac{x - 3}{x^{2} - 9}\right|
+    = \left|\lim_{x \to 3} \frac{x - 3}{(x - 3)(x + 3)}\right|
+    = \left|\lim_{x \to 3} \frac{1}{x + 3}\right|
+    = \left|\frac{1}{6}\right|
+    = \frac{1}{6}.
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 20}
+Evaluate \(\displaystyle\lim_{x \to 1/4} \bigl[4x^{2}\bigr]\).
+
+\medskip
+\textbf{Solution.}
+\[
+\lim_{x \to 1/4} 4x^{2} = 4\!\left(\frac{1}{16}\right) = \frac{1}{4}.
+\]
+The function \([\![\cdot]\!]\) is continuous at non-integer arguments, including \(\frac{1}{4}\). By Theorem 18:
+\[
+\lim_{x \to 1/4} \bigl[4x^{2}\bigr]
+    = \left\lfloor \lim_{x \to 1/4} 4x^{2} \right\rfloor
+    = \left\lfloor \frac{1}{4} \right\rfloor
+    = 0.
+\]
+\end{examplebox}
+
+Theorem 18 yields an immediate corollary for compositions.
+
+\begin{theorembox}{Theorem 21}
+If \(g\) is continuous at \(x = a\) and \(f\) is continuous at \(g(a)\), then \((f \circ g)(x) = f(g(x))\) is continuous at \(x = a\).
+\end{theorembox}
+
+\begin{examplebox}{Example 22}
+Determine the interval on which \(h(x) = \sqrt{4 - x^{2}}\) is continuous.
+
+\medskip
+\textbf{Solution.}
+Let \(h = f \circ g\) with \(g(x) = 4 - x^{2}\) and \(f(x) = \sqrt{x}\).
+\begin{itemize}
+    \item \(g\) is continuous everywhere.
+    \item \(f\) is continuous on \([0, \infty)\).
+    \item Thus \(h\) is continuous where \(g(x) \ge 0\), which means \(4 - x^{2} \ge 0\), or \(x \in [-2, 2]\).
+\end{itemize}
+Checking endpoints:
+\[
+\lim_{x \to -2^{+}} \sqrt{4 - x^{2}} = 0 = h(-2), \qquad
+\lim_{x \to 2^{-}} \sqrt{4 - x^{2}} = 0 = h(2).
+\]
+Hence \(h\) is continuous on \([-2, 2]\).
+\end{examplebox}
+
+
+\subsection*{Intermediate Value Theorem}
+\label{subsec:1.5.5}
+
+
+A continuous function on a closed interval takes on every value between its endpoint values.
+
+\begin{theorembox}{Theorem 23 (Intermediate Value Theorem)}
+Let \(f\) be continuous on \([a, b]\) with \(f(a) \neq f(b)\). For every number \(k\) strictly between \(f(a)\) and \(f(b)\), there exists at least one number \(c \in (a, b)\) such that \(f(c) = k\).
+\end{theorembox}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.45]
+    \draw[->,thick] (0,0) -- (8.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,0) -- (0,6.2) node[left] {\(y\)};
+    \node at (0,0) [below left] {\(0\)};
+    
+    \draw (1.5,0.1) -- (1.5,-0.1) node[below] {\(a\)};
+    \draw (6.5,0.1) -- (6.5,-0.1) node[below] {\(b\)};
+    \draw (3.8,0.1) -- (3.8,-0.1) node[below] {\(c\)};
+    \draw (0.1,1.5) -- (-0.1,1.5) node[left] {\(f(a)\)};
+    \draw (0.1,3.8) -- (-0.1,3.8) node[left] {\(k\)};
+    \draw (0.1,5.5) -- (-0.1,5.5) node[left] {\(f(b)\)};
+    
+    \fill[softBg] (0,1.5) rectangle (8,5.5);
+    
+    \draw[very thick, primaryColor] plot[smooth, tension=0.7] 
+        coordinates {(1.5,1.5) (3.8,3.8) (6.5,5.5)}
+        node[above right, font=\footnotesize] {\(y = f(x)\)};
+    \draw[secondaryColor, dashed, thick] (0,3.8) -- (7.8,3.8);
+    \node[secondaryColor, anchor=south east, font=\footnotesize] at (7.8,3.8) {\(y = k\)};
+    \draw[dashed, gray] (3.8,0) -- (3.8,3.8);
+
+    \fill[primaryColor] (1.5,1.5) circle (2.5pt);
+    \fill[primaryColor] (6.5,5.5) circle (2.5pt);
+    \fill[secondaryColor] (3.8,3.8) circle (2.5pt);
+    \node[secondaryColor, anchor=south west, font=\footnotesize] at (1.5,3.8) {\((c, f(c))\)};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 11:} The Intermediate Value Theorem: a continuous function \(f\) on \([a, b]\) must cross every horizontal line between \(f(a)\) and \(f(b)\).
+\end{center}
+
+Geometrically, the IVT guarantees that the graph of a continuous function on \([a, b]\) intersects any horizontal line \(y = k\) located between \(f(a)\) and \(f(b)\).
+
+\begin{remarkbox}{Remark 24}
+\begin{enumerate}
+    \item Continuity on the closed interval \([a, b]\) is necessary. A single discontinuity on \([a, b]\) can cause the conclusion to fail.
+    \item The value \(c\) need not be unique; the graph may cross \(y = k\) multiple times.
+\end{enumerate}
+\end{remarkbox}
+
+\begin{examplebox}{Example 25}
+Consider \(f(x) = \dfrac{2x + 1}{x + 2}\).
+\begin{enumerate}
+    \item[(a)] Verify that the IVT applies to \(f\) on \([0, 2]\).
+    \item[(b)] Find the value \(c \in (0, 2)\) guaranteed by the theorem such that \(f(c) = 1\).
+\end{enumerate}
+
+\medskip
+\textbf{Solution.}
+\begin{enumerate}
+    \item[(a)] The function \(f\) is continuous on its domain \(\R \setminus \{-2\}\). Since \(-2 \notin [0, 2]\), \(f\) is continuous on \([0, 2]\). Further,
+    \[
+    f(0) = \frac{1}{2}, \qquad f(2) = \frac{5}{4},
+    \]
+    with \(f(0) \neq f(2)\). The IVT applies.
+
+    \item[(b)] The value \(k = 1\) lies between \(f(0) = \frac{1}{2}\) and \(f(2) = \frac{5}{4}\). Solve \(f(c) = 1\):
+    \[
+    \frac{2c + 1}{c + 2} = 1 \implies 2c + 1 = c + 2 \implies c = 1.
+    \]
+    Note that \(c = 1 \in (0, 2)\).
+\end{enumerate}
+\end{examplebox}
+
+\begin{remarkbox}{Remark 26}
+Before applying the IVT, verify both conditions:
+\begin{itemize}
+    \item \(f\) is continuous on \([a, b]\);
+    \item \(k\) lies strictly between \(f(a)\) and \(f(b)\).
+\end{itemize}
+\end{remarkbox}
+
+The IVT is often used to establish the existence of roots.
+
+\begin{examplebox}{Example 27}
+Show that \(2x^{4} - 3x^{2} + 5x - 1 = 0\) has at least one real solution in \((0, 1)\).
+
+\medskip
+\textbf{Solution.}
+Let \(F(x) = 2x^{4} - 3x^{2} + 5x - 1\).
+\begin{itemize}
+    \item \(F\) is a polynomial, continuous everywhere and thus continuous on \([0, 1]\).
+    \item \(F(0) = -1\) and \(F(1) = 3\).
+    \item The target value \(k = 0\) lies strictly between \(F(0) = -1\) and \(F(1) = 3\).
+\end{itemize}
+By the IVT, there exists at least one \(c \in (0, 1)\) such that \(F(c) = 0\).
+\end{examplebox}
+
+ \pagebreak
+
+\subsection*{Exercises}
+\label{subsec:1.5.6}
+
+\raggedcolumns
+\setlength{\columnsep}{1.5em}
+
+
+\medskip
+\noindent\textbf{A.} Determine whether \(f\) is continuous at all candidate points of discontinuity. Classify each discontinuity as removable, jump essential, or infinite essential. For each removable discontinuity, specify the redefinition of \(f(a)\) that restores continuity.
+
+\medskip
+1.
+\[
+f(x) = \begin{cases}
+\dfrac{1}{x + 2}, & x < -1, \\[10pt]
+\dfrac{3}{1 - x}, & x \ge -1
+\end{cases}
+\]
+
+\medskip
+2.
+\[
+f(x) = \begin{cases}
+|2x + 6|, & x \le -1, \\[8pt]
+[\![3 - x]\!], & -1 < x < 2, \\[8pt]
+\dfrac{x^{2} + 2x - 8}{x - 2}, & x \ge 2
+\end{cases}
+\]
+
+\medskip
+3.
+\[
+f(x) = \begin{cases}
+\dfrac{x^{2} + 5x + 6}{x^{2} - 4}, & x < -1, \\[10pt]
+2 + \sqrt{5 + x}, & -1 \le x < 4, \\[10pt]
+\dfrac{2x^{2} - 7x - 4}{x - 4}, & x \ge 4
+\end{cases}
+\]
+
+\medskip
+4.
+\[
+f(x) = \begin{cases}
+\dfrac{x^{2} - 16}{x - 4}, & x < 2, \\[10pt]
+\dfrac{3}{x - 2}, & x \ge 2
+\end{cases}
+\]
+
+\medskip
+5.
+\[
+f(x) = \begin{cases}
+\sqrt{16 - x^{2}}, & x < 0, \\[6pt]
+[\![x + 2]\!], & 0 \le x < 3, \\[8pt]
+\dfrac{x - 3}{x^{2} - 3x}, & x \ge 3
+\end{cases}
+\]
+
+\medskip
+6.
+\[
+f(x) = \begin{cases}
+\dfrac{x^{2} + 3x}{(x + 1)(x - 2)}, & x < 0, \\[10pt]
+\sqrt{9 - x^{2}}, & 0 \le x \le 2, \\[8pt]
+x^{2} - 3x + 1, & x > 2
+\end{cases}
+\]
+
+\medskip
+7.
+\[
+f(x) = \begin{cases}
+\dfrac{x + 4}{|x + 2|}, & x \le 0, \\[10pt]
+\dfrac{x^{2} + x - 12}{x^{2} - 3x}, & x > 0
+\end{cases}
+\]
+
+\medskip
+8.
+\[
+f(x) = \begin{cases}
+\dfrac{x^{2} - 9}{x^{2} + x - 6}, & x < 1, \\[10pt]
+[\![2x]\!], & 1 \le x \le 3, \\[8pt]
+\dfrac{x^{2} - 7x + 12}{x - 3}, & x > 3
+\end{cases}
+\]
+
+\bigskip
+\noindent\textbf{B.} Find all values of the unknown constants that make \(f\) continuous everywhere.
+
+\medskip
+1.
+\[
+f(x) = \begin{cases}
+x^{2} + a, & x < -1, \\[4pt]
+2ax - b, & -1 \le x \le 2, \\[4pt]
+3x + b, & x > 2
+\end{cases}
+\]
+
+\medskip
+2.
+\[
+f(x) = \begin{cases}
+2x + m, & x \le 2, \\[4pt]
+x^{2} - m, & x > 2
+\end{cases}
+\]
+
+\bigskip
+\noindent\textbf{C.} Consider
+\[
+f(x) = \begin{cases}
+x + 2, & x \le 0, \\[4pt]
+4, & 0 < x \le 2, \\[4pt]
+x^{2} - 2, & 2 < x \le 5, \\[4pt]
+4x - 9, & x > 5.
+\end{cases}
+\]
+Determine whether \(f\) is continuous on \([0, 2]\), on \([0, 5)\), and on \((-\infty, 0)\). Justify each answer.
+
+\pagebreak
+\noindent\textbf{D.} Apply the Intermediate Value Theorem to answer the following questions.
+
+\medskip
+1. Show that \(\cos x = x^{2}\) has at least one solution in \((0, 1)\).
+
+\medskip
+2. Prove that \(p(x) = x^{5} - 3x^{3} + 4x - 1\) has at least one real zero between \(0\) and \(1\).
+
+\medskip
+3. Show that \(x^{5} + 3x^{3} + x - 6 = 0\) has at least one real solution.
+
+\medskip
+4. Show that \(f(x) = x^{4} - 4x^{2} + x + 1\) has at least two distinct real zeros.

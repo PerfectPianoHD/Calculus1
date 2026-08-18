@@ -1,0 +1,503 @@
+
+
+\section{One-Sided Limits}
+\label{sec:1.2}
+
+When we compute the limit of a function \(f\) as \(x\) approaches \(a\), we observe its behavior from both sides. However, a function may behave differently from the left than from the right, as happens with piecewise functions. A function may also be undefined on one side of \(a\), leaving only one direction to observe. These situations lead to the concept of a one-sided limit. \\
+ 
+By the end of this section, the student will be able to:
+\begin{itemize}
+    \item interpret the one-sided limit of a function through graphs and tables of values;
+    \item evaluate one-sided limits of functions; and
+    \item determine the limit of piecewise functions using one-sided limits.
+\end{itemize}
+
+\medskip
+We first illustrate the idea with two concrete functions.
+
+\medskip
+\textbf{Illustration 1.2.1.}
+Let
+\[
+f(x) = \begin{cases}
+3 - 5x^{2}, & x < 1, \\[4pt]
+4x - 3,     & x \ge 1.
+\end{cases}
+\]
+If \(x\) is less than 1 but very close to 1, then \(f(x) = 3 - 5x^{2}\) and its values approach \(-2\). If \(x\) approaches 1 through values greater than 1, we use \(f(x) = 4x - 3\) and \(f(x)\) approaches \(1\). The two sides do not agree, so \(\lim_{x \to 1} f(x)\) does not exist.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    \draw[->,thick] (-2.5,0) -- (3.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-3.2) -- (0,3.8) node[left] {\(y\)};
+    \foreach \x in {-2,-1,1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \foreach \y in {-2,-1,1,2,3}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\(\y\)};
+    \node at (0,0) [below left] {\(0\)};
+    % y = 3 - 5x^2, x < 1
+    \draw[very thick, primaryColor, domain=-1.05:0.97, smooth]
+        plot (\x, {3 - 5*\x*\x});
+    \draw[primaryColor, fill=white, thick] (1,-2) circle (2.5pt);
+    %y = 4x - 3, x >= 1
+    \draw[very thick, primaryColor, domain=1:1.65, smooth]
+        plot (\x, {4*\x - 3});
+    \fill[primaryColor] (1,1) circle (2.5pt);
+    %  x=1
+    \draw[dashed, gray] (1,-2.8) -- (1,3.2);
+
+    \node[primaryColor, anchor=west] at (1.5,2.8) {\(y = 3 - 5x^{2}\)};
+    \node[primaryColor, anchor=south west] at (1.05,1.2) {\(y = 4x - 3\)};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 2:} Graph of \(y = f(x)\) in Illustration~1.2.1.
+\end{center}
+
+\medskip
+\textbf{Illustration 1.2.2.}
+Let \(f(x) = \sqrt{x}\). The domain is \([0, \infty)\), so we can only consider values of \(x\) greater than 0. We cannot observe the behavior from the left of 0 at all.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    \draw[->,thick] (-0.5,0) -- (5.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.5) -- (0,3.2) node[left] {\(y\)};
+    \foreach \x in {1,2,3,4}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \foreach \y in {1,2}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\(\y\)};
+    \node at (0,0) [below left] {\(0\)};
+    \draw[very thick, primaryColor, domain=0:4.5, smooth]
+        plot (\x, {sqrt(\x)});
+    \fill[primaryColor] (0,0) circle (2.5pt);
+    \node[primaryColor, anchor=south west] at (3.2,2.2) {\(y = \sqrt{x}\)};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 3:} Graph of \(y = \sqrt{x}\) in Illustration~1.2.2.
+\end{center}
+
+\bigskip
+
+These cases lead us to the formal definition of one-sided limits.
+
+\medskip
+Let \(f\) be a function defined at every number in some open interval \((c, a)\). The \textbf{limit of \(f(x)\) as \(x\) approaches \(a\) from the left} is \(L\), denoted
+\[
+\lim_{x \to a^{-}} f(x) = L,
+\]
+if the values of \(f(x)\) get closer and closer to \(L\) as \(x\) gets closer and closer to \(a\), but with \(x\) restricted to values less than \(a\).
+
+Similarly, let \(f\) be defined on some open interval \((a, c)\). The \textbf{limit of \(f(x)\) as \(x\) approaches \(a\) from the right} is \(L\), denoted
+\[
+\lim_{x \to a^{+}} f(x) = L,
+\]
+if the values of \(f(x)\) get closer and closer to \(L\) as \(x\) gets closer and closer to \(a\), but with \(x\) restricted to values greater than \(a\).
+
+
+\begin{remarkbox}{Remark 1}
+
+\begin{enumerate}
+    \item The basic limit laws in Section~1.1 remain valid when \(x \to a\) is replaced by \(x \to a^{-}\) or \(x \to a^{+}\).
+    \item The expression \(\displaystyle\lim_{x \to a} f(x)\) is sometimes called the \textbf{two-sided limit} to distinguish it from one-sided limits.
+\end{enumerate}
+\end{remarkbox}
+
+
+\begin{examplebox}{Example 2}
+
+Let \(H(x)\) be the Heaviside step function:
+\[
+H(x) = \begin{cases}
+1, & x \ge 0, \\[4pt]
+0, & x < 0.
+\end{cases}
+\]
+For \(x > 0\), \(H(x) = 1\) identically, so \(\displaystyle\lim_{x \to 0^{+}} H(x) = \lim_{x \to 0^{+}} 1 = 1\). For \(x < 0\), \(H(x) = 0\) identically, so \(\displaystyle\lim_{x \to 0^{-}} H(x) = \lim_{x \to 0^{-}} 0 = 0\).
+\end{examplebox}
+
+
+\begin{examplebox}{Example 3}
+
+Return to the function from Illustration~1.2.1:
+\[
+f(x) = \begin{cases}
+3 - 5x^{2}, & x < 1, \\[4pt]
+4x - 3,     & x \ge 1.
+\end{cases}
+\]
+\[
+\lim_{x \to 1^{-}} f(x) = \lim_{x \to 1^{-}} (3 - 5x^{2}) = -2,
+\qquad
+\lim_{x \to 1^{+}} f(x) = \lim_{x \to 1^{+}} (4x - 3) = 1.
+\]
+\end{examplebox}
+
+\bigskip
+
+
+\subsection*{Approaching Zero Through Positive or Negative Values}
+\label{subsec:1.2.1}
+
+
+Suppose a function \(f\) satisfies \(\lim_{x \to a} f(x) = 0\). We can distinguish the manner in which \(f\) approaches 0. Consider \(f(x) = 2 - x\). As \(x \to 2^{-}\), we have \(f(x) \to 0\) but passing through \emph{positive} values. As \(x \to 2^{+}\), \(f(x)\) approaches 0 through \emph{negative} values:
+
+\begin{center}
+\small
+\begin{tabular}{c|cccc|c|cccc}
+\(x\)      & \(1.9\) & \(1.99\) & \(1.999\) & \(1.9999\) & \(2\) & \(2.0001\) & \(2.001\) & \(2.01\) & \(2.1\) \\
+\hline
+\(f(x)\)   & \(0.1\) & \(0.01\) & \(0.001\) & \(0.0001\) & \(0\) & \(-0.0001\) & \(-0.001\) & \(-0.01\) & \(-0.1\)
+\end{tabular}
+\normalsize
+\end{center}
+
+Now consider \(g(x) = (2 - x)^{2}\). Again \(\lim_{x \to 2} g(x) = 0\), but this time \(g(x)\) passes through \emph{positive} values from \emph{both} sides:
+
+\begin{center}
+\small
+\begin{tabular}{c|cccc|c|cccc}
+\(x\)      & \(1.9\)   & \(1.99\)     & \(1.999\)       & \(1.9999\)       & \(2\) & \(2.0001\)       & \(2.001\)       & \(2.01\)     & \(2.1\)   \\
+\hline
+\(g(x)\)   & \(0.01\)  & \(0.0001\)   & \(0.000001\)    & \(0.00000001\)   & \(0\) & \(0.00000001\)   & \(0.000001\)    & \(0.0001\)   & \(0.01\)
+\end{tabular}
+\normalsize
+\end{center}
+
+This distinction matters when we take even roots of quantities that tend to zero.
+
+
+\begin{definitionbox}{Definition 4}
+
+Suppose \(\displaystyle\lim_{x \to a} f(x) = 0\). If \(f(x)\) approaches 0 through positive values, we write
+\[
+f(x) \to 0^{+}.
+\]
+If \(f(x)\) approaches 0 through negative values, we write
+\[
+f(x) \to 0^{-}.
+\]
+\end{definitionbox}
+
+
+\begin{remarkbox}{Remark 5}
+
+\begin{itemize}
+    \item If \(f(x) \to 0^{+}\) as \(x \to a\) and \(n\) is even, then \(\displaystyle\lim_{x \to a} \sqrt[n]{f(x)} = 0\).
+    \item If \(f(x) \to 0^{-}\) as \(x \to a\) and \(n\) is even, then \(\displaystyle\lim_{x \to a} \sqrt[n]{f(x)}\) does not exist.
+\end{itemize}
+\end{remarkbox}
+
+
+\begin{examplebox}{Example 6}
+
+Let \(f(x) = \sqrt{2 - x}\). As \(x \to 2^{-}\), \(2 - x \to 0^{+}\), so
+\[
+\lim_{x \to 2^{-}} \sqrt{2 - x} = 0.
+\]
+As \(x \to 2^{+}\), \(2 - x \to 0^{-}\). The square root (even index) of a negative quantity is undefined in \(\R\), so the right-hand limit does not exist:
+\[
+\lim_{x \to 2^{+}} \sqrt{2 - x} \quad \text{dne}.
+\]
+\end{examplebox}
+
+
+\begin{examplebox}{Example 7}
+
+Consider \(g(x) = \sqrt{2x^{2} + x - 1} = \sqrt{(2x - 1)(x + 1)}\). Analyze the sign of the radicand near the critical points \(x = -1\) and \(x = \frac{1}{2}\):
+\begin{align*}
+\lim_{x \to -1^{-}} \sqrt{(2x - 1)(x + 1)}
+    &= \sqrt{ ( -3\,)(\,0^{-} ) } = \sqrt{0^{+}} = 0,\\[6pt]
+\lim_{x \to -1^{+}} \sqrt{(2x - 1)(x + 1)}
+    &= \sqrt{ ( -3\,)(\,0^{+} ) } = \sqrt{0^{-}} \quad \text{dne},\\[6pt]
+\lim_{x \to \frac{1}{2}^{-}} \sqrt{(2x - 1)(x + 1)}
+    &= \sqrt{ (\,0^{-} )\bigl(\tfrac{3}{2}\bigr) } = \sqrt{0^{-}} \quad \text{dne},\\[6pt]
+\lim_{x \to \frac{1}{2}^{+}} \sqrt{(2x - 1)(x + 1)}
+    &= \sqrt{ (\,0^{+} )\bigl(\tfrac{3}{2}\bigr) } = \sqrt{0^{+}} = 0.
+\end{align*}
+\end{examplebox}
+
+
+\begin{examplebox}{Example 8}
+
+Let
+\[
+f(x) = \begin{cases}
+\dfrac{x^{2} - x - 2}{x + 1}, & x < 0, \\[10pt]
+\sqrt{4 - x},                  & 0 \le x \le 4, \\[6pt]
+x^{2} - 5x + 4,                & x > 4.
+\end{cases}
+\]
+Find each limit.
+\begin{enumerate}
+    \item[(a)] \(\displaystyle\lim_{x \to -1} f(x)\).
+    For \(x\) near \(-1\) (but \(x \neq -1\)) we use the first piece. Factor the numerator:
+    \[
+    \frac{x^{2} - x - 2}{x + 1} = \frac{(x - 2)(x + 1)}{x + 1} = x - 2.
+    \]
+    Hence \(\displaystyle\lim_{x \to -1} f(x) = \lim_{x \to -1} (x - 2) = -3\).
+
+    \item[(b)] \(\displaystyle\lim_{x \to 0^{-}} f(x)\).
+    For \(x\) just below 0, the first piece applies:
+    \[
+    \lim_{x \to 0^{-}} \frac{x^{2} - x - 2}{x + 1} = \frac{0 - 0 - 2}{0 + 1} = -2.
+    \]
+
+    \item[(c)] \(\displaystyle\lim_{x \to 0^{+}} f(x)\).
+    For \(x\) just above 0, use \(\sqrt{4 - x}\):
+    \[
+    \lim_{x \to 0^{+}} \sqrt{4 - x} = \sqrt{4} = 2.
+    \]
+
+    \item[(d)] \(\displaystyle\lim_{x \to 4^{+}} f(x)\).
+    For \(x\) just above 4, the third piece applies:
+    \[
+    \lim_{x \to 4^{+}} (x^{2} - 5x + 4) = 16 - 20 + 4 = 0.
+    \]
+\end{enumerate}
+\end{examplebox}
+
+\bigskip
+
+
+\subsection*{Two-Sided Limits via One-Sided Limits}
+\label{subsec:1.2.2}
+
+
+Some limits are most easily evaluated by first computing the two one-sided limits. The following theorem makes this connection precise.
+
+
+\begin{theorembox}{Theorem 9}
+
+\[
+\lim_{x \to a} f(x) = L \quad\iff\quad \lim_{x \to a^{-}} f(x) = L = \lim_{x \to a^{+}} f(x).
+\]
+The two-sided limit exists if and only if both one-sided limits exist and are equal. When they are equal, the two-sided limit is that common value.
+\end{theorembox}
+
+
+\begin{examplebox}{Example 10}
+
+From Example~6, \(\displaystyle\lim_{x \to 2^{-}} \sqrt{2 - x} = 0\) but \(\displaystyle\lim_{x \to 2^{+}} \sqrt{2 - x}\) does not exist. By Theorem~9, the two-sided limit cannot exist:
+\[
+\lim_{x \to 2} \sqrt{2 - x} \quad \text{dne}.
+\]
+\end{examplebox}
+
+
+\begin{examplebox}{Example 11}
+
+For the Heaviside function \(H(x)\) from Example~2, we have \(\lim_{x \to 0^{-}} H(x) = 0\) and \(\lim_{x \to 0^{+}} H(x) = 1\). Since the one-sided limits differ, Theorem~9 gives
+\[
+\lim_{x \to 0} H(x) \quad \text{dne}.
+\]
+\end{examplebox}
+
+
+\begin{examplebox}{Example 12}
+
+Let
+\[
+f(x) = \begin{cases}
+\sqrt{4 - x},   & x \le 4, \\[4pt]
+x^{2} - 5x + 4, & x > 4.
+\end{cases}
+\]
+Evaluate \(\displaystyle\lim_{x \to 4} f(x)\).
+
+\medskip
+\textbf{Solution.}
+The function is defined differently for \(x < 4\) and \(x > 4\), so we check one-sided limits.
+\[
+\lim_{x \to 4^{-}} f(x) = \lim_{x \to 4^{-}} \sqrt{4 - x} = 0,
+\qquad
+\lim_{x \to 4^{+}} f(x) = \lim_{x \to 4^{+}} (x^{2} - 5x + 4) = 0.
+\]
+Both one-sided limits equal 0, so by Theorem~9, \(\displaystyle\lim_{x \to 4} f(x) = 0\).
+\end{examplebox}
+
+
+\begin{examplebox}{Example 13}
+
+Let \(g(t) = \dfrac{t + 4}{|t + 4|}\). Evaluate \(\displaystyle\lim_{t \to -4} g(t)\).
+
+\medskip
+\textbf{Solution.}
+Recall the piecewise definition of the absolute value:
+\[
+|t + 4| = \begin{cases}
+\phantom{-}t + 4,  & t \ge -4, \\[4pt]
+-(t + 4),          & t < -4.
+\end{cases}
+\]
+For the left-hand limit, \(t < -4\):
+\[
+\lim_{t \to -4^{-}} g(t) = \lim_{t \to -4^{-}} \frac{t + 4}{-(t + 4)} = \lim_{t \to -4^{-}} (-1) = -1.
+\]
+For the right-hand limit, \(t > -4\):
+\[
+\lim_{t \to -4^{+}} g(t) = \lim_{t \to -4^{+}} \frac{t + 4}{t + 4} = \lim_{t \to -4^{+}} 1 = 1.
+\]
+The one-sided limits differ, so \(\displaystyle\lim_{t \to -4} g(t)\) does not exist.
+\end{examplebox}
+
+\bigskip
+
+
+\subsection*{Limits Involving the Greatest Integer Function}
+\label{subsec:1.2.3}
+
+
+The greatest integer function (or floor function), denoted \([\![x]\!]\), returns the largest integer less than or equal to \(x\). Its piecewise nature makes one-sided limits essential for evaluating limits at integer points.
+
+
+\begin{examplebox}{Example 14}
+
+Evaluate \(\displaystyle\lim_{x \to -2} [\![x]\!]\).
+
+\medskip
+\textbf{Solution.}
+For values of \(x\) satisfying \(-3 \le x < -2\), we have \([\![x]\!] = -3\). For \(-2 \le x < -1\), we have \([\![x]\!] = -2\).
+\begin{align*}
+\lim_{x \to -2^{-}} [\![x]\!] &= \lim_{x \to -2^{-}} (-3) = -3,\\[6pt]
+\lim_{x \to -2^{+}} [\![x]\!] &= \lim_{x \to -2^{+}} (-2) = -2.
+\end{align*}
+Since the one-sided limits differ, Theorem~9 gives \(\displaystyle\lim_{x \to -2} [\![x]\!]\) dne.
+\end{examplebox}
+
+
+\begin{examplebox}{Example 15}
+
+Evaluate \(\displaystyle\lim_{s \to 2^{+}} \bigl(s + [\![1 - s]\!]\bigr)\).
+
+\medskip
+\textbf{Solution.}
+For \(s\) just greater than 2, the quantity \(1 - s\) is just less than \(-1\). Since \(-2 \le 1 - s < -1\) for such \(s\), we have \([\![1 - s]\!] = -2\), and
+\[
+\lim_{s \to 2^{+}} \bigl(s + [\![1 - s]\!]\bigr)
+    = \lim_{s \to 2^{+}} (s - 2) = 0.
+\]
+\end{examplebox}
+
+
+\begin{examplebox}{Example 16}
+
+Evaluate \(\displaystyle\lim_{x \to \frac{1}{2}^{-}} \frac{[\![2x - 1]\!] - 2x}{2x + 1}\).
+
+\medskip
+\textbf{Solution.}
+As \(x \to \frac{1}{2}^{-}\), we have \(2x - 1 \to 0^{-}\). For \(x\) just below \(\frac{1}{2}\), the quantity \(2x - 1\) satisfies \(-1 \le 2x - 1 < 0\), so \([\![2x - 1]\!] = -1\).
+\[
+\frac{[\![2x - 1]\!] - 2x}{2x + 1}
+    = \frac{-1 - 2x}{2x + 1}
+    = -\frac{2x + 1}{2x + 1} = -1.
+\]
+The expression is identically \(-1\) for all \(x\) sufficiently close to \(\frac{1}{2}\) from the left, so
+\[
+\lim_{x \to \frac{1}{2}^{-}} \frac{[\![2x - 1]\!] - 2x}{2x + 1} = -1.
+\]
+\end{examplebox}
+
+
+\begin{examplebox}{Example 17}
+
+Evaluate \(\displaystyle\lim_{x \to 1} \frac{x^{2} - 2x + 1}{x - [\![x]\!]}\).
+
+\medskip
+\textbf{Solution.}
+We inspect each one-sided limit and apply Theorem~9.
+
+\textbf{Left-hand limit} (\(x \to 1^{-}\)): For \(0 \le x < 1\), \([\![x]\!] = 0\).
+\[
+\lim_{x \to 1^{-}} \frac{x^{2} - 2x + 1}{x - [\![x]\!]}
+    = \lim_{x \to 1^{-}} \frac{(x - 1)^{2}}{x}
+    = \frac{0}{1} = 0.
+\]
+
+\textbf{Right-hand limit} (\(x \to 1^{+}\)): For \(1 \le x < 2\), \([\![x]\!] = 1\).
+\[
+\lim_{x \to 1^{+}} \frac{x^{2} - 2x + 1}{x - [\![x]\!]}
+    = \lim_{x \to 1^{+}} \frac{(x - 1)^{2}}{x - 1}
+    = \lim_{x \to 1^{+}} (x - 1) = 0.
+\]
+
+Both one-sided limits equal 0, so \(\displaystyle\lim_{x \to 1} \frac{x^{2} - 2x + 1}{x - [\![x]\!]} = 0\).
+\end{examplebox}
+
+\pagebreak
+
+
+\subsection*{Exercises}
+\label{subsec:1.2.4}
+
+
+\raggedcolumns
+\setlength{\columnsep}{1.5em}
+
+\medskip
+\noindent\textbf{A.} Evaluate the following limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{x \to 2} \sqrt{7x^{2} - 12x + 5}\)
+    \item \(\displaystyle\lim_{x \to \frac{5}{2}} \sqrt{4x^{2} - 20x + 25}\)
+    \item \(\displaystyle\lim_{x \to \frac{1}{2}^{+}} [\![2x + 1]\!]\)
+    \item \(\displaystyle\lim_{x \to \frac{1}{2}^{-}} [\![2x + 1]\!]\)
+    \item \(\displaystyle\lim_{x \to \frac{1}{2}} [\![2x + 1]\!]\)
+    \item \(\displaystyle\lim_{x \to 2} \frac{|3x|}{|x - 4|\,(x - 2)}\)
+    \item \(\displaystyle\lim_{t \to 1} \frac{3t - 2}{|2t^{2} - 5t + 3|}\)
+    \item \(\displaystyle\lim_{x \to 0} \frac{x - [\![x]\!] - 1}{[\![x]\!] + 1}\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{B.} Let
+\[
+g(x) = \begin{cases}
+\dfrac{x^{2} - 9}{x^{2} + 3x}, & x \le -2, \\[10pt]
+\sqrt{3x + 7} - 1,               & x > -2.
+\end{cases}
+\]
+Evaluate: \(\displaystyle\lim_{x \to -3} g(x)\), \quad \(\displaystyle\lim_{x \to -2} g(x)\), \quad \(\displaystyle\lim_{x \to 1} g(x)\).
+
+\medskip
+\noindent\textbf{C.} Let
+\[
+f(x) = \begin{cases}
+\dfrac{x^{2} + 5x + 6}{x^{2} - x - 6}, & x \le -2, \\[10pt]
+[\![x + 2]\!],                           & -2 < x < 0, \\[6pt]
+\sqrt{x + 1},                            & x \ge 0.
+\end{cases}
+\]
+Evaluate: \(\displaystyle\lim_{x \to -2} f(x)\), \quad \(\displaystyle\lim_{x \to -1} f(x)\), \quad \(\displaystyle\lim_{x \to 0} f(x)\), \quad \(\displaystyle\lim_{x \to 3} f(x)\).
+
+\medskip
+\noindent\textbf{D.} Given
+\[
+h(x) = \begin{cases}
+kx + 2,   & x \le 2, \\[4pt]
+x^{2} - k, & x > 2,
+\end{cases}
+\]
+where \(k\) is a constant. Find \(k\) so that \(\displaystyle\lim_{x \to 2} h(x)\) exists.
+
+\medskip
+\noindent\textbf{E.} Sketch a graph of a function \(f(x)\) satisfying all of the following:
+\begin{multicols}{2}
+\begin{itemize}[nosep, topsep=0pt, itemsep=3pt]
+    \item \(\operatorname{dom} f = [-4, 4]\)
+    \item \(f(-4) = f(-2) = 2\)
+    \item \(f(0) = 1\)
+    \item \(f(2) = -1\)
+    \item \(f(4) = 0\)
+    
+    \columnbreak
+    
+    \item \(\displaystyle\lim_{x \to -4^{+}} f(x) = 0\)
+    \item \(\displaystyle\lim_{x \to -2} f(x) = 3\)
+    \item \(\displaystyle\lim_{x \to 0^{-}} f(x) = -1\)
+    \item \(\displaystyle\lim_{x \to 0^{+}} f(x) = 4\)
+    \item \(\displaystyle\lim_{x \to 2} f(x) = -1\)
+    \item \(\displaystyle\lim_{x \to 4} f(x) = 0\)
+\end{itemize}
+\end{multicols}

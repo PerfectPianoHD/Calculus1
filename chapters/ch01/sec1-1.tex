@@ -1,0 +1,644 @@
+
+\section{Limit of a Function: An Intuitive Approach}
+\label{sec:1.1}
+
+A central problem throughout calculus is describing how a function behaves near a point, regardless of what happens at the point itself. This idea is captured by the \emph{limit}, which we first develop through graphs, numeric tables, and algebraic reasoning. \\
+
+By the end of this section, the student will be able to:
+\begin{itemize}
+    \item read limits from the graph of a function and from tables of function values;
+    \item evaluate limits of polynomial and rational expressions using limit laws; and
+    \item resolve indeterminate forms of type \(\frac{0}{0}\) via factoring, canceling common factors, and \\ rationalizing radicals.
+\end{itemize}
+
+
+\subsection*{An Intuitive Approach to Limits}
+\label{subsec:1.1.1}
+
+
+When we ask for the limit of a function \(f(x)\) as \(x\) approaches a number \(a\), we are asking: ``To what single value do the outputs \(f(x)\) tend when \(x\) is taken arbitrarily close to \(a\), but not necessarily equal to \(a\)?'' The value of \(f(a)\) itself, if it even exists, is irrelevant to the limit. The following three functions illustrate this key distinction.
+
+\begin{examplebox}{Illustration 1}
+\textbf{1.} Let \(f(x) = 2x + 1\).  Examine the tables of values near \(x = 2\).
+
+\medskip
+\small
+\begin{minipage}{0.46\textwidth}
+\centering
+\begin{tabular}{c|c}
+\(x\) (from the left) & \(f(x)\) \\
+\hline
+\(1\)      & \(3\) \\
+\(1.5\)    & \(4\) \\
+\(1.9\)    & \(4.8\) \\
+\(1.99\)   & \(4.98\) \\
+\(1.9999\) & \(4.9998\) \\
+\multicolumn{2}{c}{\(\downarrow\)} \\
+\multicolumn{2}{c}{\(f(x) \to 5\)}
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}{0.46\textwidth}
+\centering
+\begin{tabular}{c|c}
+\(x\) (from the right) & \(f(x)\) \\
+\hline
+\(3\)      & \(7\) \\
+\(2.5\)    & \(6\) \\
+\(2.1\)    & \(5.2\) \\
+\(2.01\)   & \(5.02\) \\
+\(2.0001\) & \(5.0002\) \\
+\multicolumn{2}{c}{\(\downarrow\)} \\
+\multicolumn{2}{c}{\(f(x) \to 5\)}
+\end{tabular}
+\end{minipage}
+\normalsize
+
+\medskip
+As \(x\) creeps toward \(2\) from either side, the corresponding values of \(f(x)\) squeeze toward \(5\).  If we substituted values even closer to \(2\), the outputs would draw still nearer to \(5\).
+
+\medskip
+\textbf{2.} Let \(\displaystyle g(x) = \frac{2x^{2} - 3x - 2}{x - 2}\).  The denominator vanishes at \(x = 2\), so \(g\) is undefined there.  For \(x \neq 2\), however, we can factor the numerator:
+\[
+2x^{2} - 3x - 2 = (2x + 1)(x - 2),
+\qquad\text{so}\qquad
+g(x) = \frac{(2x + 1)(x - 2)}{x - 2} = 2x + 1 = f(x).
+\]
+Thus \(g\) coincides with \(f\) everywhere \emph{except} at \(x = 2\).  Consequently, as \(x\) approaches \(2\) without reaching it, the values of \(g(x)\) tend to the same number \(5\).
+
+\medskip
+\textbf{3.} Define a piecewise function
+\[
+h(x) = \begin{cases}
+2x + 1, & x \neq 2, \\[4pt]
+3,      & x = 2.
+\end{cases}
+\]
+Here \(h(2) = 3\), yet for every \(x \neq 2\) we have \(h(x) = f(x)\).  Hence as \(x\) draws close to \(2\), the outputs of \(h\) still approach \(5\) --- the value of \(h(2)\) does not affect the limiting behavior.
+
+\bigskip
+\begin{center}
+\begin{minipage}{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.55]
+    \draw[->,thick] (-0.3,0) -- (4.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.5) -- (0,8.5) node[left] {\(y\)};
+    \foreach \x in {1,2,3}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \foreach \y in {2,4,6,8}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\(\y\)};
+    \draw[domain=0.5:3.5, smooth, very thick, primaryColor]
+        plot (\x,{2*\x + 1}) node[above right] {\(y = f(x)\)};
+    \fill[primaryColor] (2,5) circle (2.5pt);
+    \draw[dashed, gray] (2,0) -- (2,5) -- (0,5);
+\end{tikzpicture}
+
+\small\textbf{\(y = f(x) = 2x + 1\)}
+\end{minipage}
+\hfill
+\begin{minipage}{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.55]
+    \draw[->,thick] (-0.3,0) -- (4.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.5) -- (0,8.5) node[left] {\(y\)};
+    \foreach \x in {1,2,3}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \foreach \y in {2,4,6,8}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\(\y\)};
+    \draw[domain=0.5:3.5, smooth, very thick, defFrame]
+        plot (\x,{2*\x + 1}) node[above right] {\(y = g(x)\)};
+    \draw[defFrame, fill=white, thick] (2,5) circle (2.5pt);
+    \draw[dashed, gray] (2,5) -- (0,5);
+\end{tikzpicture}
+
+\small\textbf{\(y = g(x)\)}
+\end{minipage}
+\hfill
+\begin{minipage}{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.55]
+    \draw[->,thick] (-0.3,0) -- (4.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.5) -- (0,8.5) node[left] {\(y\)};
+    \foreach \x in {1,2,3}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \foreach \y in {2,4,6,8}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\(\y\)};
+    \draw[domain=0.5:1.93, smooth, very thick, thmFrame]
+        plot (\x,{2*\x + 1});
+    \draw[domain=2.07:3.5, smooth, very thick, thmFrame]
+        plot (\x,{2*\x + 1}) node[above right] {\(y = h(x)\)};
+    \draw[thmFrame, fill=white, thick] (2,5) circle (2.5pt);
+    \fill[thmFrame] (2,3) circle (2.5pt);
+    \draw[dashed, gray] (2,3) -- (0,3) node[left, black] {\(3\)};
+\end{tikzpicture}
+
+\small\textbf{\(y = h(x)\)}
+\end{minipage}
+
+\medskip
+\textbf{Figure 1:} Graphs of \(y = f(x)\), \(y = g(x)\), and \(y = h(x)\) in Illustration~1.
+\end{center}
+
+In each of the three cases above, driving \(x\) ever closer to \(2\) forces the function values toward the number \(5\).  Whether the function is defined at \(x = 2\) or what its value there happens to be does not alter this convergence.  This phenomenon is what we capture with the notion of a limit.
+\end{examplebox}
+
+\bigskip
+
+The pattern observed in the illustration leads to the following informal description.
+
+\begin{definitionbox}{Definition}
+Let \(f\) be a function that is defined on some open interval containing \(a\), with the possible exception of \(a\) itself.  We write
+\[
+\lim_{x \to a} f(x) = L \qquad (L \in \mathbb{R})
+\]
+and say ``the limit of \(f(x)\) as \(x\) approaches \(a\) is \(L\)'' if the values of \(f(x)\) can be brought as close to \(L\) as desired by taking \(x\) sufficiently close to \(a\) (on either side), while never requiring \(x = a\).
+\end{definitionbox}
+
+\begin{remarkbox}{Remark 2}
+An equivalent formulation is: \(\displaystyle\lim_{x \to a} f(x) = L\) means we can make the distance \(|f(x) - L|\) arbitrarily small by placing \(x\) near enough to \(a\) (but \(x \neq a\)).
+\end{remarkbox}
+
+\begin{examplebox}{Example 3}
+The tables in Illustration~1 demonstrate that \(2x+1\) is driven toward \(5\) when \(x\) is pushed toward \(2\).  Hence
+\[
+\lim_{x \to 2} (2x + 1) = 5.
+\]
+\end{examplebox}
+
+\begin{remarkbox}{Remark 4}
+When computing a limit \(\displaystyle\lim_{x \to a} f(x)\), we examine the function's behavior \emph{near} \(a\); the value \(f(a)\) itself plays no role.  A limit can therefore exist even when the function is undefined at \(a\).
+\end{remarkbox}
+
+\begin{examplebox}{Example 5}
+Since \(x \to 2\) with \(x \neq 2\), cancel the common factor:
+\[
+\begin{aligned}
+\lim_{x \to 2} g(x)
+&= \lim_{x \to 2} \frac{2x^{2} - 3x - 2}{x - 2} \\[6pt]
+&= \lim_{x \to 2} \frac{(2x + 1)(x - 2)}{x - 2} \\[6pt]
+&= \lim_{x \to 2} (2x + 1) \\[6pt]
+&= 2(2) + 1 = 5.
+\end{aligned}
+\]
+The limit is \(5\) even though \(g(2)\) is undefined (cf.\ Remark~4).
+\end{examplebox}
+
+\begin{remarkbox}{Remark 6}
+Even when both \(\displaystyle\lim_{x \to a} f(x)\) and \(f(a)\) happen to exist, there is no requirement that they agree.  In symbols,
+\[
+f(a) \neq \lim_{x \to a} f(x)
+\]
+is entirely possible.
+\end{remarkbox}
+
+\begin{examplebox}{Example 7}
+Recall \(h(x)\) from Illustration~1:
+\[
+h(x) = \begin{cases}
+2x + 1, & x \neq 2, \\[4pt]
+3,      & x = 2.
+\end{cases}
+\]
+Then \(h(2) = 3\) but for \(x \neq 2\), \(h(x) = 2x + 1\).  Hence
+\[
+\lim_{x \to 2} h(x) = \lim_{x \to 2} (2x + 1) = 5.
+\]
+This exhibits Remark~6: the function value (\(3\)) differs from the limit (\(5\)).
+\end{examplebox}
+
+\begin{remarkbox}{Remark 8}
+If the outputs of \(f(x)\) do not settle toward a single, well-defined real number as \(x\) tends to \(a\), we say the limit \textbf{does not exist}, abbreviated \textbf{dne}.
+\end{remarkbox}
+
+\begin{examplebox}{Example 9}
+Consider the sign-like function
+\[
+S(x) = \begin{cases}
+\hphantom{-}1, & x > 0, \\[4pt]
+           0,  & x = 0, \\[4pt]
+          -1,  & x < 0.
+\end{cases}
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85]
+    \draw[->,thick] (-2.5,0) -- (2.5,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-1.6) -- (0,1.6) node[left] {\(y\)};
+    \foreach \x in {-2,-1,1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \draw (0.1,1) -- (-0.1,1) node[left] {\(1\)};
+    \draw (0.1,-1) -- (-0.1,-1) node[left] {\(-1\)};
+    \draw[very thick, exFrame] (0.1,1) -- (2.5,1);
+    \draw[exFrame, fill=white, thick] (0,1) circle (2.5pt);
+    \draw[very thick, exFrame] (-2.5,-1) -- (-0.1,-1);
+    \draw[exFrame, fill=white, thick] (0,-1) circle (2.5pt);
+    \fill[exFrame] (0,0) circle (2.5pt);
+    \node[exFrame] at (1.8,1.3) {\(y = S(x)\)};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 2:} The function \(S(x)\).
+\end{center}
+
+As \(x\) approaches \(0\) from the right, \(S(x)\) is constantly \(1\); from the left, \(S(x)\) is constantly \(-1\).  The two sides do not agree on a common limiting value, so the two-sided limit does not exist:
+\[
+\lim_{x \to 0} S(x) \quad \text{dne}.
+\]
+(The isolated value \(S(0) = 0\) is irrelevant to the limit.)
+\end{examplebox}
+
+
+
+\subsection*{Evaluating Limits}
+\label{subsec:1.1.2}
+
+
+Tables and graphs convey the intuition behind limits, but they can only suggest a value; they do not prove what the exact limit is.  To compute limits with certainty, we turn to algebraic rules that describe how limits interact with the ordinary operations of arithmetic.
+
+\begin{theorembox}{Theorem 10 (Basic Limit Laws)}
+Let \(f(x)\) and \(g(x)\) be functions that are defined on some open interval around \(a\) (except perhaps at \(a\) itself).  Assume that \(\displaystyle\lim_{x \to a} f(x) = L_{1}\) and \(\displaystyle\lim_{x \to a} g(x) = L_{2}\) both exist, with \(L_{1}, L_{2} \in \mathbb{R}\), and let \(c \in \mathbb{R}\) be any constant.
+
+\begin{enumerate}
+    \item \textbf{Uniqueness.} A limit, when it exists, is unique.
+
+    \item \textbf{Constant Law.} \(\displaystyle\lim_{x \to a} c = c\).
+
+    \item \textbf{Identity Law.} \(\displaystyle\lim_{x \to a} x = a\).
+
+    \item Suppose the individual limits exist as above. Then:
+    \begin{enumerate}
+        \item[(a)] \(\displaystyle\lim_{x \to a} \bigl[f(x) \pm g(x)\bigr] = L_{1} \pm L_{2}\)
+            \hfill (\textit{Sum/Difference Rule})
+
+        \item[(b)] \(\displaystyle\lim_{x \to a} \bigl[c\,f(x)\bigr] = c\,L_{1}\)
+            \hfill (\textit{Constant Multiple Rule})
+
+        \item[(c)] \(\displaystyle\lim_{x \to a} \bigl[f(x)\,g(x)\bigr] = L_{1}L_{2}\)
+            \hfill (\textit{Product Rule})
+
+        \item[(d)] \(\displaystyle\lim_{x \to a} \frac{f(x)}{g(x)} = \frac{L_{1}}{L_{2}}\),
+            provided \(g(x) \neq 0\) on some open interval \\ around \(a\) (with the possible exception  of \(a\) itself) and \(L_{2} \neq 0\)
+            \hfill (\textit{Quotient Rule})
+
+        \item[(e)] \(\displaystyle\lim_{x \to a} \bigl[f(x)\bigr]^{n} = L_{1}^{\,n}\) for every \(n \in \mathbb{N}\)
+            \hfill (\textit{Power Rule})
+
+        \item[(f)] \(\displaystyle\lim_{x \to a} \sqrt[n]{f(x)} = \sqrt[n]{L_{1}}\)
+            for \(n \in \mathbb{N}\) with \(n \geq 2\), provided \(L_{1} > 0\)\\ when \(n\) is even
+            \hfill (\textit{Root Rule})
+    \end{enumerate}
+\end{enumerate}
+\end{theorembox}
+
+\begin{examplebox}{Example 11}
+Evaluate \(\displaystyle\lim_{x \to -2} \bigl(3x^{3} + 2x^{2} - 5\bigr)\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+\lim_{x \to -2} \bigl(3x^{3} + 2x^{2} - 5\bigr)
+&= 3\lim_{x \to -2} x^{3} + 2\lim_{x \to -2} x^{2} - \lim_{x \to -2} 5
+   \tag{4(a),(b)} \\[6pt]
+&= 3(-2)^{3} + 2(-2)^{2} - 5
+   \tag{Laws 2,3; 4(e)} \\[6pt]
+&= 3(-8) + 2(4) - 5 \\[6pt]
+&= -24 + 8 - 5 = -21.
+\end{align*}
+\end{examplebox}
+
+\begin{examplebox}{Example 12}
+Evaluate \(\displaystyle\lim_{x \to 3} \frac{x^{2} - 4x + 3}{x^{2} + 2}\).
+
+\medskip
+\textbf{Solution.} \(\displaystyle\lim_{x \to 3} (x^{2} + 2) = 11 \neq 0\); the Quotient Rule applies.
+\begin{align*}
+\lim_{x \to 3} \frac{x^{2} - 4x + 3}{x^{2} + 2}
+&= \frac{\displaystyle\lim_{x \to 3} (x^{2} - 4x + 3)}
+        {\displaystyle\lim_{x \to 3} (x^{2} + 2)}
+   \tag{4(d)} \\[8pt]
+&= \frac{3^{2} - 4(3) + 3}{11}
+   \tag{4(a),(b),(e); Laws 2,3} \\[6pt]
+&= \frac{9 - 12 + 3}{11}
+   = \frac{0}{11}
+   = 0.
+\end{align*}
+\end{examplebox}
+
+\begin{examplebox}{Example 13}
+Evaluate \(\displaystyle\lim_{x \to 1} \frac{\sqrt{4x + 5}}{\,3 - x\,}\).
+
+\medskip
+\textbf{Solution.} \(\displaystyle\lim_{x \to 1} (3 - x) = 2 \neq 0\); the Quotient Rule applies.
+\begin{align*}
+\lim_{x \to 1} \frac{\sqrt{4x + 5}}{3 - x}
+&= \frac{\displaystyle\lim_{x \to 1} \sqrt{4x + 5}}
+        {\displaystyle\lim_{x \to 1} (3 - x)}
+   \tag{4(d)} \\[8pt]
+&= \frac{\sqrt{4(1) + 5}}{2}
+   \tag{4(f); Laws 2,3} \\[6pt]
+&= \frac{\sqrt{9}}{2}
+   = \frac{3}{2}.
+\end{align*}
+\end{examplebox}
+
+\bigskip
+
+For a polynomial or rational function evaluated at a point that lies inside its domain, the limit reduces to a straightforward substitution.
+
+\begin{theorembox}{Theorem 14 (Limits of Polynomials and Rational Functions)}
+Let \(f\) be a polynomial or a rational function.  If \(a\) belongs to the natural domain of \(f\), then
+\[
+\lim_{x \to a} f(x) = f(a).
+\]
+This follows from repeated application of the limit laws in Theorem~10.
+\end{theorembox}
+
+\begin{examplebox}{Example 15}
+Evaluate \(\displaystyle\lim_{x \to -2} \bigl(3x^{3} + 2x^{2} - 5\bigr)\).
+
+\medskip
+\textbf{Solution.} The polynomial is defined at \(-2\); by Theorem~14, substitute directly:
+\begin{align*}
+\lim_{x \to -2} \bigl(3x^{3} + 2x^{2} - 5\bigr)
+&= 3(-2)^{3} + 2(-2)^{2} - 5 \\
+&= 3(-8) + 2(4) - 5 \\
+&= -24 + 8 - 5 = -21.
+\end{align*}
+Contrast this with Example~11: Theorem~14 collapses half a dozen invocations of the limit laws into a single substitution.
+\end{examplebox}
+
+\begin{examplebox}{Example 16}
+Evaluate \(\displaystyle\lim_{x \to 2} \left( \frac{x + 3}{\,x^{2} + 1\,} \right)^{\!3}\).
+
+\medskip
+\textbf{Solution.} At \(x = 2\) the denominator is \(5 \neq 0\); Theorem~14 applies, then the Power Rule:
+\begin{align*}
+\lim_{x \to 2} \left( \frac{x + 3}{x^{2} + 1} \right)^{\!3}
+&= \left( \frac{2 + 3}{2^{2} + 1} \right)^{\!3}
+   \tag{Thm.~14; then 4(e)} \\[8pt]
+&= \left( \frac{5}{5} \right)^{\!3}
+   = 1^{3}
+   = 1.
+\end{align*}
+\end{examplebox}
+
+
+
+\subsection*{Other Techniques in Evaluating Limits}
+\label{subsec:1.1.3}
+
+
+Not every limit yields to direct substitution.  Returning to the expression in Illustration~1,
+\[
+\lim_{x \to 2} \frac{2x^{2} - 3x - 2}{x - 2},
+\]
+substituting \(x = 2\) gives \(0/0\): both numerator and denominator vanish.  When this occurs, the limit is said to have an \emph{indeterminate form}.
+
+\begin{definitionbox}{Indeterminate Form \(\displaystyle\frac{0}{0}\)}
+If both \(\displaystyle\lim_{x \to a} f(x) = 0\) and \(\displaystyle\lim_{x \to a} g(x) = 0\), then
+\[
+\lim_{x \to a} \frac{f(x)}{g(x)}
+\]
+is called an \textbf{indeterminate form of type \(\frac{0}{0}\)}.  Such a limit may or may not exist; when it does, its value must be uncovered through algebraic simplification.
+\end{definitionbox}
+
+\begin{remarkbox}{Remark 17}
+\begin{enumerate}
+    \item The notation \(0/0\) describes the \emph{limit} of a ratio and \emph{NOT} a numeric divisin.  When \(f(a) = 0\) and \(g(a) = 0\), the function value \(f(a)/g(a)\) is simply \textbf{undefined}; take note that it is \emph{NOT} called indeterminate.
+
+    \item Indeterminate limits of type \(0/0\) can often be resolved through:
+    \begin{itemize}
+        \item \textbf{factoring and canceling} a common factor, or
+        \item \textbf{rationalizing} a numerator or denominator that contains a radical,
+    \end{itemize}
+    after which direct evaluation frequently becomes possible.
+\end{enumerate}
+\end{remarkbox}
+
+\begin{examplebox}{Example 18}
+Evaluate \(\displaystyle\lim_{x \to 3} \frac{x^{2} - 9}{x - 3}\).
+
+\medskip
+\textbf{Solution.} \(\frac{0}{0}\) form.  Factor and cancel:
+\[
+\frac{x^{2} - 9}{x - 3}
+= \frac{(x - 3)(x + 3)}{x - 3}
+= x + 3 \quad (x \neq 3).
+\]
+Hence \(\displaystyle\lim_{x \to 3} \frac{x^{2} - 9}{x - 3}
+= \lim_{x \to 3} (x + 3) = 6.\)
+\end{examplebox}
+
+\begin{examplebox}{Example 19}
+Evaluate \(\displaystyle\lim_{x \to -4} \frac{x^{2} + 2x - 8}{x + 4}\).
+
+\medskip
+\textbf{Solution.} \(\frac{0}{0}\) form.  Factor the numerator:
+\[
+x^{2} + 2x - 8 = (x - 2)(x + 4).
+\]
+Cancel \(x + 4\) (\(x \neq -4\)):
+\[
+\frac{x^{2} + 2x - 8}{x + 4}
+= \frac{(x - 2)(x + 4)}{x + 4}
+= x - 2.
+\]
+Thus \(\displaystyle\lim_{x \to -4} \frac{x^{2} + 2x - 8}{x + 4}
+= \lim_{x \to -4} (x - 2) = -6.\)
+\end{examplebox}
+
+\begin{examplebox}{Example 20}
+Evaluate \(\displaystyle\lim_{x \to 9} \frac{x - 9}{\,3 - \sqrt{x}\,}\).
+
+\medskip
+\textbf{Solution.} \(\frac{0}{0}\) form; rationalize the denominator:
+\begin{align*}
+\lim_{x \to 9} \frac{x - 9}{3 - \sqrt{x}}
+&= \lim_{x \to 9} \left( \frac{x - 9}{3 - \sqrt{x}} \cdot \frac{3 + \sqrt{x}}{3 + \sqrt{x}} \right) \\[6pt]
+&= \lim_{x \to 9} \frac{(x - 9)(3 + \sqrt{x})}{9 - x} \\[6pt]
+&= \lim_{x \to 9} \frac{(x - 9)(3 + \sqrt{x})}{-(x - 9)} \\[6pt]
+&= \lim_{x \to 9} \bigl[-(3 + \sqrt{x})\bigr] \\[6pt]
+&= -(3 + \sqrt{9})
+   = -6.
+\end{align*}
+\end{examplebox}
+
+\begin{examplebox}{Example 21}
+Evaluate \(\displaystyle\lim_{x \to 0} \frac{\sqrt{x + 4} - 2}{x}\).
+
+\medskip
+\textbf{Solution.} \(\frac{0}{0}\) form; rationalize the numerator:
+\begin{align*}
+\lim_{x \to 0} \frac{\sqrt{x + 4} - 2}{x}
+&= \lim_{x \to 0} \left( \frac{\sqrt{x + 4} - 2}{x} \cdot \frac{\sqrt{x + 4} + 2}{\sqrt{x + 4} + 2} \right) \\[6pt]
+&= \lim_{x \to 0} \frac{(x + 4) - 4}{x\bigl(\sqrt{x + 4} + 2\bigr)} \\[6pt]
+&= \lim_{x \to 0} \frac{x}{x\bigl(\sqrt{x + 4} + 2\bigr)} \\[6pt]
+&= \lim_{x \to 0} \frac{1}{\sqrt{x + 4} + 2} \\[6pt]
+&= \frac{1}{\sqrt{4} + 2}
+   = \frac{1}{4}.
+\end{align*}
+\end{examplebox}
+
+
+
+\subsection*{Exercises}
+\label{subsec:1.1.4}
+
+\raggedcolumns
+\setlength{\columnsep}{1.5em}
+
+
+\medskip
+\textbf{A.} For the function \(g\) whose graph is shown below, state the value of each quantity, if it exists. If it does not exist, explain why.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    \draw[->,thick] (-3.5,0) -- (6.5,0) node[below] {\(t\)};
+    \draw[->,thick] (0,-2.2) -- (0,4.5) node[left] {\(y\)};
+    \foreach \x in {-2,-1,1,2,3,4,5,6}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \foreach \y in {-2,-1,1,2,3,4}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\(\y\)};
+    \node at (0,0) [below left] {\(0\)};
+    % t < 0: line to (0,1)
+    \draw[very thick, primaryColor, domain=-3:0, samples=2]
+        plot (\x, {-\x + 1});
+    \draw[primaryColor, fill=white, thick] (0,1) circle (2.5pt);
+    % 0 < t < 2: line from (0,-1) to (2,3)
+    \draw[very thick, primaryColor, domain=0:2, samples=2]
+        plot (\x, {2*\x - 1});
+    \draw[primaryColor, fill=white, thick] (0,-1) circle (2.5pt);
+    \draw[primaryColor, fill=white, thick] (2,3) circle (2.5pt);
+    % t > 2: line from (2,3) to (4,1) continuing to (6,-1)
+    \draw[very thick, primaryColor, domain=2:6, samples=2]
+        plot (\x, {-\x + 5});
+    \draw[primaryColor, fill=white, thick] (2,3) circle (2.5pt);
+    % g(2) = 1
+    \fill[primaryColor] (2,1) circle (2.5pt);
+    \node[primaryColor] at (5.5, -0.8) {\(y = g(t)\)};
+    % t=4
+    \draw[dashed, gray] (4,0) -- (4,1) -- (0,1);
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 3:} Graph of \(y = g(t)\) for Exercise~A.
+\end{center}
+
+\begin{multicols}{2}
+\begin{enumerate}[label=(\alph*), nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{t \to 0^{-}} g(t)\)
+    \item \(\displaystyle\lim_{t \to 0^{+}} g(t)\)
+    \item \(\displaystyle\lim_{t \to 0} g(t)\)
+    \item \(\displaystyle\lim_{t \to 2^{-}} g(t)\)
+    \item \(\displaystyle\lim_{t \to 2^{+}} g(t)\)
+    \item \(\displaystyle\lim_{t \to 2} g(t)\)
+    \item \(g(2)\)
+    \item \(\displaystyle\lim_{t \to 4} g(t)\)
+\end{enumerate}
+\end{multicols}
+
+\bigskip
+\textbf{B.} Let \(f\) be the function whose graph is shown in the figure below.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    \draw[->,thick] (-3.5,0) -- (10.5,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-1.2) -- (0,6.5) node[left] {\(y\)};
+    \foreach \x in {-2,-1,1,2,3,4,5,6,7,8,9,10}
+        \draw (\x,0.1) -- (\x,-0.1) node[below] {\(\x\)};
+    \foreach \y in {1,2,3,4,5,6}
+        \draw (0.1,\y) -- (-0.1,\y) node[left] {\(\y\)};
+    \node at (0,0) [below left] {\(0\)};
+    % x < 0: f(x) = 2
+    \draw[very thick, primaryColor] (-3,2) -- (0,2);
+    \draw[primaryColor, fill=white, thick] (0,2) circle (2.5pt);
+    % 0 < x < 8: f(x) = 0.5x + 1
+    \draw[very thick, primaryColor, domain=0:8, samples=2]
+        plot (\x, {0.5*\x + 1});
+    \draw[primaryColor, fill=white, thick] (0,1) circle (2.5pt);
+    \draw[primaryColor, fill=white, thick] (8,5) circle (2.5pt);
+    % x > 8: f(x) = 3
+    \draw[very thick, primaryColor] (8,3) -- (10,3);
+    \draw[primaryColor, fill=white, thick] (8,3) circle (2.5pt);
+    % f(5) 
+    \fill[primaryColor] (5,3.5) circle (2.5pt);
+    \draw[dashed, gray] (5,0) -- (5,3.5) -- (0,3.5);
+    \node[primaryColor] at (9, 2.2) {\(y = f(x)\)};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 4:} Graph of \(y = f(x)\) for Exercise~B.
+\end{center}
+
+Evaluate each of the following, if it exists:
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., nosep, topsep=0pt, itemsep=2pt]
+    \item \(f(5)\)
+    \item \(\displaystyle\lim_{x \to 5} f(x)\)
+    \item \(\displaystyle\lim_{x \to 0^{-}} f(x)\)
+    \item \(\displaystyle\lim_{x \to 0^{+}} f(x)\)
+    \item \(\displaystyle\lim_{x \to 0} f(x)\)
+    \item \(\displaystyle\lim_{x \to 8^{-}} f(x)\)
+    \item \(\displaystyle\lim_{x \to 8^{+}} f(x)\)
+    \item \(\displaystyle\lim_{x \to 8} f(x)\)
+\end{enumerate}
+\end{multicols}
+
+\bigskip
+\textbf{C.} Evaluate the following limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=1, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{x \to 2} (x^{2} - 4x + 5)\)
+    \item \(\displaystyle\lim_{x \to 4} \frac{x^{2} - 5x + 4}{x - 4}\)
+    \item \(\displaystyle\lim_{x \to 3} \frac{x^{2} - x - 12}{x - 3}\)
+    \item \(\displaystyle\lim_{x \to -1} \frac{x^{2} + 2x + 1}{x + 1}\)
+\end{enumerate}
+\end{multicols}
+
+\bigskip
+\textbf{D.} Evaluate the following limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=1, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{x \to 5} \frac{x^{2} - 25}{x - 5}\)
+    \item \(\displaystyle\lim_{x \to 2} \frac{x^{2} - 4}{x^{2} - x - 2}\)
+    \item \(\displaystyle\lim_{x \to 0} \frac{\sqrt{x + 9} - 3}{x}\)
+    \item \(\displaystyle\lim_{x \to 4} \frac{x - 4}{\sqrt{x} - 2}\)
+\end{enumerate}
+\end{multicols}
+
+\bigskip
+\textbf{E.} Determine the values of the constants \(a\) and \(b\) such that
+\[
+\lim_{x \to 1} \frac{\sqrt{ax + b} - 3}{x - 1} = \frac{1}{2}.
+\]
+
+\pagebreak
+\textbf{F.} Evaluate the following limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=1, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{x \to 3} \frac{x^{3} - 27}{x - 3}\)
+    \item \(\displaystyle\lim_{x \to -2} \frac{x^{3} + 8}{x^{2} - 4}\)
+    \item \(\displaystyle\lim_{x \to 4} \frac{\sqrt{2x + 1} - 3}{\sqrt{x - 2} - \sqrt{2}}\)
+    \item \(\displaystyle\lim_{x \to 0} \frac{\frac{1}{x + 1} - 1}{x}\)
+\end{enumerate}
+\end{multicols}
+
+\bigskip
+\textbf{G.} (Supplementary) Evaluate the following limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=1, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{y \to 2} \frac{y^{2} - 5y + 6}{y^{2} - 4}\)
+    \item \(\displaystyle\lim_{t \to 0} \frac{\sqrt{t^{2} + 16} - 4}{t^{2}}\)
+    \item \(\displaystyle\lim_{x \to 8} \frac{x - 8}{\sqrt[3]{x} - 2}\)
+    \item \(\displaystyle\lim_{h \to 0} \frac{(3 + h)^{2} - 9}{h}\)
+    \item \(\displaystyle\lim_{x \to 1} \frac{x^{4} - 1}{x^{3} - 1}\)
+    \item \(\displaystyle\lim_{x \to 7} \frac{\sqrt{x + 2} - 3}{x - 7}\)
+    \item \(\displaystyle\lim_{x \to 5} \frac{\sqrt{x - 1} - 2}{x - 5}\)
+    \item \(\displaystyle\lim_{x \to 0} \frac{\frac{1}{x + 2} - \frac{1}{2}}{x}\)
+\end{enumerate}
+\end{multicols}
+

@@ -1,0 +1,994 @@
+\section{New Classes of Functions: Limits and Continuity}
+\label{sec:1.7}
+
+The preceding sections developed limit evaluation techniques, the formal \(\varepsilon\)--\(\delta\) definition, continuity, and the calculus of circular trigonometric functions. This section broadens the catalog of functions by examining inverse functions in general, followed by exponential and logarithmic functions, inverse circular functions, hyperbolic functions, and inverse hyperbolic functions. For each class, we identify domain and range constraints, geometric and asymptotic properties, and evaluate limits using direct substitution, algebraic manipulation, and the continuity of composite functions. By the end of this section, the student will be able to:
+\begin{itemize}
+    \item recall the formal definition, horizontal line criterion, domain-range reciprocity, and cancellation identities of inverse functions;
+    \item analyze the algebraic laws, asymptotic limits, and continuity of exponential and logarithmic functions;
+    \item define the six inverse circular functions on their standard restricted principal domains, construct their graphs, and evaluate exact values, compositions, and limits at infinity;
+    \item define the six hyperbolic functions in terms of exponential expressions, prove fundamental hyperbolic identities, and compute limits involving hyperbolic functions;
+    \item define the six inverse hyperbolic functions, derive their logarithmic representations, and evaluate exact values and asymptotic limits; and
+    \item evaluate limits and determine intervals of continuity for composite expressions involving algebraic, exponential, logarithmic, inverse circular, and hyperbolic functions.
+\end{itemize}
+
+\subsection*{Inverse Functions and One-to-One Functions}
+\label{subsec:1.7.1}
+
+Let us revisit the definition of inverse functions and their fundamental properties. This prepares us for the systematic study of transcendental and hyperbolic functions.
+
+\begin{definitionbox}{Definition 1 (Inverse Functions)}
+Let \(f\) and \(g\) be two functions such that
+\[
+(f \circ g)(x) = x \quad \text{for all } x \in \operatorname{dom} g,
+\]
+and
+\[
+(g \circ f)(x) = x \quad \text{for all } x \in \operatorname{dom} f.
+\]
+Then \(g\) is called the \textbf{inverse function} of \(f\), denoted by \(g = f^{-1}\), and \(f = g^{-1}\).
+\end{definitionbox}
+
+\begin{examplebox}{Example 2}
+Verify that \(f(x) = -3x + 6\) and \(g(x) = -\frac{1}{3}x + 2\) are inverse functions of each other.
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+(f \circ g)(x) &= f\bigl(-\tfrac{1}{3}x + 2\bigr) = -3\bigl(-\tfrac{1}{3}x + 2\bigr) + 6 = x - 6 + 6 = x, \\[4pt]
+(g \circ f)(x) &= g(-3x + 6) = -\tfrac{1}{3}(-3x + 6) + 2 = x - 2 + 2 = x.
+\end{align*}
+Since \(\operatorname{dom} f = \operatorname{dom} g = \R\) and both compositions yield the identity, \(g = f^{-1}\).
+\end{examplebox}
+
+\begin{definitionbox}{Definition 3 (One-to-One Function)}
+A function \(f\) is \textbf{one-to-one} (or \textbf{injective}) if for all \(x_1, x_2 \in \operatorname{dom} f\),
+\[
+x_1 \neq x_2 \implies f(x_1) \neq f(x_2), \quad \text{or equivalently,} \quad f(x_1) = f(x_2) \implies x_1 = x_2.
+\]
+\end{definitionbox}
+
+\begin{remarkbox}{Remark 4 (Horizontal Line Test)}
+A function \(f\) is one-to-one if and only if no horizontal line intersects its graph in more than one point.
+\end{remarkbox}
+
+\begin{theorembox}{Theorem 5 (Existence of an Inverse Function)}
+A function \(f\) possesses an inverse function \(f^{-1}\) if and only if \(f\) is one-to-one.
+\end{theorembox}
+
+\begin{examplebox}{Example 6}
+Show that \(g(x) = 2x^{2} - 5\) is not one-to-one on \(\R\) and has no inverse on its full domain.
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+g(1) &= 2(1)^2 - 5 = -3, \\
+g(-1) &= 2(-1)^2 - 5 = -3.
+\end{align*}
+Since \(1 \neq -1\) while \(g(1) = g(-1) = -3\), \(g\) fails the Horizontal Line Test and has no inverse on \(\R\).
+\end{examplebox}
+
+\begin{remarkbox}{Remark 7 (Properties of Inverse Functions)}
+Let \(f\) be a one-to-one function.
+\begin{enumerate}
+    \item \(y = f(x) \iff x = f^{-1}(y)\).
+    \item \(\operatorname{dom} f^{-1} = \operatorname{ran} f\) and \(\operatorname{ran} f^{-1} = \operatorname{dom} f\).
+    \item The graph of \(y = f^{-1}(x)\) is the reflection of \(y = f(x)\) across the identity line \(y = x\).
+    \item Cancellation equations: \(f^{-1}(f(x)) = x\) for \(x \in \operatorname{dom} f\), and \(f(f^{-1}(y)) = y\) for \(y \in \operatorname{ran} f\).
+\end{enumerate}
+\end{remarkbox}
+
+\begin{examplebox}{Example 8}
+Find the inverse of \(f(x) = \dfrac{5x - 2}{3x + 4}\) and determine its domain and range.
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+y &= \frac{5x - 2}{3x + 4} && (\text{set } y = f(x)) \\[4pt]
+y(3x + 4) &= 5x - 2 && (\text{clear denominator}) \\[4pt]
+3xy - 5x &= -4y - 2 && (\text{collect } x\text{-terms}) \\[4pt]
+x(3y - 5) &= -(4y + 2) && (\text{factor out } x) \\[4pt]
+x &= \frac{4y + 2}{5 - 3y} && (\text{solve for } x) \\[4pt]
+\implies f^{-1}(x) &= \frac{4x + 2}{5 - 3x}. && (\text{interchange variables})
+\end{align*}
+\begin{align*}
+\operatorname{dom} f &= \operatorname{ran} f^{-1} = \R \setminus \{-4/3\}, \qquad \operatorname{ran} f = \operatorname{dom} f^{-1} = \R \setminus \{5/3\}.
+\end{align*}
+\end{examplebox}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+    \draw[->, thick] (-3.2, 0) -- (3.6, 0) node[below] {\(x\)};
+    \draw[->, thick] (0, -3.2) -- (0, 3.6) node[left] {\(y\)};
+
+    \draw[dashed, gray!80, thick] (-2.8, -2.8) -- (3.0, 3.0) 
+        node[above right, font=\footnotesize, text=gray!90] {\(y = x\)};
+
+    \foreach \x in {-2, -1, 2}
+        \draw (\x, 0.1) -- (\x, -0.1) node[below, font=\footnotesize] {\(\x\)};
+    \foreach \y in {-2, -1, 2}
+        \draw (0.1, \y) -- (-0.1, \y) node[left, font=\footnotesize] {\(\y\)};
+
+    \draw (1, 0.08) -- (1, -0.08);
+    \draw (0.08, 1) -- (-0.08, 1);
+
+    \draw[very thick, primaryColor, domain=-1.44:1.24, smooth, samples=100]
+        plot (\x, {\x*\x*\x + 1});
+    \draw[very thick, thmFrame, domain=-1.44:1.24, smooth, samples=100]
+        plot ({\x*\x*\x + 1}, \x);
+
+    \draw[dotted, darkSlate, thick] (0,1) -- (1,0);
+
+    \fill[primaryColor] (0, 1) circle (2.5pt);
+    \node[primaryColor, anchor=east, font=\footnotesize] at (-0.15, 1.2) {\((0, 1)\)};
+    
+    \fill[thmFrame] (1, 0) circle (2.5pt);
+    \node[thmFrame, anchor=north west, font=\footnotesize] at (1.05, -0.55) {\((1, 0)\)};
+
+    \node[primaryColor, font=\small, anchor=east] at (-0.4, 2.3) {\(y = x^3 + 1\)};
+    \node[thmFrame, font=\small, anchor=south west] at (1.45, 0.35) {\(y = \sqrt[3]{x - 1}\)};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 15:} Reflection of \(f(x) = x^3 + 1\) and \(f^{-1}(x) = \sqrt[3]{x - 1}\) across \(y = x\).
+\end{figure}
+
+\subsection*{Exponential and Logarithmic Functions}
+\label{subsec:1.7.2}
+
+We now examine exponential and logarithmic functions, their limit properties, and their asymptotic behavior.
+
+\begin{definitionbox}{Definition 9 (Exponential Functions)}
+Let \(a > 0\) with \(a \neq 1\). The \textbf{exponential function with base \(a\)} is
+\[
+f(x) = a^{x}, \quad x \in \R.
+\]
+\end{definitionbox}
+
+\begin{remarkbox}{Remark 10 (Properties of Exponential Functions)}
+Let \(f(x) = a^{x}\) where \(a > 0\) and \(a \neq 1\).
+\begin{enumerate}
+    \item \(\operatorname{dom} f = \R\) and \(\operatorname{ran} f = (0, +\infty)\).
+    \item \(f\) is continuous and one-to-one on \(\R\).
+    \item If \(a > 1\): strictly increasing, with \(\displaystyle\lim_{x \to +\infty} a^{x} = +\infty\) and \(\displaystyle\lim_{x \to -\infty} a^{x} = 0\).
+    \item If \(0 < a < 1\): strictly decreasing, with \(\displaystyle\lim_{x \to +\infty} a^{x} = 0\) and \(\displaystyle\lim_{x \to -\infty} a^{x} = +\infty\).
+    \item Horizontal asymptote: \(y = 0\).
+\end{enumerate}
+\end{remarkbox}
+
+\begin{definitionbox}{Definition 11 (Logarithmic Functions)}
+Let \(a > 0\) with \(a \neq 1\). The \textbf{logarithmic function with base \(a\)}, denoted \(\log_{a}\), is the inverse of \(f(x) = a^{x}\):
+\[
+y = \log_{a} x \iff a^{y} = x, \quad x \in (0, +\infty).
+\]
+Cancellation identities: \(\log_{a}(a^{x}) = x\) for all \(x \in \R\), and \(a^{\log_{a} x} = x\) for all \(x > 0\).
+\end{definitionbox}
+
+\begin{remarkbox}{Remark 12 (Properties of Logarithmic Functions)}
+Let \(g(x) = \log_{a} x\) where \(a > 0\) and \(a \neq 1\).
+\begin{enumerate}
+    \item \(\operatorname{dom} g = (0, +\infty)\) and \(\operatorname{ran} g = \R\).
+    \item \(g\) is continuous and one-to-one on \((0, +\infty)\).
+    \item If \(a > 1\): strictly increasing, with \(\displaystyle\lim_{x \to +\infty} \log_{a} x = +\infty\) and \(\displaystyle\lim_{x \to 0^{+}} \log_{a} x = -\infty\).
+    \item If \(0 < a < 1\): strictly decreasing, with \(\displaystyle\lim_{x \to +\infty} \log_{a} x = -\infty\) and \(\displaystyle\lim_{x \to 0^{+}} \log_{a} x = +\infty\).
+    \item Vertical asymptote: \(x = 0\).
+\end{enumerate}
+\end{remarkbox}
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.7]
+    \draw[->, thick] (-2.6, 0) -- (2.6, 0) node[below] {\(x\)};
+    \draw[->, thick] (0, -0.6) -- (0, 3.6) node[left] {\(y\)};
+    
+    \foreach \x in {-2, -1, 1, 2}
+        \draw (\x, 0.1) -- (\x, -0.1) node[below, font=\footnotesize] {\(\x\)};
+    \foreach \y in {2, 3}
+        \draw (0.1, \y) -- (-0.1, \y) node[left, font=\footnotesize] {\(\y\)};
+    \draw (0.1, 1) -- (-0.1, 1);
+
+    \draw[very thick, primaryColor, domain=-2.3:1.65, smooth, samples=80]
+        plot (\x, {2^(\x)});
+        
+    \fill[primaryColor] (0, 1) circle (2.5pt);
+    \node[primaryColor, anchor=east, font=\footnotesize] at (-0.15, 1.25) {\((0, 1)\)};
+    \node[primaryColor, font=\footnotesize, anchor=south west] at (0.3, 3) {\(f(x) = a^x \; (a > 1)\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.7]
+    \draw[->, thick] (-2.6, 0) -- (2.6, 0) node[below] {\(x\)};
+    \draw[->, thick] (0, -0.6) -- (0, 3.6) node[left] {\(y\)};
+    
+    \foreach \x in {-2, -1, 1, 2}
+        \draw (\x, 0.1) -- (\x, -0.1) node[below, font=\footnotesize] {\(\x\)};
+    \foreach \y in {2, 3}
+        \draw (0.1, \y) -- (-0.1, \y) node[left, font=\footnotesize] {\(\y\)};
+    \draw (0.1, 1) -- (-0.1, 1);
+
+    \draw[very thick, primaryColor, domain=-1.65:2.3, smooth, samples=80]
+        plot (\x, {0.5^(\x)});
+        
+    \fill[primaryColor] (0, 1) circle (2.5pt);
+    \node[primaryColor, anchor=west, font=\footnotesize] at (0.15, 1.25) {\((0, 1)\)};
+    \node[primaryColor, font=\footnotesize, anchor=south east] at (-0.3, 3) {\(f(x) = a^x \; (0 < a < 1)\)};
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{0.6cm}
+
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.7]
+    \draw[->, thick] (-0.6, 0) -- (3.6, 0) node[below] {\(x\)};
+    \draw[->, thick] (0, -2.8) -- (0, 2.8) node[left] {\(y\)};
+    
+    \foreach \x in {2, 3}
+        \draw (\x, 0.1) -- (\x, -0.1) node[below, font=\footnotesize] {\(\x\)};
+    \draw (1, 0.1) -- (1, -0.1);
+    \foreach \y in {-2, -1, 1, 2}
+        \draw (0.1, \y) -- (-0.1, \y) node[left, font=\footnotesize] {\(\y\)};
+
+    \draw[very thick, thmFrame, domain=-2.5:1.75, smooth, samples=80]
+        plot ({2^(\x)}, \x);
+        
+    \fill[thmFrame] (1, 0) circle (2.5pt);
+    \node[thmFrame, anchor=north west, font=\footnotesize] at (0.65, -0.5) {\((1, 0)\)};
+    \node[thmFrame, font=\footnotesize, anchor=south] at (2.75, 1.8) {\(f(x) = \log_a x \; (a > 1)\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.7]
+    \draw[->, thick] (-0.6, 0) -- (3.6, 0) node[below] {\(x\)};
+    \draw[->, thick] (0, -2.8) -- (0, 2.8) node[left] {\(y\)};
+    
+    \foreach \x in {2, 3}
+        \draw (\x, 0.1) -- (\x, -0.1) node[below, font=\footnotesize] {\(\x\)};
+    \draw (1, 0.1) -- (1, -0.1);
+    \foreach \y in {-2, -1, 1, 2}
+        \draw (0.1, \y) -- (-0.1, \y) node[left, font=\footnotesize] {\(\y\)};
+
+    \draw[very thick, thmFrame, domain=-1.75:2.5, smooth, samples=80]
+        plot ({0.5^(\x)}, \x);
+        
+    \fill[thmFrame] (1, 0) circle (2.5pt);
+    \node[thmFrame, anchor=south west, font=\footnotesize] at (1.05, 0.15) {\((1, 0)\)};
+    \node[thmFrame, font=\footnotesize, anchor=north] at (3.3, -1.8) {\(f(x) = \log_a x \; (0 < a < 1)\)};
+\end{tikzpicture}
+\end{minipage}
+
+\smallskip
+\textbf{Figure 16:} Graphs of exponential and logarithmic functions for \(a > 1\) and \(0 < a < 1\).
+\end{figure}
+
+\medskip
+Table~1 summarizes the algebraic laws governing exponents and logarithms.
+
+\begin{center}
+\begin{tabular}{l|l}
+\toprule
+\textbf{Laws of Exponents} (\(a, b > 0;\, r, s \in \R\)) & \textbf{Laws of Logarithms} (\(a, b > 0,\, a, b \neq 1;\, m, n > 0;\, c \in \R\)) \\
+\midrule
+\(a^0 = 1, \quad a^1 = a\) & \(\log_a 1 = 0, \quad \log_a a = 1\) \\
+\(a^r a^s = a^{r+s}\) & \(\log_a(mn) = \log_a m + \log_a n\) \\
+\(\dfrac{a^r}{a^s} = a^{r-s}\) & \(\log_a\!\left(\dfrac{m}{n}\right) = \log_a m - \log_a n\) \\
+\((a^r)^s = a^{rs}\) & \(\log_a(m^c) = c \log_a m\) \\
+\((ab)^r = a^r b^r\) & \(\log_a\!\left(\dfrac{1}{m}\right) = -\log_a m\) \\
+\(\left(\dfrac{a}{b}\right)^{\!r} = \dfrac{a^r}{b^r}\) & \(\log_a m = \dfrac{\log_b m}{\log_b a} = \dfrac{\ln m}{\ln a}\) \\
+\(a^{-r} = \dfrac{1}{a^r}\) & \(\log_a b = \dfrac{1}{\log_b a}\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{examplebox}{Example 13}
+Rewrite \(\dfrac{8^{2x+1}}{(4^{x-1})^{3-x}}\) as a single exponential expression in base \(2\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+\frac{8^{2x+1}}{(4^{x-1})^{3-x}} &= \frac{(2^3)^{2x+1}}{\bigl(2^{2(x-1)}\bigr)^{3-x}} && (\text{express in base } 2) \\[4pt]
+&= \frac{2^{6x+3}}{2^{2(4x - x^2 - 3)}} && (\text{expand exponents}) \\[4pt]
+&= \frac{2^{6x+3}}{2^{-2x^2 + 8x - 6}} \\[4pt]
+&= 2^{(6x+3) - (-2x^2 + 8x - 6)} && (\text{quotient rule}) \\[4pt]
+&= 2^{2x^2 - 2x + 9}.
+\end{align*}
+\end{examplebox}
+
+\begin{examplebox}{Example 14}
+Find the exact numerical value of \(\log_3 18 - \log_3 50 + \log_3 75\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+\log_3 18 - \log_3 50 + \log_3 75 &= \log_3\!\left(\frac{18 \cdot 75}{50}\right) 
+&= \log_3\!\left(\frac{18 \cdot 3}{2}\right) = \log_3(27) = \log_3(3^3) = 3.
+\end{align*}
+\end{examplebox}
+
+\begin{definitionbox}{Definition 15 (Euler's Number and Natural Functions)}
+Euler's number \(e\) is the unique irrational real number defined by
+\[
+e = \lim_{h \to 0} (1 + h)^{1/h} \approx 2.718281828459\dots
+\]
+The \textbf{natural exponential function} is \(f(x) = e^{x}\), and the \textbf{natural logarithmic function} is \(f(x) = \ln x = \log_e x\).
+\end{definitionbox}
+
+\begin{remarkbox}{Remark 16 (Natural Base Conversions)}
+For any base \(a > 0\) with \(a \neq 1\):
+\[
+a^{x} = e^{x \ln a} \quad \text{for all } x \in \R, \qquad \log_a x = \frac{\ln x}{\ln a} \quad \text{for all } x > 0.
+\]
+\end{remarkbox}
+
+\begin{examplebox}{Example 17}
+Solve for \(x\): \(\ln(3x + 1) - \ln(x - 2) = \ln 4\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+\ln\!\left(\frac{3x + 1}{x - 2}\right) &= \ln 4 && (\text{domain restriction: } x > 2) \\[4pt]
+\frac{3x + 1}{x - 2} &= 4 && (\text{exponentiate both sides}) \\[4pt]
+3x + 1 &= 4x - 8 \implies x = 9 \quad (\text{valid since } 9 > 2).
+\end{align*}
+\end{examplebox}
+
+\begin{examplebox}{Example 18}
+Evaluate the following limits:
+\begin{enumerate}
+    \item \(\displaystyle\lim_{x \to +\infty} \frac{3^x + 7^x}{9^x}\)
+    \item \(\displaystyle\lim_{x \to -\infty} \frac{4e^{-x} - 5}{3e^{-x} + 2}\)
+    \item \(\displaystyle\lim_{x \to 0^+} \ln(\sin x)\)
+\end{enumerate}
+
+\medskip
+\textbf{Solution.}
+\begin{enumerate}
+    \item \(\displaystyle\lim_{x \to +\infty} \left[ \left(\frac{3}{9}\right)^{\!x} + \left(\frac{7}{9}\right)^{\!x} \right] = \lim_{x \to +\infty} \left[ \left(\frac{1}{3}\right)^{\!x} + \left(\frac{7}{9}\right)^{\!x} \right] = 0 + 0 = 0\).
+    \item \(\displaystyle\lim_{x \to -\infty} \frac{4e^{-x} - 5}{3e^{-x} + 2} \cdot \frac{e^x}{e^x} = \lim_{x \to -\infty} \frac{4 - 5e^x}{3 + 2e^x} = \frac{4 - 5(0)}{3 + 2(0)} = \frac{4}{3}\).
+    \item Since \(\sin x \to 0^+\) as \(x \to 0^+\), \(\displaystyle\lim_{x \to 0^+} \ln(\sin x) = \lim_{u \to 0^+} \ln u = -\infty\).
+\end{enumerate}
+\end{examplebox}
+
+\subsection*{Inverse Circular Functions}
+\label{subsec:1.7.3}
+
+The six circular functions are periodic and therefore fail the horizontal line test on \(\R\). In order to define their inverses, their domains are restricted to intervals where each function is strictly monotonic and covers its complete range.
+
+\begin{definitionbox}{Definition 19 (The Six Inverse Circular Functions)}
+\begin{enumerate}
+    \item \(y = \sin^{-1} x \iff x = \sin y\), where \(x \in [-1, 1]\) and \(y \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]\).
+    \item \(y = \cos^{-1} x \iff x = \cos y\), where \(x \in [-1, 1]\) and \(y \in [0, \pi]\).
+    \item \(y = \tan^{-1} x \iff x = \tan y\), where \(x \in \R\) and \(y \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right)\).
+    \item \(y = \cot^{-1} x \iff x = \cot y\), where \(x \in \R\) and \(y \in (0, \pi)\).
+    \item \(y = \sec^{-1} x \iff x = \sec y\), where \(|x| \ge 1\) and \(y \in \left[0, \frac{\pi}{2}\right) \cup \left[\pi, \frac{3\pi}{2}\right)\).
+    \item \(y = \csc^{-1} x \iff x = \csc y\), where \(|x| \ge 1\) and \(y \in \left(-\pi, -\frac{\pi}{2}\right] \cup \left(0, \frac{\pi}{2}\right]\).
+\end{enumerate}
+\end{definitionbox}
+
+\begin{examplebox}{Example 20}
+Evaluate the exact value of each expression:
+\begin{multicols}{2}
+\begin{enumerate}
+    \item \(\sin^{-1}\!\left(-\dfrac{\sqrt{3}}{2}\right)\)
+    \item \(\cos^{-1}\!\left(-\dfrac{1}{2}\right)\)
+    \item \(\tan^{-1}(-\sqrt{3})\)
+    \item \(\sec^{-1}(-\sqrt{2})\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+1.\; \sin y &= -\frac{\sqrt{3}}{2}, \; y \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right] \implies y = -\frac{\pi}{3}. &
+2.\; \cos y &= -\frac{1}{2}, \; y \in [0, \pi] \implies y = \frac{2\pi}{3}. \\[4pt]
+3.\; \tan y &= -\sqrt{3}, \; y \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right) \implies y = -\frac{\pi}{3}. &
+4.\; \sec y &= -\sqrt{2}, \; y \in \left[\pi, \frac{3\pi}{2}\right) \implies y = \frac{5\pi}{4}.
+\end{align*}
+\end{examplebox}
+
+\begin{examplebox}{Example 21}
+Evaluate the exact values of: \\
+\begin{enumerate}
+    \item \(\sin^{-1}\!\left(\sin\dfrac{7\pi}{5}\right)\)
+    \item \(\cos\!\left(\sin^{-1}\dfrac{3}{7}\right)\)
+\end{enumerate}
+
+\medskip
+\textbf{Solution.}
+\begin{enumerate}
+    \item Since \(\frac{7\pi}{5} = \pi + \frac{2\pi}{5} \notin [-\frac{\pi}{2}, \frac{\pi}{2}]\):
+    \begin{align*}
+    \sin\left(\frac{7\pi}{5}\right) &= -\sin\left(\frac{2\pi}{5}\right) = \sin\left(-\frac{2\pi}{5}\right) \implies \sin^{-1}\!\left(\sin\frac{7\pi}{5}\right) = -\frac{2\pi}{5}.
+    \end{align*}
+    \item Let \(\theta = \sin^{-1}(3/7) \in [0, \pi/2]\). Then \(\sin\theta = 3/7\):
+    \begin{align*}
+    \cos\theta &= \sqrt{1 - \sin^2\theta} = \sqrt{1 - \frac{9}{49}} = \frac{\sqrt{40}}{7} = \frac{2\sqrt{10}}{7}.
+    \end{align*}
+\end{enumerate}
+\end{examplebox}
+
+\begin{center}
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-2.2,0) -- (2.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-2.4) -- (0,2.4) node[left] {\(y\)};
+    \draw (1,0.1) -- (1,-0.1) node[below, font=\footnotesize] {\(1\)};
+    \draw (-1,0.1) -- (-1,-0.1) node[below, font=\footnotesize] {\(-1\)};
+    \draw (0.1,1.57) -- (-0.1,1.57) node[left, font=\footnotesize] {\(\frac{\pi}{2}\)};
+    \draw (0.1,-1.57) -- (-0.1,-1.57) node[left, font=\footnotesize] {\(-\frac{\pi}{2}\)};
+    \draw[very thick, primaryColor, domain=-1.57:1.57, smooth, samples=70]
+        plot ({sin(\x r)}, \x);
+    \fill[primaryColor] (1,1.57) circle (2.5pt) node[anchor=west, font=\footnotesize] {\((1,\frac{\pi}{2})\)};
+    \fill[primaryColor] (-1,-1.57) circle (2.5pt) node[anchor=east, font=\footnotesize] {\((-1,-\frac{\pi}{2})\)};
+    \node[primaryColor, font=\footnotesize] at (0,-2.7) {\(y=\sin^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-2.2,0) -- (2.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.6) -- (0,3.8) node[left] {\(y\)};
+    \draw (1,0.1) -- (1,-0.1) node[below, font=\footnotesize] {\(1\)};
+    \draw (-1,0.1) -- (-1,-0.1) node[below, font=\footnotesize] {\(-1\)};
+    \draw (0.1,3.14) -- (-0.1,3.14) node[left, font=\footnotesize] {\(\pi\)};
+    \draw (0.1,1.57) -- (-0.1,1.57) node[left, font=\footnotesize] {\(\frac{\pi}{2}\)};
+    \draw[very thick, primaryColor, domain=0:3.14159, smooth, samples=70]
+        plot ({cos(\x r)}, \x);
+    \fill[primaryColor] (1,0) circle (2.5pt) node[anchor=north, font=\footnotesize] {};
+    \fill[primaryColor] (-1,3.14159) circle (2.5pt) node[anchor=south east, font=\footnotesize] {\((-1,\pi)\)};
+    \node[primaryColor, font=\footnotesize] at (0,-1.0) {\(y=\cos^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{0.6cm}
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.2,0) -- (3.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-2.4) -- (0,2.4) node[left] {\(y\)};
+    \draw[dashed, gray!80, thick] (-3.2,1.57) -- (3.2,1.57) node[right, font=\footnotesize] {\(y=\frac{\pi}{2}\)};
+    \draw[dashed, gray!80, thick] (-3.2,-1.57) -- (3.2,-1.57) node[right, font=\footnotesize] {\(y=-\frac{\pi}{2}\)};
+    \draw[very thick, primaryColor, domain=-1.30:1.30, smooth, samples=70]
+        plot ({tan(\x r)}, \x);
+    \fill[primaryColor] (0,0) circle (2.5pt);
+    \node[primaryColor, font=\footnotesize] at (0,-2.7) {\(y=\tan^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.2,0) -- (3.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.6) -- (0,3.8) node[left] {\(y\)};
+    \draw[dashed, gray!80, thick] (-3.2,3.14159) -- (3.2,3.14159) node[right, font=\footnotesize] {\(y=\pi\)};
+    \draw[very thick, primaryColor, domain=0.28:2.86, smooth, samples=70]
+        plot ({cos(\x r)/sin(\x r)}, \x);
+    \fill[primaryColor] (0,1.57) circle (2.5pt) node[anchor=west, font=\footnotesize] {\((0,\frac{\pi}{2})\)};
+    \node[primaryColor, font=\footnotesize] at (0,-1.0) {\(y=\cot^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{0.6cm}
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.5,0) -- (3.5,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.6) -- (0,5.4) node[left] {\(y\)};
+    \draw[dashed, gray!80, thick] (-3.5,1.57) -- (3.5,1.57) node[right, font=\footnotesize] {\(y=\frac{\pi}{2}\)};
+    \draw[dashed, gray!80, thick] (-3.5,4.71) -- (3.5,4.71) node[right, font=\footnotesize] {\(y=\frac{3\pi}{2}\)};
+    \draw[very thick, primaryColor, domain=0:1.32, smooth, samples=50]
+        plot ({1/cos(\x r)}, \x);
+    \fill[primaryColor] (1,0) circle (2.5pt) node[anchor=north west, font=\footnotesize] {\((1,0)\)};
+    \draw[very thick, primaryColor, domain=3.14159:4.46, smooth, samples=50]
+        plot ({1/cos(\x r)}, \x);
+    \fill[primaryColor] (-1,3.14159) circle (2.5pt) node[anchor=south east, font=\footnotesize] {\((-1,\pi)\)};
+    \node[primaryColor, font=\footnotesize] at (0,-1.0) {\(y=\sec^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.5,0) -- (3.5,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-3.8) -- (0,2.4) node[left] {\(y\)};
+    \draw[dashed, gray!80, thick] (-3.5,-3.14159) -- (3.5,-3.14159) node[right, font=\footnotesize] {\(y=-\pi\)};
+    \draw[very thick, primaryColor, domain=0.32:1.57, smooth, samples=50]
+        plot ({1/sin(\x r)}, \x);
+    \fill[primaryColor] (1,1.57) circle (2.5pt) node[anchor=west, font=\footnotesize] {\((1,\frac{\pi}{2})\)};
+    \draw[very thick, primaryColor, domain=-2.82:-1.57, smooth, samples=50]
+        plot ({1/sin(\x r)}, \x);
+    \fill[primaryColor] (-1,-1.57) circle (2.5pt) node[anchor=east, font=\footnotesize] {\((-1,-\frac{\pi}{2})\)};
+    \node[primaryColor, font=\footnotesize] at (0,-4.2) {\(y=\csc^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+
+\smallskip
+\textbf{Figure 17:} Graphs of the six inverse circular functions on their principal branches.
+\end{center}
+
+\begin{remarkbox}{Remark 22 (Limits at Infinity of Inverse Circular Functions)}
+\[
+\lim_{x \to +\infty} \tan^{-1} x = \frac{\pi}{2}, \quad \lim_{x \to -\infty} \tan^{-1} x = -\frac{\pi}{2}, \qquad
+\lim_{x \to +\infty} \cot^{-1} x = 0, \quad \lim_{x \to -\infty} \cot^{-1} x = \pi,
+\]
+\[
+\lim_{x \to +\infty} \sec^{-1} x = \frac{\pi}{2}, \quad \lim_{x \to -\infty} \sec^{-1} x = \frac{3\pi}{2}, \qquad
+\lim_{x \to +\infty} \csc^{-1} x = 0, \quad \lim_{x \to -\infty} \csc^{-1} x = -\pi.
+\]
+\end{remarkbox}
+
+\begin{examplebox}{Example 23}
+Evaluate the following limits:
+\begin{enumerate}
+    \item \(\displaystyle\lim_{x \to +\infty} \frac{1}{\tan^{-1} x - \frac{\pi}{2}}\)
+    \item \(\displaystyle\lim_{x \to -\infty} \tan^{-1}(e^x)\)
+    \item \(\displaystyle\lim_{x \to 0^+} \cot^{-1}(\ln x)\)
+\end{enumerate}
+
+\medskip
+\textbf{Solution.}
+\begin{enumerate}
+    \item As \(x \to +\infty\), \(\tan^{-1} x \to \left(\frac{\pi}{2}\right)^{\!-}\), so \(\tan^{-1} x - \frac{\pi}{2} \to 0^-\) \(\implies \displaystyle\lim_{x \to +\infty} \frac{1}{\tan^{-1} x - \frac{\pi}{2}} = -\infty\).
+    \item As \(x \to -\infty\), \(e^x \to 0 \implies \displaystyle\lim_{x \to -\infty} \tan^{-1}(e^x) = \tan^{-1}(0) = 0\).
+    \item As \(x \to 0^+\), \(\ln x \to -\infty \implies \displaystyle\lim_{x \to 0^+} \cot^{-1}(\ln x) = \lim_{u \to -\infty} \cot^{-1} u = \pi\).
+\end{enumerate}
+\end{examplebox}
+
+\subsection*{Hyperbolic Functions}
+\label{subsec:1.7.4}
+
+We now introduce the hyperbolic functions, which are formed by specific linear combinations of \(e^x\) and \(e^{-x}\).
+
+\begin{definitionbox}{Definition 24 (The Six Hyperbolic Functions)}
+For every \(x \in \R\):
+\[
+\sinh x = \frac{e^x - e^{-x}}{2}, \qquad \cosh x = \frac{e^x + e^{-x}}{2}, \qquad \tanh x = \frac{\sinh x}{\cosh x} = \frac{e^x - e^{-x}}{e^x + e^{-x}},
+\]
+\[
+\operatorname{sech} x = \frac{1}{\cosh x} = \frac{2}{e^x + e^{-x}}.
+\]
+For every \(x \neq 0\):
+\[
+\coth x = \frac{\cosh x}{\sinh x} = \frac{e^x + e^{-x}}{e^x - e^{-x}}, \qquad \operatorname{csch} x = \frac{1}{\sinh x} = \frac{2}{e^x - e^{-x}}.
+\]
+\end{definitionbox}
+
+\begin{examplebox}{Example 25}
+Evaluate the exact value of each expression:
+\begin{multicols}{3}
+\begin{enumerate}
+    \item \(\cosh(\ln 4)\)
+    \item \(\sinh(2\ln 3)\)
+    \item \(\tanh(\ln 2)\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+1.\; \cosh(\ln 4) &= \frac{4 + \frac{1}{4}}{2} = \frac{17}{8}. \\[4pt]
+2.\; \sinh(2\ln 3) &= \sinh(\ln 9) = \frac{9 - \frac{1}{9}}{2} = \frac{40}{9}. \\[4pt]
+3.\; \tanh(\ln 2) &= \frac{2 - \frac{1}{2}}{2 + \frac{1}{2}} = \frac{3/2}{5/2} = \frac{3}{5}.
+\end{align*}
+\end{examplebox}
+
+\begin{center}
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-2.8,0) -- (2.8,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-3.0) -- (0,3.0) node[left] {\(y\)};
+    \foreach \x in {-2,-1,1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\footnotesize] {\(\x\)};
+    \foreach \y in {-2,-1,1,2}
+        \draw (0.1,\y) -- (-0.1,\y) node[left, font=\footnotesize] {\(\y\)};
+    \draw[very thick, primaryColor, domain=-1.8:1.8, smooth, samples=70]
+        plot (\x, {(exp(\x)-exp(-\x))/2});
+    \fill[primaryColor] (0,0) circle (2.5pt);
+    \node[primaryColor, font=\footnotesize] at (0,-3.4) {\(y=\sinh x\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-2.8,0) -- (2.8,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.6) -- (0,3.8) node[left] {\(y\)};
+    \foreach \x in {-2,-1,1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\footnotesize] {\(\x\)};
+    \foreach \y in {1,2,3}
+        \draw (0.1,\y) -- (-0.1,\y) node[left, font=\footnotesize] {\(\y\)};
+    \draw[very thick, primaryColor, domain=-1.75:1.75, smooth, samples=70]
+        plot (\x, {(exp(\x)+exp(-\x))/2});
+    \fill[primaryColor] (0,1) circle (2.5pt);
+    \node[primaryColor, anchor=north, font=\footnotesize] at (0.99,1) {\((0,1)\)};
+    \node[primaryColor, font=\footnotesize] at (0,-1.0) {\(y=\cosh x\)};
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{0.6cm}
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.2,0) -- (3.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-2.2) -- (0,2.2) node[left] {\(y\)};
+    \draw[dashed, gray!80, thick] (-3.2,1) -- (3.2,1) node[right, font=\footnotesize] {\(y=1\)};
+    \draw[dashed, gray!80, thick] (-3.2,-1) -- (3.2,-1) node[right, font=\footnotesize] {\(y=-1\)};
+    \draw[very thick, primaryColor, domain=-2.8:2.8, smooth, samples=70]
+        plot (\x, {(exp(\x)-exp(-\x))/(exp(\x)+exp(-\x))});
+    \fill[primaryColor] (0,0) circle (2.5pt);
+    \node[primaryColor, font=\footnotesize] at (0,-2.6) {\(y=\tanh x\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.2,0) -- (3.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-3.2) -- (0,3.2) node[left] {\(y\)};
+    \draw[dashed, gray!80, thick] (-3.2,1) -- (3.2,1) node[right, font=\footnotesize] {\(y=1\)};
+    \draw[dashed, gray!80, thick] (-3.2,-1) -- (3.2,-1) node[right, font=\footnotesize] {\(y=-1\)};
+    \draw[very thick, primaryColor, domain=0.35:2.8, smooth, samples=50]
+        plot (\x, {(exp(\x)+exp(-\x))/(exp(\x)-exp(-\x))});
+    \draw[very thick, primaryColor, domain=-2.8:-0.35, smooth, samples=50]
+        plot (\x, {(exp(\x)+exp(-\x))/(exp(\x)-exp(-\x))});
+    \node[primaryColor, font=\footnotesize] at (0,-3.6) {\(y=\coth x\)};
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{0.6cm}
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.2,0) -- (3.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.6) -- (0,2.4) node[left] {\(y\)};
+    \foreach \x in {-2,-1,1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\footnotesize] {\(\x\)};
+    \draw (0.1,1) -- (-0.1,1) node[left, font=\footnotesize] {\(1\)};
+    \draw[very thick, primaryColor, domain=-2.8:2.8, smooth, samples=70]
+        plot (\x, {2/(exp(\x)+exp(-\x))});
+    \fill[primaryColor] (0,1) circle (2.5pt);
+    \node[primaryColor, anchor=south, font=\footnotesize] at (1,1.05) {\((0,1)\)};
+    \node[primaryColor, font=\footnotesize] at (0,-1.0) {\(y=\operatorname{sech} x\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.2,0) -- (3.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-3.2) -- (0,3.2) node[left] {\(y\)};
+    \draw[very thick, primaryColor, domain=0.35:2.8, smooth, samples=50]
+        plot (\x, {2/(exp(\x)-exp(-\x))});
+    \draw[very thick, primaryColor, domain=-2.8:-0.35, smooth, samples=50]
+        plot (\x, {2/(exp(\x)-exp(-\x))});
+    \node[primaryColor, font=\footnotesize] at (0,-3.6) {\(y=\operatorname{csch} x\)};
+\end{tikzpicture}
+\end{minipage}
+
+\smallskip
+\textbf{Figure 18:} Graphs of the six hyperbolic functions.
+\end{center}
+
+\begin{theorembox}{Theorem 26 (Fundamental Hyperbolic Identities)}
+\begin{enumerate}
+    \item \(\cosh x + \sinh x = e^{x}, \quad \cosh x - \sinh x = e^{-x}\)
+    \item \(\cosh^2 x - \sinh^2 x = 1\)
+    \item \(1 - \tanh^2 x = \operatorname{sech}^2 x, \quad \coth^2 x - 1 = \operatorname{csch}^2 x\)
+    \item \(\sinh(x \pm y) = \sinh x \cosh y \pm \cosh x \sinh y\)
+    \item \(\cosh(x \pm y) = \cosh x \cosh y \pm \sinh x \sinh y\)
+    \item \(\sinh(2x) = 2\sinh x \cosh x, \quad \cosh(2x) = \cosh^2 x + \sinh^2 x = 2\cosh^2 x - 1\)
+\end{enumerate}
+\end{theorembox}
+
+\begin{proof}
+\begin{align*}
+\cosh^2 x - \sinh^2 x &= (\cosh x + \sinh x)(\cosh x - \sinh x) = e^x \cdot e^{-x} = 1. \\[6pt]
+\sinh x \cosh y + \cosh x \sinh y &= \left(\frac{e^x - e^{-x}}{2}\right)\!\left(\frac{e^y + e^{-y}}{2}\right) + \left(\frac{e^x + e^{-x}}{2}\right)\!\left(\frac{e^y - e^{-y}}{2}\right) \\
+&= \frac{2e^{x+y} - 2e^{-(x+y)}}{4} = \frac{e^{x+y} - e^{-(x+y)}}{2} = \sinh(x+y). \qedhere
+\end{align*}
+\end{proof}
+
+\begin{examplebox}{Example 27}
+If \(\tanh x = \frac{8}{17}\), find the exact values of the remaining five hyperbolic functions of \(x\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+\coth x &= \frac{1}{\tanh x} = \frac{17}{8}, \\[4pt]
+\operatorname{sech} x &= \sqrt{1 - \tanh^2 x} = \sqrt{1 - \frac{64}{289}} = \frac{15}{17} && (\operatorname{sech} x > 0), \\[4pt]
+\cosh x &= \frac{1}{\operatorname{sech} x} = \frac{17}{15}, \\[4pt]
+\sinh x &= \tanh x \cosh x = \left(\frac{8}{17}\right)\!\left(\frac{17}{15}\right) = \frac{8}{15}, \\[4pt]
+\operatorname{csch} x &= \frac{1}{\sinh x} = \frac{15}{8}.
+\end{align*}
+\end{examplebox}
+
+\subsection*{Inverse Hyperbolic Functions}
+\label{subsec:1.7.5}
+
+The functions \(\sinh x, \tanh x, \coth x\), and \(\operatorname{csch} x\) are strictly monotonic on their natural domains and require no domain restriction to define their inverses. The functions \(\cosh x\) and \(\operatorname{sech} x\) are even; their domains are restricted to \([0, +\infty)\) to ensure injectivity.
+
+\begin{definitionbox}{Definition 28 (The Six Inverse Hyperbolic Functions)}
+\begin{enumerate}
+    \item \(y = \sinh^{-1} x \iff x = \sinh y\), where \(x \in \R\) and \(y \in \R\).
+    \item \(y = \cosh^{-1} x \iff x = \cosh y\), where \(x \ge 1\) and \(y \ge 0\).
+    \item \(y = \tanh^{-1} x \iff x = \tanh y\), where \(|x| < 1\) and \(y \in \R\).
+    \item \(y = \coth^{-1} x \iff x = \coth y\), where \(|x| > 1\) and \(y \neq 0\).
+    \item \(y = \operatorname{sech}^{-1} x \iff x = \operatorname{sech} y\), where \(x \in (0, 1]\) and \(y \ge 0\).
+    \item \(y = \operatorname{csch}^{-1} x \iff x = \operatorname{csch} y\), where \(x \neq 0\) and \(y \neq 0\).
+\end{enumerate}
+\end{definitionbox}
+
+\begin{center}
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-2.8,0) -- (2.8,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-2.6) -- (0,2.6) node[left] {\(y\)};
+    \foreach \x in {-2,-1,1,2}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\footnotesize] {\(\x\)};
+    \foreach \y in {-2,-1,1,2}
+        \draw (0.1,\y) -- (-0.1,\y) node[left, font=\footnotesize] {\(\y\)};
+    \draw[very thick, primaryColor, domain=-1.75:1.75, smooth, samples=70]
+        plot ({(exp(\x)-exp(-\x))/2}, \x);
+    \fill[primaryColor] (0,0) circle (2.5pt);
+    \node[primaryColor, font=\footnotesize] at (0,-3.0) {\(y=\sinh^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-0.6,0) -- (3.8,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.6) -- (0,2.8) node[left] {\(y\)};
+    \foreach \x in {1,2,3}
+        \draw (\x,0.1) -- (\x,-0.1) node[below, font=\footnotesize] {\(\x\)};
+    \foreach \y in {1,2}
+        \draw (0.1,\y) -- (-0.1,\y) node[left, font=\footnotesize] {\(\y\)};
+    \draw[very thick, primaryColor, domain=0:1.75, smooth, samples=70]
+        plot ({(exp(\x)+exp(-\x))/2}, \x);
+    \fill[primaryColor] (1,0) circle (2.5pt);
+    \node[primaryColor, anchor=north west, font=\footnotesize] at (1.05,-0.05) {\((1,0)\)};
+    \node[primaryColor, font=\footnotesize] at (1.4,-1.0) {\(y=\cosh^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{0.6cm}
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-2.2,0) -- (2.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-2.8) -- (0,2.8) node[left] {\(y\)};
+    \draw[dashed, gray!80, thick] (1,-2.8) -- (1,2.8) node[above, font=\footnotesize] {\(x=1\)};
+    \draw[dashed, gray!80, thick] (-1,-2.8) -- (-1,2.8) node[above, font=\footnotesize] {\(x=-1\)};
+    \draw[very thick, primaryColor, domain=-2.0:2.0, smooth, samples=70]
+        plot ({(exp(\x)-exp(-\x))/(exp(\x)+exp(-\x))}, \x);
+    \fill[primaryColor] (0,0) circle (2.5pt);
+    \node[primaryColor, font=\footnotesize] at (0,-3.2) {\(y=\tanh^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.2,0) -- (3.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-2.8) -- (0,2.8) node[left] {\(y\)};
+    \draw[dashed, gray!80, thick] (1,-2.8) -- (1,2.8) node[above, font=\footnotesize] {\(x=1\)};
+    \draw[dashed, gray!80, thick] (-1,-2.8) -- (-1,2.8) node[above, font=\footnotesize] {\(x=-1\)};
+    \draw[very thick, primaryColor, domain=0.35:2.4, smooth, samples=50]
+        plot ({(exp(\x)+exp(-\x))/(exp(\x)-exp(-\x))}, \x);
+    \draw[very thick, primaryColor, domain=-2.4:-0.35, smooth, samples=50]
+        plot ({(exp(\x)+exp(-\x))/(exp(\x)-exp(-\x))}, \x);
+    \node[primaryColor, font=\footnotesize] at (0,-3.2) {\(y=\coth^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{0.6cm}
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-0.6,0) -- (2.4,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-0.6) -- (0,2.8) node[left] {\(y\)};
+    \draw (1,0.1) -- (1,-0.1) node[below, font=\footnotesize] {\(1\)};
+    \foreach \y in {1,2}
+        \draw (0.1,\y) -- (-0.1,\y) node[left, font=\footnotesize] {\(\y\)};
+    \draw[very thick, primaryColor, domain=0:2.5, smooth, samples=70]
+        plot ({2/(exp(\x)+exp(-\x))}, \x);
+    \fill[primaryColor] (1,0) circle (2.5pt);
+    \node[primaryColor, anchor=north west, font=\footnotesize] at (1.05,0.95) {\((1,0)\)};
+    \node[primaryColor, font=\footnotesize] at (1.0,-1.0) {\(y=\operatorname{sech}^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.65]
+    \draw[->,thick] (-3.2,0) -- (3.2,0) node[below] {\(x\)};
+    \draw[->,thick] (0,-2.8) -- (0,2.8) node[left] {\(y\)};
+    \draw[very thick, primaryColor, domain=0.35:2.5, smooth, samples=50]
+        plot ({2/(exp(\x)-exp(-\x))}, \x);
+    \draw[very thick, primaryColor, domain=-2.5:-0.35, smooth, samples=50]
+        plot ({2/(exp(\x)-exp(-\x))}, \x);
+    \node[primaryColor, font=\footnotesize] at (0,-3.2) {\(y=\operatorname{csch}^{-1} x\)};
+\end{tikzpicture}
+\end{minipage}
+
+\smallskip
+\textbf{Figure 19:} Graphs of the six inverse hyperbolic functions.
+\end{center}
+
+\begin{theorembox}{Theorem 29 (Logarithmic Formulas for Inverse Hyperbolic Functions)}
+\begin{enumerate}
+    \item \(\sinh^{-1} x = \ln\!\left(x + \sqrt{x^2 + 1}\right), \quad x \in \R\)
+    \item \(\cosh^{-1} x = \ln\!\left(x + \sqrt{x^2 - 1}\right), \quad x \ge 1\)
+    \item \(\tanh^{-1} x = \dfrac{1}{2}\ln\!\left(\dfrac{1+x}{1-x}\right), \quad |x| < 1\)
+    \item \(\coth^{-1} x = \dfrac{1}{2}\ln\!\left(\dfrac{x+1}{x-1}\right), \quad |x| > 1\)
+    \item \(\operatorname{sech}^{-1} x = \ln\!\left(\dfrac{1 + \sqrt{1 - x^2}}{x}\right), \quad 0 < x \le 1\)
+    \item \(\operatorname{csch}^{-1} x = \ln\!\left(\dfrac{1}{x} + \dfrac{\sqrt{1 + x^2}}{|x|}\right), \quad x \neq 0\)
+\end{enumerate}
+\end{theorembox}
+
+\begin{examplebox}{Example 30 (Derivation of Logarithmic Form)}
+Prove that \(\cosh^{-1} x = \ln\!\left(x + \sqrt{x^2 - 1}\right)\) for \(x \ge 1\).
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+y &= \cosh^{-1} x \implies x = \cosh y = \frac{e^y + e^{-y}}{2} && (y \ge 0) \\[4pt]
+(e^y)^2 - 2x(e^y) + 1 &= 0 && (\text{quadratic in } e^y) \\[4pt]
+e^y &= x + \sqrt{x^2 - 1} && (e^y \ge 1 \text{ for } y \ge 0) \\[4pt]
+\implies y &= \ln\!\left(x + \sqrt{x^2 - 1}\right).
+\end{align*}
+\end{examplebox}
+
+\begin{examplebox}{Example 31}
+Evaluate the exact value of each expression:
+\begin{multicols}{2}
+\begin{enumerate}
+    \item \(\sinh^{-1}(2)\)
+    \item \(\cosh^{-1}(3)\)
+    \item \(\tanh^{-1}(0.6)\)
+    \item \(\operatorname{sech}^{-1}\!\left(\dfrac{5}{13}\right)\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\textbf{Solution.}
+\begin{align*}
+1.\; \sinh^{-1}(2) &= \ln(2 + \sqrt{4 + 1}) = \ln(2 + \sqrt{5}). \\[4pt]
+2.\; \cosh^{-1}(3) &= \ln(3 + \sqrt{9 - 1}) = \ln(3 + 2\sqrt{2}). \\[4pt]
+3.\; \tanh^{-1}(3/5) &= \frac{1}{2}\ln\!\left(\frac{1 + 3/5}{1 - 3/5}\right) = \frac{1}{2}\ln 4 = \ln 2. \\[4pt]
+4.\; \operatorname{sech}^{-1}(5/13) &= \ln\!\left(\frac{1 + \sqrt{1 - 25/169}}{5/13}\right) = \ln\!\left(\frac{1 + 12/13}{5/13}\right) = \ln 5.
+\end{align*}
+\end{examplebox}
+
+\subsection*{Continuity and Limits of Transcendental Compositions}
+\label{subsec:1.7.6}
+
+Finally, we conclude by examining continuity and limit theorems for composite expressions involving algebraic, exponential, logarithmic, and hyperbolic functions.
+
+\begin{theorembox}{Theorem 32 (Continuity of Composite Transcendental Functions)}
+Every exponential, logarithmic, inverse circular, hyperbolic, and inverse hyperbolic function is continuous on the interior of its domain.
+If \(\displaystyle\lim_{x \to a} g(x) = L\) and \(f\) is continuous at \(L\), then
+\[
+\lim_{x \to a} f(g(x)) = f\!\left(\lim_{x \to a} g(x)\right) = f(L).
+\]
+\end{theorembox}
+
+\begin{examplebox}{Example 33}
+Evaluate each limit:
+\begin{multicols}{2}
+\begin{enumerate}
+    \item \(\displaystyle\lim_{x \to 1^-} \tanh^{-1} x\)
+    \item \(\displaystyle\lim_{x \to -\infty} e^{\coth^{-1} x}\)
+    \item \(\displaystyle\lim_{x \to +\infty} \left[ 3x - \ln(e^{3x} + 4x) \right]\)
+    \item \(\displaystyle\lim_{x \to -\infty} \frac{\sinh x}{e^x}\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\textbf{Solution.}
+\begin{enumerate}
+    \item \(\displaystyle\lim_{x \to 1^-} \tanh^{-1} x = \lim_{x \to 1^-} \frac{1}{2}\ln\!\left(\frac{1+x}{1-x}\right) = +\infty \quad \left(\text{since } \frac{1+x}{1-x} \to +\infty\right)\).
+    \item \(\displaystyle\lim_{x \to -\infty} e^{\coth^{-1} x} = e^{\lim_{x \to -\infty} \coth^{-1} x} = e^0 = 1\).
+    \item \(\displaystyle\lim_{x \to +\infty} \ln\!\left(\frac{e^{3x}}{e^{3x} + 4x}\right) = \lim_{x \to +\infty} \ln\!\left(\frac{1}{1 + 4xe^{-3x}}\right) = \ln(1) = 0\).
+    \item \(\displaystyle\lim_{x \to -\infty} \frac{e^x - e^{-x}}{2e^x} = \lim_{x \to -\infty} \frac{1 - e^{-2x}}{2} = -\infty \quad (\text{since } e^{-2x} \to +\infty)\).
+\end{enumerate}
+\end{examplebox}
+
+\subsection*{Exercises}
+\label{subsec:1.7.7}
+
+\raggedcolumns
+\setlength{\columnsep}{1.5em}
+
+\medskip
+\noindent\textbf{A.} Evaluate the exact value of each expression.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., nosep, topsep=0pt, itemsep=2pt]
+    \item \(\log_4 144 - \log_4 18 - \log_4 2\)
+    \item \(3^{3\log_3 2} + \ln(e^5) - e^{-3\ln 2}\)
+    \item \(\operatorname{sech}(\ln 3)\)
+    \item \(\sinh(2\ln 3 - \ln 6)\)
+    \item \(\cos\!\left[2\sin^{-1}\!\left(-\dfrac{2}{3}\right)\right]\)
+    \item \(\tanh^{-1}(0.6)\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{B.} Solve each equation or determine the indicated inverse function.
+
+\begin{enumerate}[label=\arabic*., start=7, nosep, topsep=0pt, itemsep=2pt]
+    \item Find the inverse function \(f^{-1}(x)\) for \(f(x) = \dfrac{7x + 3}{2 - 5x}\) and state its domain and range.
+    \item Solve for \(x\): \(\ln(4x - 3) - \ln(x + 1) = \ln 3\).
+    \item Solve for \(x\): \(\sin^{-1}(x) = \cos^{-1}(0) - \tan^{-1}(\sqrt{3})\).
+    \item Solve for \(x\): \(4^{x+1} - 3 \cdot 2^{x+2} - 64 = 0\).
+\end{enumerate}
+
+\medskip
+\noindent\textbf{C.} Compute hyperbolic values and establish the following identities.
+
+\begin{enumerate}[label=\arabic*., start=11, nosep, topsep=0pt, itemsep=2pt]
+    \item If \(\sinh x = \dfrac{5}{12}\) with \(x > 0\), find the exact values of \(\cosh x\), \(\tanh x\), \(\coth x\), \(\operatorname{sech} x\), and \(\operatorname{csch} x\).
+    \item If \(\operatorname{sech} x = \dfrac{3}{5}\) with \(x > 0\), find the exact values of \(\cosh x\), \(\sinh x\), \(\tanh x\), \(\coth x\), and \(\operatorname{csch} x\).
+    \item Prove the identity \(\tanh(x + y) = \dfrac{\tanh x + \tanh y}{1 + \tanh x \tanh y}\) directly from the exponential definitions of \(\sinh\) and \(\cosh\).
+    \item Prove the identity \(\cosh(3x) = 4\cosh^3 x - 3\cosh x\).
+\end{enumerate}
+
+\pagebreak 
+
+\noindent\textbf{D.} Evaluate the following limits.
+
+\begin{multicols}{2}
+\begin{enumerate}[label=\arabic*., start=15, nosep, topsep=0pt, itemsep=2pt]
+    \item \(\displaystyle\lim_{x \to -\infty} \frac{5^{x+1} + 3^x}{5^x - 2 \cdot 3^x}\)
+    \item \(\displaystyle\lim_{x \to +\infty} \frac{\cosh(2x)}{e^{2x}}\)
+    \item \(\displaystyle\lim_{x \to 0^+} \sec^{-1}(\operatorname{csch} x)\)
+    \item \(\displaystyle\lim_{x \to -1^+} \coth^{-1} x\)
+    \item \(\displaystyle\lim_{x \to +\infty} \cot^{-1}\!\left(\frac{2 - 3x}{4 + x}\right)\)
+    \item \(\displaystyle\lim_{x \to 0^-} \left(4e^{2/x} + 5^{\cos x}\right)\)
+    \item \(\displaystyle\lim_{x \to +\infty} \left[ \ln(3x^2 + 7) - \ln(x^2 + 2) \right]\)
+    \item \(\displaystyle\lim_{x \to 0^+} (\ln x)(\tan 2x)\)
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{E.} Determine natural domains and investigate continuity.
+
+\begin{enumerate}[label=\arabic*., start=23, nosep, topsep=0pt, itemsep=2pt]
+    \item Find the natural domain of \(f(x) = \sqrt{9 - 3^x}\).
+    \item Find the natural domain of \(g(x) = \ln(\sin^{-1}(2x))\).
+    \item Determine whether the piecewise function
+    \[
+    f(x) = \begin{cases}
+    \dfrac{\tanh(3x)}{x}, & x \neq 0, \\[8pt]
+    3, & x = 0
+    \end{cases}
+    \]
+    is continuous at \(x = 0\).
+    \item Determine all values of the constant \(k\) such that
+    \[
+    h(x) = \begin{cases}
+    e^{kx} + 2, & x \le 0, \\[4pt]
+    \dfrac{\sin(4x)}{x}, & x > 0
+    \end{cases}
+    \]
+    is continuous at \(x = 0\).
+\end{enumerate}
+
+\medskip
+\noindent\textbf{F.} Proofs and Theoretical Applications.
+
+\begin{enumerate}[label=\arabic*., start=27, nosep, topsep=0pt, itemsep=2pt]
+    \item Prove that \(\tanh^{-1} x = \dfrac{1}{2}\ln\!\left(\dfrac{1+x}{1-x}\right)\) for all \(x \in (-1, 1)\).
+    \item Use the Intermediate Value Theorem to prove that the equation \(\cosh(x^2 - 1) = 3^x + 1\) has at least one real solution in the closed interval \([-1, 1]\).
+\end{enumerate}

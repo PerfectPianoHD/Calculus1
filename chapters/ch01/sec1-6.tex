@@ -1,0 +1,717 @@
+\section{Trigonometric Functions: Limits, Continuity, and the Squeeze Theorem}
+\label{sec:1.6}
+
+The preceding sections developed limit laws for algebraic functions. However, many limits that involve \(\sin(1/x)\), \(\cos(1/x)\), or other trigonometric factors cannot be resolved by distributing the limit over the product, because at least one factor fails to have a finite limit. The Squeeze Theorem overcomes this by placing the unknown function between two simpler functions whose limits are known. With that result in hand we derive the fundamental trigonometric limits and then establish the continuity of the six trigonometric functions on their natural domains. By the end of this section, the student will be able to:
+\begin{itemize}
+    \item state the Squeeze Theorem and interpret it graphically;
+    \item bound oscillatory expressions and evaluate limits using the Squeeze Theorem;
+    \item state the four fundamental trigonometric limits at \(0\);
+    \item manipulate trigonometric expressions with identities and algebraic factors to evaluate limits;
+    \item evaluate one-sided limits involving trigonometric functions, including infinite limits at vertical asymptotes;
+    \item apply the continuity of trigonometric functions to compute limits by direct substitution; and
+    \item determine intervals of continuity for composite functions that involve trigonometric expressions.
+\end{itemize}
+
+\subsection*{The Squeeze Theorem}
+\label{subsec:1.6.1}
+
+\begin{theorembox}{Theorem 1}
+Let \(f\), \(g\), and \(h\) be functions defined on an open interval containing \(a\), except possibly at \(a\) itself. Suppose that
+\[
+f(x) \leq g(x) \leq h(x)
+\]
+for all \(x\) in that interval with \(x \neq a\). If
+\[
+\lim_{x \to a} f(x) = L \qquad\text{and}\qquad \lim_{x \to a} h(x) = L,
+\]
+where \(L \in \R\), then
+\[
+\lim_{x \to a} g(x) = L.
+\]
+\end{theorembox}
+
+Informally, if \(g(x)\) is ``squeezed'' between \(f(x)\) and \(h(x)\) near \(a\), and the two outer functions converge to the same number \(L\), then \(g(x)\) must also converge to \(L\). The theorem is also called the Sandwich Theorem or the Pinching Theorem.
+
+\begin{remarkbox}{Remark 2}
+The Squeeze Theorem remains valid when \(x \to a\) is replaced by any of the following:
+\[
+x \to a^{-},\qquad
+x \to a^{+},\qquad
+x \to +\infty,\qquad
+x \to -\infty.
+\]
+In every case the inequality \(f(x) \leq g(x) \leq h(x)\) must hold for all \(x\) sufficiently near the limiting point (on the appropriate side, if a one-sided limit is involved), and the outer limits must both equal the same finite number \(L\).
+\end{remarkbox}
+
+Figure~12 illustrates the geometry. All three curves pass through the point \((a, L)\). On both sides of \(a\), the curve \(y = f(x)\) lies below \(y = g(x)\), which in turn lies below \(y = h(x)\).
+
+\begin{center}
+\begin{tikzpicture}[scale=0.45]
+    \draw[->,thick] (-0.5,0) -- (5.5,0) node[below] {$x$};
+    \draw[->,thick] (0,-1.2) -- (0,5.5) node[left] {$y$};
+    \draw (2.5,0.1) -- (2.5,-0.1) node[below] {$a$};
+    \draw (0.1,2.8) -- (-0.1,2.8) node[left] {$L$};
+    \draw[dashed, gray] (2.5,0) -- (2.5,2.8) -- (0,2.8);
+    \draw[very thick, defFrame, domain=0.5:4.5, smooth, samples=80]
+        plot (\x, {2.8 - 0.45*(\x-2.5)^2});
+    \draw[very thick, primaryColor, domain=0.5:4.5, smooth, samples=80]
+        plot (\x, {2.8 + 0.12*(\x-2.5)^3});
+    \draw[very thick, thmFrame, domain=0.5:4.5, smooth, samples=80]
+        plot (\x, {2.8 + 0.45*(\x-2.5)^2});
+    \fill[primaryColor] (2.5,2.8) circle (2.5pt);
+    \node[defFrame, anchor=north] at (4.3,{2.8-0.45*1.8^2}) {$y=f(x)$};
+    \node[primaryColor, anchor=north] at (4.3,{2.8+0.12*1.8^3}) {$y=g(x)$};
+    \node[thmFrame, anchor=south] at (4.3,{2.8+0.45*1.8^2}) {$y=h(x)$};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 12:} The Squeeze Theorem: \(g\) lies between \(f\) and \(h\) near \(a\); all three share the common limit \(L\) at \(a\).
+\end{center}
+
+\bigskip
+
+\begin{examplebox}{Example 3}
+Evaluate \(\displaystyle \lim_{x \to 0} x^{4} \sin\!\left(\frac{3}{x}\right)\).
+
+\medskip
+\textbf{Solution.}
+The factor \(\sin(3/x)\) has no limit as \(x \to 0\); it oscillates between \(-1\) and \(1\) ever more rapidly. However, for every real \(u\),
+\[
+-1 \leq \sin u \leq 1.
+\]
+Set \(u = 3/x\) (defined for \(x \neq 0\)):
+\[
+-1 \leq \sin\!\left(\frac{3}{x}\right) \leq 1.
+\]
+Since \(x^{4} \geq 0\) for all \(x\), multiplication by \(x^{4}\) preserves the inequalities:
+\[
+-x^{4}
+\;\leq\;
+x^{4}\sin\!\left(\frac{3}{x}\right)
+\;\leq\;
+x^{4}.
+\]
+The outer functions are polynomial and their limits are immediate:
+\[
+\lim_{x \to 0}(-x^{4}) = 0,
+\qquad
+\lim_{x \to 0} x^{4} = 0.
+\]
+All hypotheses of the Squeeze Theorem are satisfied with \(f(x) = -x^{4}\), \(g(x) = x^{4}\sin(3/x)\), and \(h(x) = x^{4}\). Consequently,
+\[
+\boxed{\;\lim_{x \to 0} x^{4}\sin\!\left(\frac{3}{x}\right) = 0\;}.
+\]
+\end{examplebox}
+
+Figure~13 shows the oscillatory function trapped between \(-x^{4}\) and \(x^{4}\). As \(x\) approaches \(0\), the amplitude \(x^{4}\) collapses to zero, forcing the oscillations to die out.
+
+\begin{center}
+\begin{tikzpicture}[xscale=2.2, yscale=1.4]
+    \draw[->, thick] (-1.4,0) -- (1.6,0) node[below] {$x$};
+    \draw[->, thick] (0,-1.4) -- (0,1.5) node[left] {$y$};
+    \node at (0,0) [below left=2pt] {$0$};
+
+    \draw[dashed, thmFrame, thick, domain=-1.15:1.15, smooth, samples=100]
+        plot (\x, {\x*\x*\x*\x});
+    \draw[dashed, defFrame, thick, domain=-1.15:1.15, smooth, samples=100]
+        plot (\x, {-\x*\x*\x*\x});
+
+    \draw[very thick, primaryColor, domain=0.25:1.15, smooth, samples=200]
+        plot (\x, {\x*\x*\x*\x*sin(3/\x r)});
+    \draw[very thick, primaryColor, domain=-1.15:-0.25, smooth, samples=200]
+        plot (\x, {\x*\x*\x*\x*sin(3/\x r)});
+
+    \fill[primaryColor] (0,0) circle (1.8pt);
+
+    \node[thmFrame, font=\small, anchor=south] at (0.8, 1.15) {$y = x^{4}$};
+    \node[defFrame, font=\small, anchor=north] at (-0.8, -1.15) {$y = -x^{4}$};
+    \node[primaryColor, font=\small, anchor=west] at (1.18, 0.4) {$y = x^{4}\sin(3/x)$};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 13:} The function \(x^{4}\sin(3/x)\) oscillates with shrinking amplitude, squeezed between \(-x^{4}\) (below) and \(x^{4}\) (above).
+\end{center}
+
+\bigskip
+
+\begin{examplebox}{Example 4}
+Evaluate \(\displaystyle \lim_{x \to +\infty} \frac{2\sin x - \cos x}{x}\).
+
+\medskip
+\textbf{Solution.}
+Both \(\sin x\) and \(\cos x\) remain between \(-1\) and \(1\) for every real \(x\). Hence
+\[
+-2 \leq 2\sin x \leq 2,
+\qquad
+-1 \leq -\cos x \leq 1.
+\]
+Adding the two chains,
+\[
+-3 \leq 2\sin x - \cos x \leq 3.
+\]
+For \(x > 0\) we may divide by \(x\) to obtain
+\[
+-\frac{3}{x}
+\;\leq\;
+\frac{2\sin x - \cos x}{x}
+\;\leq\;
+\frac{3}{x}.
+\]
+Now
+\[
+\lim_{x \to +\infty}\!\left(-\frac{3}{x}\right) = 0
+= \lim_{x \to +\infty} \frac{3}{x}.
+\]
+By the Squeeze Theorem (Remark~2, with \(x \to +\infty\)),
+\[
+\boxed{\;\lim_{x \to +\infty} \frac{2\sin x - \cos x}{x} = 0\;}.
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 5}
+Evaluate \(\displaystyle \lim_{x \to +\infty} \frac{[\![3x + 2]\!]}{x}\).
+
+\medskip
+\textbf{Solution.}
+For any real number \(u\), the greatest integer function satisfies
+\[
+u - 1 \leq [\![u]\!] \leq u.
+\]
+Take \(u = 3x + 2\):
+\[
+3x + 1 \leq [\![3x + 2]\!] \leq 3x + 2.
+\]
+For \(x > 0\), divide through by \(x\):
+\[
+3 + \frac{1}{x}
+\;\leq\;
+\frac{[\![3x + 2]\!]}{x}
+\;\leq\;
+3 + \frac{2}{x}.
+\]
+The outer limits are
+\[
+\lim_{x \to +\infty}\!\left(3 + \frac{1}{x}\right) = 3,
+\qquad
+\lim_{x \to +\infty}\!\left(3 + \frac{2}{x}\right) = 3.
+\]
+Therefore
+\[
+\boxed{\;\lim_{x \to +\infty} \frac{[\![3x + 2]\!]}{x} = 3\;}.
+\]
+\end{examplebox}
+
+\subsection*{Fundamental Trigonometric Limits}
+\label{subsec:1.6.2}
+
+The Squeeze Theorem can be used to prove the four limits below; their proofs are standard and appear in most calculus textbooks. We state them here and focus on applying them.
+
+\begin{theorembox}{Theorem 6}
+\label{thm:trig-limits}
+Let \(x\) be measured in radians. Then
+\[
+\begin{aligned}
+\text{(i)}\quad &\lim_{x \to 0} \frac{\sin x}{x} = 1, \\[6pt]
+\text{(ii)}\quad &\lim_{x \to 0} \frac{1 - \cos x}{x} = 0, \\[6pt]
+\text{(iii)}\quad &\lim_{x \to 0} \sin x = 0, \\[6pt]
+\text{(iv)}\quad &\lim_{x \to 0} \cos x = 1.
+\end{aligned}
+\]
+\end{theorembox}
+
+\begin{remarkbox}{Remark 7}
+\begin{enumerate}
+    \item Because \(\displaystyle \lim_{x \to 0} \frac{\sin x}{x} = 1\) and the function \(x/\sin x\) is the reciprocal of \(\sin x / x\) (for \(x \neq 0\)), we also have
+    \[
+    \lim_{x \to 0} \frac{x}{\sin x} = \frac{1}{\lim_{x \to 0} \frac{\sin x}{x}} = 1.
+    \]
+    \item The reciprocal of the second fundamental limit,
+    \[
+    \lim_{x \to 0} \frac{x}{1 - \cos x},
+    \]
+    does \textbf{not} exist as a finite real number because the denominator tends to \(0\) while the numerator tends to \(0\). The one-sided infinite limits must be analyzed separately.
+\end{enumerate}
+\end{remarkbox}
+
+\medskip
+The examples that follow show how the fundamental limits combine with algebraic manipulation to resolve apparently intractable indeterminate forms.
+
+\begin{examplebox}{Example 8}
+Evaluate \(\displaystyle \lim_{x \to 0} \frac{\sin(7x)}{x}\).
+
+\medskip
+\textbf{Solution.}
+Multiply the numerator and denominator by \(7\):
+\[
+\frac{\sin(7x)}{x}
+= \frac{7 \sin(7x)}{7x}
+= 7 \cdot \frac{\sin(7x)}{7x}.
+\]
+As \(x \to 0\), the argument \(7x\) also approaches \(0\). Therefore
+\[
+\lim_{x \to 0} \frac{\sin(7x)}{7x} = 1,
+\]
+and
+\[
+\boxed{\;\lim_{x \to 0} \frac{\sin(7x)}{x} = 7 \cdot 1 = 7\;}.
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 9}
+Evaluate \(\displaystyle \lim_{x \to 0} \frac{x^{2}}{\sin(5x^{2})}\).
+
+\medskip
+\textbf{Solution.}
+Multiply numerator and denominator by \(5\):
+\[
+\frac{x^{2}}{\sin(5x^{2})}
+= \frac{1}{5} \cdot \frac{5x^{2}}{\sin(5x^{2})}.
+\]
+Set \(u = 5x^{2}\). Then \(u \to 0\) as \(x \to 0\), and
+\[
+\lim_{x \to 0} \frac{5x^{2}}{\sin(5x^{2})}
+= \lim_{u \to 0} \frac{u}{\sin u}
+= 1.
+\]
+Hence
+\[
+\boxed{\;\lim_{x \to 0} \frac{x^{2}}{\sin(5x^{2})} = \frac{1}{5}\;}.
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 10}
+Evaluate \(\displaystyle \lim_{x \to 2} \frac{\sin(x^{2} - 4)}{x - 2}\).
+
+\medskip
+\textbf{Solution.}
+Factor the argument of sine:
+\[
+x^{2} - 4 = (x - 2)(x + 2).
+\]
+Rewrite the expression:
+\[
+\frac{\sin(x^{2} - 4)}{x - 2}
+= \frac{\sin\bigl((x - 2)(x + 2)\bigr)}{(x - 2)(x + 2)} \cdot (x + 2).
+\]
+Let \(u = (x - 2)(x + 2)\). As \(x \to 2\), we have \(u \to 0\). Then
+\[
+\lim_{x \to 2} \frac{\sin u}{u} = 1,
+\qquad
+\lim_{x \to 2} (x + 2) = 4.
+\]
+Therefore
+\[
+\boxed{\;\lim_{x \to 2} \frac{\sin(x^{2} - 4)}{x - 2} = 1 \cdot 4 = 4\;}.
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 11}
+Evaluate \(\displaystyle \lim_{x \to 0} \frac{\tan(2x)}{x}\).
+
+\medskip
+\textbf{Solution.}
+Write \(\tan(2x) = \sin(2x)/\cos(2x)\):
+\[
+\frac{\tan(2x)}{x}
+= \frac{\sin(2x)}{x\cos(2x)}
+= \frac{\sin(2x)}{2x} \cdot \frac{2}{\cos(2x)}.
+\]
+As \(x \to 0\):
+\[
+\lim_{x \to 0} \frac{\sin(2x)}{2x} = 1,
+\qquad
+\lim_{x \to 0} \cos(2x) = 1.
+\]
+Thus
+\[
+\boxed{\;\lim_{x \to 0} \frac{\tan(2x)}{x} = 1 \cdot \frac{2}{1} = 2\;}.
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 12}
+Evaluate \(\displaystyle \lim_{x \to 0} \frac{\sin(4x)}{\sin(9x)}\).
+
+\medskip
+\textbf{Solution.}
+Insert the standard factors:
+\[
+\frac{\sin(4x)}{\sin(9x)}
+= \frac{\sin(4x)}{4x} \cdot \frac{9x}{\sin(9x)} \cdot \frac{4}{9}.
+\]
+Since
+\[
+\lim_{x \to 0} \frac{\sin(4x)}{4x} = 1,
+\qquad
+\lim_{x \to 0} \frac{9x}{\sin(9x)} = 1,
+\]
+we obtain
+\[
+\boxed{\;\lim_{x \to 0} \frac{\sin(4x)}{\sin(9x)} = \frac{4}{9}\;}.
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 13}
+Evaluate \(\displaystyle \lim_{x \to 0} \frac{1 - \cos(2x)}{x^{2}}\).
+
+\medskip
+\textbf{Solution.}
+Multiply numerator and denominator by the conjugate \(1 + \cos(2x)\):
+\[
+\frac{1 - \cos(2x)}{x^{2}}
+\cdot
+\frac{1 + \cos(2x)}{1 + \cos(2x)}
+= \frac{1 - \cos^{2}(2x)}{x^{2}\bigl(1 + \cos(2x)\bigr)}
+= \frac{\sin^{2}(2x)}{x^{2}\bigl(1 + \cos(2x)\bigr)}.
+\]
+Rewrite in terms of the standard limit:
+\[
+\frac{\sin^{2}(2x)}{x^{2}\bigl(1 + \cos(2x)\bigr)}
+= 4\left(\frac{\sin(2x)}{2x}\right)^{\!2}
+\frac{1}{1 + \cos(2x)}.
+\]
+Now
+\[
+\lim_{x \to 0} \left(\frac{\sin(2x)}{2x}\right)^{\!2} = 1^{2} = 1,
+\qquad
+\lim_{x \to 0} \bigl(1 + \cos(2x)\bigr) = 2.
+\]
+Hence
+\[
+\boxed{\;\lim_{x \to 0} \frac{1 - \cos(2x)}{x^{2}} = 4 \cdot 1 \cdot \frac{1}{2} = 2\;}.
+\]
+\end{examplebox}
+
+\subsection*{One-Sided Trigonometric Limits}
+\label{subsec:1.6.3}
+
+When a trigonometric function has a vertical asymptote, evaluating the limit requires examining the sign of the denominator on each side. The standard identities are:
+\[
+\tan x = \frac{\sin x}{\cos x},\qquad
+\cot x = \frac{\cos x}{\sin x},\qquad
+\csc x = \frac{1}{\sin x},
+\]
+\[
+\sin^{2}x + \cos^{2}x = 1,\qquad
+1 - \cos^{2}x = \sin^{2}x.
+\]
+
+\begin{examplebox}{Example 14}
+Evaluate \(\displaystyle \lim_{x \to 0^{+}} \frac{\tan(2x)}{1 - \cos^{2}(3x)}\).
+
+\medskip
+\textbf{Solution.}
+Using \(1 - \cos^{2}(3x) = \sin^{2}(3x)\) and \(\tan(2x) = \sin(2x)/\cos(2x)\):
+\[
+\frac{\tan(2x)}{1 - \cos^{2}(3x)}
+= \frac{\sin(2x)}{\cos(2x)\,\sin^{2}(3x)}.
+\]
+Insert the standard-limit factors:
+\[
+\frac{\sin(2x)}{\cos(2x)\,\sin^{2}(3x)}
+= \frac{2}{3}\;
+\frac{\sin(2x)}{2x}
+\left(\frac{3x}{\sin(3x)}\right)^{\!2}
+\frac{1}{x\cos(2x)}.
+\]
+As \(x \to 0^{+}\):
+\[
+\frac{\sin(2x)}{2x} \to 1,\qquad
+\frac{3x}{\sin(3x)} \to 1,\qquad
+\cos(2x) \to 1.
+\]
+Since \(x\) is positive, \(1/x \to +\infty\). Hence the product
+\[
+\frac{2}{3} \cdot 1 \cdot 1^{2} \cdot \frac{1}{x \cdot 1}
+\]
+tends to \(+\infty\):
+\[
+\boxed{\;\lim_{x \to 0^{+}} \frac{\tan(2x)}{1 - \cos^{2}(3x)} = +\infty\;}.
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 15}
+Evaluate \(\displaystyle \lim_{x \to \pi^{+}} \cot x\).
+
+\medskip
+\textbf{Solution.}
+Write \(\cot x = \cos x / \sin x\).
+\begin{itemize}
+    \item As \(x \to \pi\), \(\cos x \to \cos\pi = -1\).
+    \item For \(x\) just to the right of \(\pi\), \(\sin x\) is negative. Moreover, \(\sin x \to 0^{-}\).
+\end{itemize}
+Thus
+\[
+\lim_{x \to \pi^{+}} \cot x
+= \lim_{x \to \pi^{+}} \frac{\cos x}{\sin x}
+= \frac{-1}{0^{-}}
+= +\infty.
+\]
+\[
+\boxed{\;\lim_{x \to \pi^{+}} \cot x = +\infty\;}.
+\]
+\end{examplebox}
+
+Figure~14 shows the graph of \(y = \cot x\) near \(x = \pi\). The left branch descends to \(-\infty\), while the right branch descends from \(+\infty\).
+
+\begin{center}
+\begin{tikzpicture}[xscale=1.6, yscale=1.1]
+    \draw[->, thick] (-0.4,0) -- (5.2,0) node[below] {$x$};
+    \draw[->, thick] (0,-2.6) -- (0,2.6) node[left] {$y$};
+    \node at (0,0) [below left=2pt] {$0$};
+
+    \draw (3.14159,0.08) -- (3.14159,-0.08) node[below=2pt, font=\small] {$\pi$};
+    \draw (0.08,1) -- (-0.08,1) node[left=2pt, font=\small] {$1$};
+    \draw (0.08,-1) -- (-0.08,-1) node[left=2pt, font=\small] {$-1$};
+
+    \draw[dashed, gray, thick] (3.14159,-2.4) -- (3.14159,2.4);
+    \node[gray, font=\small, anchor=south west] at (3.18,2.1) {$x=\pi$};
+
+    \draw[very thick, primaryColor, domain=1.8:2.78, smooth, samples=100]
+        plot (\x, {cos(\x r)/sin(\x r)});
+    \draw[very thick, primaryColor, domain=3.50:4.8, smooth, samples=100]
+        plot (\x, {cos(\x r)/sin(\x r)});
+
+    \node[primaryColor, font=\small, anchor=west] at (4.85, 0.8) {$y=\cot x$};
+\end{tikzpicture}
+
+\smallskip
+\textbf{Figure 14:} Graph of \(y = \cot x\) near the vertical asymptote at \(x = \pi\). The one-sided limits are \(-\infty\) from the left and \(+\infty\) from the right.
+\end{center}
+
+\subsection*{Continuity of Trigonometric Functions}
+\label{subsec:1.6.4}
+
+The Squeeze Theorem also supplies the proof that sine and cosine are continuous everywhere.
+
+\begin{theorembox}{Theorem 16}
+For every real number \(a\),
+\[
+\lim_{x \to a} \sin x = \sin a,
+\qquad
+\lim_{x \to a} \cos x = \cos a.
+\]
+Consequently, the sine and cosine functions are continuous on \(\R\). The remaining trigonometric functions are continuous at every point in their respective domains:
+\[
+\begin{array}{c|c}
+\text{Function} & \text{Domain of continuity} \\ \hline
+\sin x,\; \cos x & \R \\[3pt]
+\tan x,\; \sec x & \R \setminus \{\frac{\pi}{2} + k\pi : k \in \Z\} \\[3pt]
+\cot x,\; \csc x & \R \setminus \{k\pi : k \in \Z\}
+\end{array}
+\]
+\end{theorembox}
+
+\begin{remarkbox}{Remark 17}
+If \(f\) is any trigonometric function and \(a \in \operatorname{dom} f\), then
+\[
+\lim_{x \to a} f(x) = f(a).
+\]
+In other words, the limit may be evaluated by direct substitution whenever the function is defined and continuous at the limiting point. If \(a \notin \operatorname{dom} f\), direct substitution is not permitted and a one-sided analysis or limit manipulation is required.
+\end{remarkbox}
+
+\begin{examplebox}{Example 18}
+Evaluate \(\displaystyle \lim_{x \to \pi/3} \tan x\).
+
+\medskip
+\textbf{Solution.}
+The tangent function is continuous at \(\pi/3\) because \(\pi/3\) belongs to its domain. By direct substitution,
+\[
+\lim_{x \to \pi/3} \tan x = \tan\frac{\pi}{3} = \sqrt{3}.
+\]
+\[
+\boxed{\;\sqrt{3}\;}
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 19}
+Evaluate \(\displaystyle \lim_{x \to -2} \cos(x^{2} + 3x)\).
+
+\medskip
+\textbf{Solution.}
+First evaluate the inner limit:
+\[
+\lim_{x \to -2} (x^{2} + 3x) = (-2)^{2} + 3(-2) = 4 - 6 = -2.
+\]
+Since cosine is continuous everywhere,
+\[
+\lim_{x \to -2} \cos(x^{2} + 3x)
+= \cos\!\left(\lim_{x \to -2} (x^{2} + 3x)\right)
+= \cos(-2).
+\]
+\[
+\boxed{\;\cos 2\;}
+\]
+(The value \(\cos(-2) = \cos 2\) by the even property of cosine.)
+\end{examplebox}
+
+\begin{examplebox}{Example 20}
+Evaluate \(\displaystyle \lim_{x \to +\infty} \sin\!\left(\frac{5}{x}\right)\).
+
+\medskip
+\textbf{Solution.}
+Since
+\[
+\lim_{x \to +\infty} \frac{5}{x} = 0,
+\]
+and the sine function is continuous at \(0\),
+\[
+\lim_{x \to +\infty} \sin\!\left(\frac{5}{x}\right)
+= \sin\!\left(\lim_{x \to +\infty} \frac{5}{x}\right)
+= \sin 0 = 0.
+\]
+\[
+\boxed{\;0\;}
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 21}
+Evaluate \(\displaystyle \lim_{x \to 0} \tan\!\left(\frac{1 - \cos(3x)}{x}\right)\).
+
+\medskip
+\textbf{Solution.}
+By Theorem~6(ii), with the argument \(3x\) in place of \(x\),
+\[
+\lim_{x \to 0} \frac{1 - \cos(3x)}{x}
+= 3 \cdot \lim_{x \to 0} \frac{1 - \cos(3x)}{3x}
+= 3 \cdot 0 = 0.
+\]
+The tangent function is continuous at \(0\). Therefore
+\[
+\lim_{x \to 0} \tan\!\left(\frac{1 - \cos(3x)}{x}\right)
+= \tan 0 = 0.
+\]
+\[
+\boxed{\;0\;}
+\]
+\end{examplebox}
+
+\begin{examplebox}{Example 22}
+Evaluate \(\displaystyle \lim_{x \to (3\pi/2)^{-}} \csc x\).
+
+\medskip
+\textbf{Solution.}
+Write \(\csc x = 1 / \sin x\). The point \(3\pi/2\) is a zero of sine; hence it does not belong to the domain of cosecant and we cannot use direct substitution. However, \(3\pi/2\) is approached from the left:
+\[
+\lim_{x \to (3\pi/2)^{-}} \sin x = \sin\frac{3\pi}{2} = -1.
+\]
+Since the limit of the denominator exists and is nonzero,
+\[
+\lim_{x \to (3\pi/2)^{-}} \csc x
+= \frac{1}{\lim_{x \to (3\pi/2)^{-}} \sin x}
+= \frac{1}{-1} = -1.
+\]
+\[
+\boxed{\;-1\;}
+\]
+\end{examplebox}
+
+\subsection*{Exercises}
+\label{subsec:1.6.5}
+
+\noindent\textbf{A. Evaluate the following limits.}
+\begin{multicols}{2}
+\begin{enumerate}
+    \setlength{\itemsep}{3pt}
+    \setlength{\parsep}{0pt}
+    \setlength{\topsep}{2pt}
+    \item \(\displaystyle \lim_{x \to 0} \frac{\sin(6x)}{x}\)
+    \item \(\displaystyle \lim_{x \to 0} \frac{x^{2}}{\sin(8x^{2})}\)
+    \item \(\displaystyle \lim_{x \to 0} \frac{\tan(5x)}{x}\)
+    \item \(\displaystyle \lim_{x \to 0} \frac{\sin(7x)}{\sin(2x)}\)
+    \item \(\displaystyle \lim_{x \to 0} \frac{1 - \cos(4x)}{x^{2}}\)
+    \item \(\displaystyle \lim_{x \to 1} \frac{\sin(x^{2} - 1)}{x - 1}\)
+    \item \(\displaystyle \lim_{x \to 0} \frac{x \tan(3x)}{\sin^{2}(5x)}\)
+    \item \(\displaystyle \lim_{x \to 0} x \csc(6x)\)
+    \item \(\displaystyle \lim_{x \to 0} \frac{\tan^{3}(2x)}{x^{3}}\)
+        \item \(\displaystyle \lim_{x \to 3} \frac{x - 3}{\tan(x^{2} - 9)}\)
+
+\end{enumerate}
+\end{multicols}
+
+\medskip
+\noindent\textbf{B. Use the Squeeze Theorem to evaluate the following limits.}
+\begin{multicols}{2}
+\begin{enumerate}
+    \setlength{\itemsep}{3pt}
+    \setlength{\parsep}{0pt}
+    \setlength{\topsep}{2pt}
+    \setcounter{enumi}{10}
+    \item \(\displaystyle \lim_{x \to 0} x^{3} \cos\!\left(\frac{5}{x}\right)\)
+    \item \(\displaystyle \lim_{x \to +\infty} x \sin\!\left(\frac{2}{x^{2}}\right)\)
+    \item \(\displaystyle \lim_{x \to +\infty} \frac{4\sin x - 7\cos x}{x}\)
+    \item \(\displaystyle \lim_{x \to -\infty} \frac{[\![5x - 2]\!]}{x}\)
+\end{enumerate}
+\end{multicols}
+\begin{enumerate}
+    \setlength{\itemsep}{3pt}
+    \setlength{\parsep}{0pt}
+    \setlength{\topsep}{0pt}
+    \setcounter{enumi}{14}
+    \item Suppose that \(-3x \leq f(x) \leq 2x^{2} + 1\) for all \(x\) near \(0\). Determine whether the given inequalities are sufficient to find \(\displaystyle \lim_{x \to 0} f(x)\). Justify your answer.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{C. Discuss the continuity of each function at the indicated points. Classify each discontinuity as removable, jump essential, or infinite essential.}
+\begin{enumerate}
+    \setlength{\itemsep}{4pt}
+    \setlength{\parsep}{0pt}
+    \setlength{\topsep}{2pt}
+    \setcounter{enumi}{14}
+    \item
+    \[
+    f(x) = \begin{cases}
+    \dfrac{x^{2} - 9}{x - 3}, & x < 1, \\[8pt]
+    \dfrac{\sin(2x)}{x}, & 1 \leq x \leq \pi, \\[8pt]
+    2x - \pi, & x > \pi
+    \end{cases}
+    \qquad\text{at } x = 1 \text{ and } x = \pi.
+    \]
+
+    \item
+    \[
+    g(x) = \begin{cases}
+    \dfrac{x + 2}{|x^{2} + 3x + 2|}, & x < 0, \\[10pt]
+    x \csc(x/2), & 0 < x \leq \pi, \\[6pt]
+    x + \pi, & x > \pi
+    \end{cases}
+    \qquad\text{at } x = -2,\; x = 0, \text{ and } x = \pi.
+    \]
+
+    \item Find all values of the constants \(a\) and \(b\) for which
+    \[
+    h(x) = \begin{cases}
+    2x + a, & x < 0, \\[4pt]
+    \sin(bx) + a, & 0 \leq x \leq 1, \\[4pt]
+    x^{2} + b, & x > 1
+    \end{cases}
+    \]
+    is continuous at both breakpoints.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{D. Proof.}
+\begin{enumerate}
+    \setlength{\itemsep}{3pt}
+    \setlength{\parsep}{0pt}
+    \setlength{\topsep}{2pt}
+    \setcounter{enumi}{17}
+    \item Prove that \(\displaystyle \lim_{x \to 0} x^{2} \left|\sin\!\left(\frac{1}{x^{3}}\right)\right| = 0\) using the Squeeze Theorem.
+    \item If \(|f(x) - 7| \leq 4(x - 2)^{2}\) for all \(x \neq 2\), find \(\displaystyle \lim_{x \to 2} f(x)\).
+    \item Prove that \(\displaystyle \lim_{x \to 0} f(x) = 0\) if and only if \(\displaystyle \lim_{x \to 0} |f(x)| = 0\).
+\end{enumerate}
+
+\medskip
+\noindent\textbf{E. Evaluate the following limits.}
+\begin{multicols}{2}
+\begin{enumerate}
+    \setlength{\itemsep}{3pt}
+    \setlength{\parsep}{0pt}
+    \setlength{\topsep}{2pt}
+    \setcounter{enumi}{20}
+    \item \(\displaystyle \lim_{x \to 0} \frac{\sin^{3}(3x)}{27x^{3}}\)
+    \item \(\displaystyle \lim_{x \to -\infty} x\!\left(1 - \cos\frac{2}{x}\right)\)
+    \item \(\displaystyle \lim_{x \to 3} \frac{\sin(5x - 15)}{x^{2} - 9}\)
+    \item \(\displaystyle \lim_{x \to 0} \frac{\sin(2x)}{|x|}\)
+    \item \(\displaystyle \lim_{x \to 0^{+}} \sin\!\left(\frac{4}{x}\right)\)
+\end{enumerate}
+\end{multicols}

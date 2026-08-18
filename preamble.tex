@@ -1,0 +1,235 @@
+\usepackage[
+  a4paper, 
+  top=2.5cm, 
+  bottom=2.5cm, 
+  left=2cm, 
+  right=2cm, 
+  marginparwidth=0pt, 
+  marginparsep=0pt, 
+  hmarginratio=1:1
+]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{bm}
+
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage[english]{babel}
+
+\babelfont{rm}{IBM Plex Serif}
+\babelfont{sf}{IBM Plex Sans}
+\babelfont{tt}{IBM Plex Mono}
+\setmathfont{IBM Plex Math}
+
+\unimathsetup{ math-style = ISO, bold-style = ISO, partial = upright }
+
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc, matrix, decorations.pathreplacing}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, theorems}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{23.12pt}
+\usepackage{parskip}
+\setlength{\parskip}{0.6em}
+\usepackage{enumitem}
+\setlist[itemize]{itemsep=0.4em}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+\setlength{\textfloatsep}{18pt plus 3pt minus 3pt}
+\setlength{\intextsep}{15pt plus 3pt minus 3pt}
+\setlength{\floatsep}{14pt plus 2pt minus 2pt}
+\setlength{\abovecaptionskip}{8pt plus 2pt}
+\setlength{\belowcaptionskip}{4pt}
+
+\AtBeginDocument{
+  \setlength{\abovedisplayskip}{10pt plus 3pt minus 2pt}
+  \setlength{\belowdisplayskip}{10pt plus 3pt minus 2pt}
+  \setlength{\abovedisplayshortskip}{5pt plus 2pt}
+  \setlength{\belowdisplayshortskip}{5pt plus 2pt}
+}
+
+\tcbset{
+  before skip=14pt plus 2pt minus 2pt,
+  after skip=14pt plus 2pt minus 2pt
+}
+
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage[autostyle]{csquotes}
+\MakeOuterQuote{"}
+
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{2}
+
+\renewcommand{\baselinestretch}{1.2}
+
+\definecolor{primaryColor}{HTML}{005A9C}
+\definecolor{secondaryColor}{HTML}{4DA6FF}
+\definecolor{darkSlate}{HTML}{002366}
+\definecolor{softBg}{HTML}{F2F9FF}
+
+\definecolor{defBg}{HTML}{EBF5FF}
+\definecolor{defFrame}{HTML}{1565C0}
+
+\definecolor{thmBg}{HTML}{E8F5E9}
+\definecolor{thmFrame}{HTML}{2E7D32}
+
+\definecolor{exBg}{HTML}{F5F5F5}
+\definecolor{exFrame}{HTML}{424242}
+
+\definecolor{rmkBg}{HTML}{FFF3E0}
+\definecolor{rmkFrame}{HTML}{EF6C0F}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{darkSlate}{\footnotesize\textsl{Calculus I}}}
+\fancyhead[R]{\textcolor{primaryColor}{\footnotesize\textsl{Course Notes}}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{%
+  \hbox to\headwidth{%
+    \color{primaryColor}\leaders\hrule height \headrulewidth\hfill}}
+
+\titleformat{\chapter}
+  {\color{darkSlate}\Huge\bfseries\sffamily\raggedright}
+  {\thechapter}{1em}{}
+
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+\titleformat{\section}
+  {\color{primaryColor}\Huge\bfseries\sffamily\raggedright}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\color{primaryColor}\Large\bfseries\sffamily\raggedright}
+  {}{0pt}{}
+
+\titleformat{\subsubsection}
+  {\color{primaryColor}\large\bfseries\sffamily\raggedright}
+  {}{0pt}{}
+
+\titlecontents{chapter}[0em]
+  {\addvspace{0.8pc}\bfseries\sffamily}
+  {\color{primaryColor}\thecontentslabel\hspace{0.8em}\color{darkSlate}}
+  {\color{darkSlate}}
+  {\hfill\color{primaryColor}\bfseries\contentspage}
+
+\titlecontents{section}[1.8em]
+  {\addvspace{0.3pc}}
+  {\color{primaryColor}\thecontentslabel\hspace{0.8em}\color{darkSlate}}
+  {\color{darkSlate}}
+  {\titlerule*[0.75pc]{.}\contentspage}
+
+\titlecontents{subsection}[3.8em]
+  {}
+  {\color{primaryColor}\thecontentslabel\hspace{0.6em}\color{darkSlate}}
+  {\color{darkSlate}}
+  {\titlerule*[0.75pc]{.}\contentspage}
+
+\newcommand{\sectionpage}[1]{%
+  \clearpage
+  \thispagestyle{empty}%
+  \refstepcounter{chapter}%
+  \setcounter{section}{0}%
+  \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[darkSlate] (current page.north west) rectangle ([xshift=3.5cm] current page.south west);
+    \fill[secondaryColor] ([xshift=3.5cm] current page.north west) rectangle ([xshift=3.65cm] current page.south west);
+    \node[opacity=0.06, circle, fill=primaryColor, minimum size=18cm] at ([xshift=-5cm, yshift=5cm] current page.south east) {};
+    \node[text=white, font=\fontsize{80}{80}\selectfont\bfseries] at ([xshift=1.75cm] current page.west) {\thechapter};
+    \node[anchor=west] at ([xshift=5.5cm] current page.west) {%
+      \begin{minipage}{11cm}
+        \sffamily\raggedright
+        \hyphenpenalty=10000\exhyphenpenalty=10000
+        \fontsize{38}{46}\selectfont
+        \color{darkSlate}\textbf{#1}
+        \par\vspace{0.5cm}
+        \textcolor{primaryColor}{\rule{4cm}{2.5pt}}
+      \end{minipage}%
+    };
+  \end{tikzpicture}%
+  \vspace*{\fill}
+  \newpage
+}
+
+\newtcolorbox{definitionbox}[1]{%
+  enhanced, breakable, title={#1},
+  colframe=defFrame, colback=defBg, coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  attach boxed title to top left={yshift=-3mm, xshift=5mm},
+  boxed title style={colback=defFrame, rounded corners, sharp corners=south},
+  arc=2mm, boxrule=0.75pt, top=4mm, bottom=3mm, left=4mm, right=4mm,
+  separator sign={:}
+}
+
+\newtcolorbox{theorembox}[1]{%
+  enhanced, breakable, title={#1},
+  colframe=thmFrame, colback=thmBg, coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  attach boxed title to top left={yshift=-3mm, xshift=5mm},
+  boxed title style={colback=thmFrame, rounded corners, sharp corners=south},
+  arc=2mm, boxrule=0.75pt, top=4mm, bottom=3mm, left=4mm, right=4mm,
+  separator sign={:}
+}
+
+\newtcolorbox{examplebox}[1]{%
+  enhanced, breakable, title={#1},
+  colframe=exFrame, colback=exBg, coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  attach boxed title to top left={yshift=-3mm, xshift=5mm},
+  boxed title style={colback=exFrame, rounded corners, sharp corners=south},
+  arc=2mm, boxrule=0.75pt, top=4mm, bottom=3mm, left=4mm, right=4mm,
+  separator sign={:}
+}
+
+\newtcolorbox{remarkbox}[1]{%
+  enhanced, breakable, title={#1},
+  colframe=rmkFrame, colback=rmkBg, coltitle=white,
+  fonttitle=\bfseries\sffamily,
+  attach boxed title to top left={yshift=-3mm, xshift=5mm},
+  boxed title style={colback=rmkFrame, rounded corners, sharp corners=south},
+  arc=2mm, boxrule=0.75pt, top=4mm, bottom=3mm, left=4mm, right=4mm,
+  separator sign={:}
+}
+
+\newcommand{\ddx}{\frac{d}{dx}}
+\newcommand{\dydx}{\frac{dy}{dx}}
+\newcommand{\dnt}[2]{\frac{d^{#2}#1}{dx^{#2}}}
+\newcommand{\pdn}[2]{\frac{\partial #1}{\partial #2}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\interval}[2]{\left[#1,#2\right]}
+\newcommand{\openint}[2]{\left(#1,#2\right)}
+\newcommand{\norm}[1]{\left|#1\right|}
+\newcommand{\abs}[1]{\left|#1\right|}
+
+\newcommand{\vr}{\mathbf{r}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\va}{\mathbf{a}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\lhopital}{L'Hôpital's Rule}
+
+\usepackage{hyperref}
+\usepackage{bookmark}
+\hypersetup{%
+  colorlinks = true,
+  linkcolor  = darkSlate,
+  filecolor  = magenta,
+  urlcolor   = primaryColor,
+  pdftitle   = {Calculus 1 Course Notes},
+  pdfpagemode = FullScreen
+}
